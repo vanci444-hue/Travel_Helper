@@ -1,0 +1,36 @@
+{
+  "overflow": {
+    "inner": {
+      "w": 439,
+      "h": 951
+    },
+    "html": {
+      "cw": 390,
+      "sw": 439
+    },
+    "body": {
+      "cw": 390,
+      "sw": 439
+    },
+    "wrapDisplay": "block",
+    "offenders": []
+  },
+  "reload": {
+    "fetches": [
+      {
+        "url": "./project-map.json",
+        "status": 200,
+        "ok": true
+      }
+    ],
+    "banner": "",
+    "navCount": 3,
+    "h2": "行程列表 /trips"
+  },
+  "file_picker": {
+    "notes": "T013-FILE-PICKER-MARKER\n规划经理 Coco 是固定 JSON 决策流水线（action=ask/ready/stop/revise/suggest_new_plan），没有 Plugin 工具，不标可自由选工具的 Agent。\n三专员按 Plugin 工具循环呈现：研究 4 工具、行程 4 工具、预算 0 工具。\n高德六工具均在 create_amap_registry 注",
+    "hasMarker": true,
+    "banner": "",
+    "navCount": 3
+  }
+}

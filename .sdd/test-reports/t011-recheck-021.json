@@ -1,0 +1,258 @@
+{
+  "result": "FAIL",
+  "start": {
+    "ok": true,
+    "scrollTop": 321,
+    "clientHeight": 767,
+    "selected": "第 1 天",
+    "expected": 1,
+    "candidates": [
+      {
+        "day": 1,
+        "visible": 236.8828125,
+        "top": 0.1796875,
+        "height": 236.8828125
+      },
+      {
+        "day": 2,
+        "visible": 83.99960937500003,
+        "top": 261.0625,
+        "height": 107.7421875
+      },
+      {
+        "day": 3,
+        "visible": 0,
+        "top": 392.8046875,
+        "height": 107.7421875
+      },
+      {
+        "day": 4,
+        "visible": 0,
+        "top": 524.546875,
+        "height": 236.8828125
+      },
+      {
+        "day": 5,
+        "visible": 0,
+        "top": 785.4296875,
+        "height": 107.7421875
+      }
+    ],
+    "chips": [
+      {
+        "text": "第 1 天",
+        "selected": true
+      },
+      {
+        "text": "第 2 天",
+        "selected": false
+      },
+      {
+        "text": "第 3 天",
+        "selected": false
+      },
+      {
+        "text": "第 4 天",
+        "selected": false
+      },
+      {
+        "text": "第 5 天",
+        "selected": false
+      }
+    ]
+  },
+  "after_click3": {
+    "ok": true,
+    "scrollTop": 714,
+    "clientHeight": 767,
+    "selected": "第 4 天",
+    "expected": 4,
+    "candidates": [
+      {
+        "day": 1,
+        "visible": 0,
+        "top": -392.8203125,
+        "height": 236.8828125
+      },
+      {
+        "day": 2,
+        "visible": 0,
+        "top": -131.9375,
+        "height": 107.7421875
+      },
+      {
+        "day": 3,
+        "visible": 107.546875,
+        "top": -0.1953125,
+        "height": 107.7421875
+      },
+      {
+        "day": 4,
+        "visible": 213.51523437500003,
+        "top": 131.546875,
+        "height": 236.8828125
+      },
+      {
+        "day": 5,
+        "visible": 0,
+        "top": 392.4296875,
+        "height": 107.7421875
+      }
+    ],
+    "chips": [
+      {
+        "text": "第 1 天",
+        "selected": false
+      },
+      {
+        "text": "第 2 天",
+        "selected": false
+      },
+      {
+        "text": "第 3 天",
+        "selected": false
+      },
+      {
+        "text": "第 4 天",
+        "selected": true
+      },
+      {
+        "text": "第 5 天",
+        "selected": false
+      }
+    ]
+  },
+  "scroll_steps": [
+    {
+      "i": 0,
+      "scrollTop": 602.5,
+      "expected": 3,
+      "selected": "第 3 天"
+    }
+  ],
+  "matched": {
+    "ok": true,
+    "scrollTop": 602.5,
+    "clientHeight": 767,
+    "selected": "第 3 天",
+    "expected": 3,
+    "candidates": [
+      {
+        "day": 1,
+        "visible": 0,
+        "top": -281.3203125,
+        "height": 236.8828125
+      },
+      {
+        "day": 2,
+        "visible": 87.3046875,
+        "top": -20.4375,
+        "height": 107.7421875
+      },
+      {
+        "day": 3,
+        "visible": 107.7421875,
+        "top": 111.3046875,
+        "height": 107.7421875
+      },
+      {
+        "day": 4,
+        "visible": 102.01523437500003,
+        "top": 243.046875,
+        "height": 236.8828125
+      },
+      {
+        "day": 5,
+        "visible": 0,
+        "top": 503.9296875,
+        "height": 107.7421875
+      }
+    ],
+    "chips": [
+      {
+        "text": "第 1 天",
+        "selected": false
+      },
+      {
+        "text": "第 2 天",
+        "selected": false
+      },
+      {
+        "text": "第 3 天",
+        "selected": true
+      },
+      {
+        "text": "第 4 天",
+        "selected": false
+      },
+      {
+        "text": "第 5 天",
+        "selected": false
+      }
+    ]
+  },
+  "after_d1": {
+    "ok": true,
+    "scrollTop": 536,
+    "clientHeight": 767,
+    "selected": "第 1 天",
+    "expected": 2,
+    "candidates": [
+      {
+        "day": 1,
+        "visible": 22.0625,
+        "top": -214.8203125,
+        "height": 236.8828125
+      },
+      {
+        "day": 2,
+        "visible": 107.7421875,
+        "top": 46.0625,
+        "height": 107.7421875
+      },
+      {
+        "day": 3,
+        "visible": 107.7421875,
+        "top": 177.8046875,
+        "height": 107.7421875
+      },
+      {
+        "day": 4,
+        "visible": 35.515234375000034,
+        "top": 309.546875,
+        "height": 236.8828125
+      },
+      {
+        "day": 5,
+        "visible": 0,
+        "top": 570.4296875,
+        "height": 107.7421875
+      }
+    ],
+    "chips": [
+      {
+        "text": "第 1 天",
+        "selected": true
+      },
+      {
+        "text": "第 2 天",
+        "selected": false
+      },
+      {
+        "text": "第 3 天",
+        "selected": false
+      },
+      {
+        "text": "第 4 天",
+        "selected": false
+      },
+      {
+        "text": "第 5 天",
+        "selected": false
+      }
+    ]
+  },
+  "click3_ok": false,
+  "scroll_ok": true,
+  "chip1_ok": true
+}

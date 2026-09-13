@@ -1,0 +1,2696 @@
+{
+  "project": {
+    "id": "Travel_Helper",
+    "name": "Xtrip",
+    "checked_at": "2026-09-13",
+    "implementation_status": "源码已核对",
+    "notes": [
+      "规划经理 Coco 是固定 JSON 决策流水线（action=ask/ready/stop/revise/suggest_new_plan），没有 Plugin 工具，不标可自由选工具的 Agent。",
+      "三专员按 Plugin 工具循环呈现：研究 4 工具、行程 4 工具、预算 0 工具。",
+      "高德六工具均在 create_amap_registry 注册：geocode_city、search_poi、get_poi_detail、get_weather、route_walking、route_transit。",
+      "未找到出境必验实现；出境只影响 region 与 destination_city 是否在 OUTBOUND_PLACES。行前清单会去掉含「护照/签证」的条目。",
+      "未找到 PDF 导出。行程是网页详情 /itineraries/:id。",
+      "设计 docs/tech-spec.md 七、写路由仅 / 与 /itineraries/:id；源码另有 /trips（TripListPage）。以源码为准。",
+      "配置只列字段名与源码默认值，不读取真实 .env，不展示 Key。"
+    ]
+  },
+  "pages": [
+    {
+      "id": "page-workbench",
+      "name": "工作台",
+      "route": "/",
+      "purpose": "和 Coco 问诊、看规划进度，规划前右侧是灵感卡，开始对话后右侧换成地图槽。",
+      "implementation_status": "源码已核对",
+      "sources": [
+        {
+          "path": "frontend/src/pages/WorkbenchPage.tsx",
+          "symbol": "WorkbenchPage",
+          "fingerprint": "b11384fc9185a32f",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "frontend/src/router/index.tsx",
+          "symbol": "AppRoutes",
+          "fingerprint": "45c254c17f330d1a",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "frontend/src/components/layout/Sidebar.tsx",
+          "symbol": "Sidebar",
+          "fingerprint": "18afedac73f9a1e7",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "frontend/src/components/chat/ChatThread.tsx",
+          "symbol": "ChatThread",
+          "fingerprint": "1cea252561ac99c0",
+          "checked_at": "2026-09-13"
+        }
+      ],
+      "features": [
+        "feat-new-plan",
+        "feat-intake",
+        "feat-planning-log",
+        "feat-inspiration"
+      ]
+    },
+    {
+      "id": "page-trips",
+      "name": "行程列表",
+      "route": "/trips",
+      "purpose": "列出 status=ready 的行程，点击进入网页详情。空列表提示先和 Coco 聊。",
+      "implementation_status": "源码已核对",
+      "sources": [
+        {
+          "path": "frontend/src/pages/TripListPage.tsx",
+          "symbol": "TripListPage",
+          "fingerprint": "7c7a806a0cafd1c9",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "frontend/src/router/index.tsx",
+          "symbol": "AppRoutes",
+          "fingerprint": "45c254c17f330d1a",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "frontend/src/hooks/useItinerary.ts",
+          "symbol": "useItinerary/useTripList",
+          "fingerprint": "9bc84585fffaa6ca",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "frontend/src/services/itineraryService.ts",
+          "symbol": "listItineraries/reviseItinerary/deleteItineraryCard",
+          "fingerprint": "c61ac79644d3b678",
+          "checked_at": "2026-09-13"
+        }
+      ],
+      "features": [
+        "feat-trip-list"
+      ]
+    },
+    {
+      "id": "page-itinerary",
+      "name": "行程详情",
+      "route": "/itineraries/:id",
+      "purpose": "网页报告：按天卡片、预算、清单、地图或地图入口；逐项删卡与对话修订分开。",
+      "implementation_status": "源码已核对",
+      "sources": [
+        {
+          "path": "frontend/src/pages/ItineraryDetailPage.tsx",
+          "symbol": "ItineraryDetailPage",
+          "fingerprint": "f994e1c548375a40",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "frontend/src/hooks/useItinerary.ts",
+          "symbol": "useItinerary/useTripList",
+          "fingerprint": "9bc84585fffaa6ca",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "frontend/src/services/itineraryService.ts",
+          "symbol": "listItineraries/reviseItinerary/deleteItineraryCard",
+          "fingerprint": "c61ac79644d3b678",
+          "checked_at": "2026-09-13"
+        }
+      ],
+      "features": [
+        "feat-report",
+        "feat-item-edit",
+        "feat-revise"
+      ]
+    }
+  ],
+  "features": [
+    {
+      "id": "feat-new-plan",
+      "name": "新建计划预填",
+      "trigger": "左侧「新建计划」，填去哪/何时/成人儿童/预算/节奏芯片/已知计划后点开始聊；全空也可提交。",
+      "input": "NewPlanDraft 文本；节奏 chip 为 relaxed/moderate/packed。",
+      "output": "POST /api/conversations 得到会话；若有预填，前端立刻再 POST 一条「请根据已填写的计划继续…」避免经理重问。导航回 /，不在弹层出方案。",
+      "flow": [
+        {
+          "actor": "用户",
+          "action": "打开弹层并提交",
+          "data": "destination_text/when_text/adults_text/children_text/budget_text/pace/wish_text",
+          "branch": "全空也允许"
+        },
+        {
+          "actor": "前端 AppProvider",
+          "action": "draftToPayload：N天→duration_days(1–14)，N月→date_month，预算「万」当 0000",
+          "data": "ConversationCreate",
+          "branch": "解析不到数字则对应字段为 null"
+        },
+        {
+          "actor": "后端 ManagerService.create",
+          "action": "apply_create_payload 写入问诊槽，planning=idle",
+          "data": "201 ConversationPublic",
+          "branch": "pace 非法返回校验错误"
+        },
+        {
+          "actor": "前端 conversationService",
+          "action": "hasPrefill 则 sendMessage(CONTINUE_AFTER_CREATE)",
+          "data": "MessageTurnPublic",
+          "branch": "Mock 或无预填则不补发"
+        }
+      ],
+      "api_ids": [
+        "api-001",
+        "api-004"
+      ],
+      "sources": [
+        {
+          "path": "frontend/src/components/NewPlanModal.tsx",
+          "symbol": "NewPlanModal",
+          "fingerprint": "576dbe65c069c144",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "frontend/src/stores/AppProvider.tsx",
+          "symbol": "submitNewPlan/draftToPayload",
+          "fingerprint": "5311416442e587c6",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "frontend/src/services/conversationService.ts",
+          "symbol": "createConversation/sendMessage",
+          "fingerprint": "ed63cc57b14507c1",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "backend/src/api/routes/conversations.py",
+          "symbol": "create_conversation/send_message",
+          "fingerprint": "db6311d282d6bd54",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "backend/src/services/manager.py",
+          "symbol": "finalize_intake/send_message/_revise",
+          "fingerprint": "8640db39eeccb7bf",
+          "checked_at": "2026-09-13"
+        }
+      ],
+      "implementation_status": "源码已核对"
+    },
+    {
+      "id": "feat-intake",
+      "name": "对话问诊与就绪",
+      "trigger": "工作台底部发送；空输入按钮禁用。",
+      "input": "content 1–2000 字。无会话时先 POST 空会话再发消息。",
+      "output": "一轮用户+Coco 消息，以及更新后的 intake/planning。ready 后 Coco 说让专员出一版，不贴按天安排。",
+      "flow": [
+        {
+          "actor": "前端 useConversation",
+          "action": "乐观插入用户气泡，sendMessage timeout=180000ms",
+          "data": "{content}",
+          "branch": "无 conversationId 先 createConversation({})"
+        },
+        {
+          "actor": "后端 send_message",
+          "action": "落用户消息；抽槽+经理 JSON；按 ready/followup 改 action",
+          "data": "intake + reply",
+          "branch": "见问诊算法"
+        },
+        {
+          "actor": "前端 ChatThread",
+          "action": "渲染 Coco；running 时挂专员状态与日志",
+          "data": "planning",
+          "branch": "失败气泡加失败样式"
+        }
+      ],
+      "api_ids": [
+        "api-001",
+        "api-003",
+        "api-004"
+      ],
+      "algorithm": {
+        "subject": "问诊槽合并、硬默认与 ready 判定",
+        "steps": [
+          "用户消息先 extract_from_text 抽城市/天数/预算/节奏/同行，再与已有槽 merge_intake；模型 JSON 的 intake_patch 再合并，空白字段不覆盖。",
+          "finalize_intake：couple 且 adults 空则 adults=2；children 空则 0。",
+          "_apply_hard_defaults：海边愿望词且无城市时 destination_city=青岛；亲子缺年龄段时 children_age_bands=['学龄儿童']；region 由城市名单/出境词推断。",
+          "compute_missing_fields 得到 missing_fields；ready = (missing_fields 为空)。",
+          "模型输出 action 归一化为 ask/ready/stop/revise/suggest_new_plan。若槽已 ready，强制 action=ready；模型自称 ready 但槽未齐：followup 未满则改 ask，已满则 stop。",
+          "action=ask 时 followup_rounds_used +1；used>=intake_max_followups 且未 ready → stop，不启动规划。",
+          "action=ready 才调用 start_planning_stub 建规划任务。回复若仍在追问城市/出境则改成就绪话术。"
+        ],
+        "branches": [
+          "planning.status==running：不调模型，回复「专员还在做」。",
+          "已有 ready 行程且消息不是继续提示：走修订，不再问诊。",
+          "缺 DeepSeek Key：MissingModelKeyError；模型不可用：ManagerUnavailableError。",
+          "出境只根据 OUTBOUND_PLACES/出境词推断 region，没有护照签证必验步骤。"
+        ],
+        "parameters": [
+          {
+            "key": "intake_max_followups",
+            "value": "2",
+            "value_kind": "source_default",
+            "location": "backend/src/config/settings.py AppSettings；backend/.env.example",
+            "impact": "超过 2 轮仍缺槽则 stop，不出假装完整方案"
+          },
+          {
+            "key": "manager_history_limit",
+            "value": "20",
+            "value_kind": "source_default",
+            "location": "settings.py / .env.example",
+            "impact": "问诊只带最近 20 条非 system 消息"
+          },
+          {
+            "key": "manager_thinking_enabled",
+            "value": "false",
+            "value_kind": "source_default",
+            "location": "settings.py / .env.example；llm_client.chat_completion",
+            "impact": "Coco 请求 thinking.type=disabled（D-007 A）"
+          },
+          {
+            "key": "DEFAULT_SEA_CITY",
+            "value": "青岛",
+            "value_kind": "source_default",
+            "location": "manager.py",
+            "impact": "「想看海」且无城市时补青岛"
+          },
+          {
+            "key": "DEFAULT_CHILD_AGE_BAND",
+            "value": "学龄儿童",
+            "value_kind": "source_default",
+            "location": "manager.py",
+            "impact": "亲子缺年龄时补默认段"
+          },
+          {
+            "key": "duration_days",
+            "value": "1–14",
+            "value_kind": "source_default",
+            "location": "ConversationCreate Field ge=1 le=14",
+            "impact": "新建对话天数越界校验失败"
+          }
+        ],
+        "selection": "ready 只看 missing_fields 是否为空，不看模型有没有说「可以出方案」。",
+        "failures": "空消息 ValidationAppError；模型 JSON 修一次仍失败则 ManagerUnavailableError；stop 时回「还缺…这轮先不出假装完整的旅行计划」。未找到出境必验或 PDF 导出。",
+        "sources": [
+          {
+            "path": "backend/src/services/manager.py",
+            "symbol": "finalize_intake/send_message/_revise",
+            "fingerprint": "8640db39eeccb7bf",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/src/services/llm_client.py",
+            "symbol": "chat_json",
+            "fingerprint": "ddca723680b1f237",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/src/config/settings.py",
+            "symbol": "AppSettings",
+            "fingerprint": "6b572f9d00cb85d1",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/.env.example",
+            "symbol": "字段占位",
+            "fingerprint": "54409c11c5576a5c",
+            "checked_at": "2026-09-13"
+          }
+        ],
+        "implementation_status": "源码已核对"
+      },
+      "sources": [
+        {
+          "path": "frontend/src/components/chat/ChatThread.tsx",
+          "symbol": "ChatThread",
+          "fingerprint": "1cea252561ac99c0",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "frontend/src/hooks/useConversation.ts",
+          "symbol": "useConversation",
+          "fingerprint": "7fd53dd8175eea04",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "frontend/src/services/conversationService.ts",
+          "symbol": "createConversation/sendMessage",
+          "fingerprint": "ed63cc57b14507c1",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "backend/src/services/manager.py",
+          "symbol": "finalize_intake/send_message/_revise",
+          "fingerprint": "8640db39eeccb7bf",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "backend/src/services/llm_client.py",
+          "symbol": "chat_json",
+          "fingerprint": "ddca723680b1f237",
+          "checked_at": "2026-09-13"
+        }
+      ],
+      "implementation_status": "源码已核对"
+    },
+    {
+      "id": "feat-planning-log",
+      "name": "三专员规划与 SSE 运行日志",
+      "trigger": "问诊 action=ready 后自动开始；工作台在 logHost 助手气泡下展开日志。",
+      "input": "当前会话 intake；浏览器 EventSource Accept: text/event-stream。",
+      "output": "逐步 planning.log；成功出「查看行程」链到 /itineraries/:id；失败 Coco 说明原因且无假装完整方案。",
+      "flow": [
+        {
+          "actor": "后端 start_planning_stub",
+          "action": "建 job 并后台 execute_planning",
+          "data": "planning.status=running",
+          "branch": "已有 running job 则复用"
+        },
+        {
+          "actor": "三专员",
+          "action": "研究成功后再并行预算与行程",
+          "data": "工具观察 JSON",
+          "branch": "任一步失败则规划 failed"
+        },
+        {
+          "actor": "SSE events.py",
+          "action": "先推 planning.updated 与历史 log，再订阅 event_hub",
+          "data": "event: planning.log / itinerary.ready / planning.failed / heartbeat",
+          "branch": "Accept 不含 SSE 则 500「无法升级为事件流」"
+        },
+        {
+          "actor": "前端 usePlanningEvents",
+          "action": "监听 SSE，同时 2s 轮询 GET 对话兜底",
+          "data": "activity_log 追加去重",
+          "branch": "Mock 走 PlanningMockEventSource"
+        }
+      ],
+      "api_ids": [
+        "api-005",
+        "api-003"
+      ],
+      "algorithm": {
+        "subject": "三专员编排与工具观察循环",
+        "steps": [
+          "start_planning_stub 建 PlanningJob，后台 _run_job 用 planning_timeout_seconds 包一层 wait_for。",
+          "先 run_research（千问、关思考、最多 8 轮、工具 geocode_city/search_poi/get_poi_detail/get_weather）。研究把目的地改写成另一座已知城市则当 destination_not_found。",
+          "研究成功后并行 run_budget（千问、无工具、1 轮）与 run_itinerary（DeepSeek、开思考 reasoning_effort=high、最多 12 轮、工具 search_poi/get_poi_detail/route_walking/route_transit）。",
+          "run_loop：模型可 tool_calls → registry.execute → 观察 JSON 回灌；末两轮提示立刻出 JSON；超轮次 reason_code=iteration_limit。",
+          "工具步与思考步写入 activity_log 并 publish planning.log；日志脱敏去掉 key/polyline，正文最多 4000 字，最多 80 条。",
+          "行程卡片金额与预算总额差超过 20% 时再跑一次预算。成功写 Itinerary 并 SSE itinerary.ready；失败 assemble_coco_failure，不造完整方案。"
+        ],
+        "branches": [
+          "研究失败：整次 failed，预算/行程不启动。",
+          "预算或行程失败：keep_others=True，已成功专员状态保留。",
+          "看门狗超时：按 iteration_limit 失败。",
+          "缺模型/高德 Key：专员返回 model_error / amap_unavailable，不是 Mock 顶替。"
+        ],
+        "parameters": [
+          {
+            "key": "planning_timeout_seconds",
+            "value": "180",
+            "value_kind": "source_default",
+            "location": "settings.py / .env.example；planning._run_job",
+            "impact": "整次规划超时=失败"
+          },
+          {
+            "key": "max_tool_iterations_research",
+            "value": "8",
+            "value_kind": "source_default",
+            "location": "settings.py；research.run_research",
+            "impact": "研究工具循环上限"
+          },
+          {
+            "key": "max_tool_iterations_itinerary",
+            "value": "12",
+            "value_kind": "source_default",
+            "location": "settings.py；itinerary.run_itinerary",
+            "impact": "行程工具循环上限"
+          },
+          {
+            "key": "itinerary_thinking_enabled",
+            "value": "true",
+            "value_kind": "source_default",
+            "location": "settings.py / .env.example",
+            "impact": "仅行程专员开思考；研究/预算硬编码 False"
+          },
+          {
+            "key": "llm_timeout_seconds",
+            "value": "60",
+            "value_kind": "source_default",
+            "location": "settings.py",
+            "impact": "单次模型 HTTP 超时"
+          },
+          {
+            "key": "llm_max_retries",
+            "value": "1",
+            "value_kind": "source_default",
+            "location": "settings.py",
+            "impact": "超时/429/5xx 再试 1 次"
+          },
+          {
+            "key": "BUDGET_RECOMPUTE_RATIO",
+            "value": "0.2",
+            "value_kind": "source_default",
+            "location": "planning.py",
+            "impact": "卡片金额相对预算偏差超过 20% 重算预算"
+          },
+          {
+            "key": "HEARTBEAT_SECONDS",
+            "value": "15",
+            "value_kind": "source_default",
+            "location": "events.py",
+            "impact": "SSE 空闲心跳；同时前端 2s 轮询对话详情兜底"
+          }
+        ],
+        "selection": "Coco 不选工具。研究/行程由模型在允许的 Plugin 名内 tool_choice=auto；预算无 tools。",
+        "failures": "reason_code：destination_not_found / poi_empty / amap_unavailable / iteration_limit / model_error。观察与日志不含密钥。未实现 PDF 导出。",
+        "sources": [
+          {
+            "path": "backend/src/services/planning.py",
+            "symbol": "execute_planning/_PlanningSession.run_loop",
+            "fingerprint": "c5cda53035ab9237",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/src/services/specialists/research.py",
+            "symbol": "run_research",
+            "fingerprint": "7c202f890a158c99",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/src/services/specialists/budget.py",
+            "symbol": "run_budget",
+            "fingerprint": "0445a71dbef70b88",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/src/services/specialists/itinerary.py",
+            "symbol": "run_itinerary",
+            "fingerprint": "5bf1b20fa355f87c",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/src/plugins/amap.py",
+            "symbol": "create_amap_registry",
+            "fingerprint": "40948f4b4f3fc5e4",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/src/services/activity_log.py",
+            "symbol": "build_entry",
+            "fingerprint": "28145133c2a9d1a4",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/src/api/routes/events.py",
+            "symbol": "conversation_events",
+            "fingerprint": "c19ea95f236b80d4",
+            "checked_at": "2026-09-13"
+          }
+        ],
+        "implementation_status": "源码已核对"
+      },
+      "sources": [
+        {
+          "path": "backend/src/services/planning.py",
+          "symbol": "execute_planning/_PlanningSession.run_loop",
+          "fingerprint": "c5cda53035ab9237",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "backend/src/api/routes/events.py",
+          "symbol": "conversation_events",
+          "fingerprint": "c19ea95f236b80d4",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "frontend/src/hooks/usePlanningEvents.ts",
+          "symbol": "usePlanningEvents",
+          "fingerprint": "9156b30ddb889f6e",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "frontend/src/components/chat/ChatThread.tsx",
+          "symbol": "ChatThread",
+          "fingerprint": "1cea252561ac99c0",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "backend/src/services/activity_log.py",
+          "symbol": "build_entry",
+          "fingerprint": "28145133c2a9d1a4",
+          "checked_at": "2026-09-13"
+        }
+      ],
+      "implementation_status": "源码已核对"
+    },
+    {
+      "id": "feat-inspiration",
+      "name": "规划前国内灵感",
+      "trigger": "工作台尚未开始对话时右栏展示；点击卡片无跳转。",
+      "input": "无请求体。",
+      "output": "城市图+标题+描述。接口失败则退回前端内置 CURRENT_INSPIRATIONS，不报密钥。",
+      "flow": [
+        {
+          "actor": "AppProvider 挂载",
+          "action": "GET /inspirations",
+          "data": "InspirationPublic[]",
+          "branch": "失败用本地三张国内卡"
+        },
+        {
+          "actor": "InspirationPanel",
+          "action": "只展示，无点击进详情",
+          "data": "id/city/title/description/image_url",
+          "branch": "无详情路由"
+        }
+      ],
+      "api_ids": [
+        "api-010"
+      ],
+      "sources": [
+        {
+          "path": "frontend/src/pages/WorkbenchPage.tsx",
+          "symbol": "WorkbenchPage",
+          "fingerprint": "b11384fc9185a32f",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "frontend/src/stores/AppProvider.tsx",
+          "symbol": "submitNewPlan/draftToPayload",
+          "fingerprint": "5311416442e587c6",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "frontend/src/services/inspirationService.ts",
+          "symbol": "listInspirations",
+          "fingerprint": "cdce92750ca80e7b",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "backend/src/api/routes/inspirations.py",
+          "symbol": "list_inspirations",
+          "fingerprint": "c297b3fa09f8f494",
+          "checked_at": "2026-09-13"
+        }
+      ],
+      "implementation_status": "源码已核对"
+    },
+    {
+      "id": "feat-trip-list",
+      "name": "查看已出行程",
+      "trigger": "左侧「行程」进 /trips；?empty=1 仅 Mock 测空列表。",
+      "input": "page 默认 1，page_size 默认 20。",
+      "output": "标题、城市、天数、节奏、相对时间；点击进 /itineraries/:id。",
+      "flow": [
+        {
+          "actor": "useTripList",
+          "action": "GET /itineraries",
+          "data": "items + pagination",
+          "branch": "空：还没有行程，先和 Coco 聊一趟"
+        },
+        {
+          "actor": "后端 list_ready",
+          "action": "只查 status=ready，按 updated_at 倒序",
+          "data": "ItineraryListItem",
+          "branch": "未 ready 的规划中行程不出现"
+        }
+      ],
+      "api_ids": [
+        "api-006"
+      ],
+      "sources": [
+        {
+          "path": "frontend/src/pages/TripListPage.tsx",
+          "symbol": "TripListPage",
+          "fingerprint": "7c7a806a0cafd1c9",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "frontend/src/hooks/useItinerary.ts",
+          "symbol": "useItinerary/useTripList",
+          "fingerprint": "9bc84585fffaa6ca",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "frontend/src/services/itineraryService.ts",
+          "symbol": "listItineraries/reviseItinerary/deleteItineraryCard",
+          "fingerprint": "c61ac79644d3b678",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "backend/src/api/routes/itineraries.py",
+          "symbol": "list_itineraries/delete_card",
+          "fingerprint": "bc8abfdbcab5d878",
+          "checked_at": "2026-09-13"
+        }
+      ],
+      "implementation_status": "源码已核对"
+    },
+    {
+      "id": "feat-report",
+      "name": "网页行程报告",
+      "trigger": "打开 /itineraries/:id 或工作台「查看行程」。",
+      "input": "路径参数 itinerary id。",
+      "output": "按天卡片、预算（含 over_cap）、行前清单、日期芯片滚动、卡间交通、微详情；地图模式用高德 JS，未配置 Key 显示「地图未配置」。不是 PDF。",
+      "flow": [
+        {
+          "actor": "useItinerary",
+          "action": "GET 行程，再 GET 关联对话",
+          "data": "ItineraryPublic + ConversationPublic",
+          "branch": "对话拉失败仍显示行程"
+        },
+        {
+          "actor": "页面",
+          "action": "滚动同步 activeDay；地图模式当天有坐标的点打标",
+          "data": "days/budget/checklist/map_center",
+          "branch": "无 JS Key 不加载高德脚本"
+        }
+      ],
+      "api_ids": [
+        "api-007",
+        "api-003"
+      ],
+      "algorithm": {
+        "subject": "卡间交通补腿",
+        "steps": [
+          "有相邻卡片坐标时算 haversine 距离。",
+          "distance < walk_threshold_m 且未 prefer_transit → 步行，否则公交。",
+          "无 amap_web_key 或高德失败：估算，步行 80 m/min、公交 250 m/min，source=estimate。",
+          "有 Key：RouteWalkingPlugin 或 RouteTransitPlugin，成功则 source=amap。"
+        ],
+        "branches": [
+          "prefer_transit=true（芯片「少走路/公交」）强制不走步行分支。",
+          "公交缺 citycode：估算。",
+          "删卡/修订只 recalc 受影响天，不重跑三专员。"
+        ],
+        "parameters": [
+          {
+            "key": "walk_threshold_m",
+            "value": "1200",
+            "value_kind": "source_default",
+            "location": "settings.py / .env.example；revision.default_resolve_leg",
+            "impact": "小于 1200 米优先步行（未强制公交时）"
+          },
+          {
+            "key": "WALK_SPEED_M_PER_MIN",
+            "value": "80",
+            "value_kind": "source_default",
+            "location": "revision.py",
+            "impact": "估算步行分钟"
+          },
+          {
+            "key": "TRANSIT_SPEED_M_PER_MIN",
+            "value": "250",
+            "value_kind": "source_default",
+            "location": "revision.py",
+            "impact": "估算公交分钟"
+          },
+          {
+            "key": "amap_timeout_seconds",
+            "value": "10",
+            "value_kind": "source_default",
+            "location": "settings.py / .env.example",
+            "impact": "高德单次 HTTP 超时"
+          }
+        ],
+        "selection": "只比较直线距离与阈值，不估爬升或实时路况。",
+        "failures": "高德失败改估算，不中断整份行程。",
+        "sources": [
+          {
+            "path": "backend/src/services/revision.py",
+            "symbol": "known_revision_operations/apply_operations",
+            "fingerprint": "9e991297a47f1bf7",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/src/config/settings.py",
+            "symbol": "AppSettings",
+            "fingerprint": "6b572f9d00cb85d1",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/src/plugins/route_walking.py",
+            "symbol": "RouteWalkingPlugin",
+            "fingerprint": "9abb240d7ce2f569",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/src/plugins/route_transit.py",
+            "symbol": "RouteTransitPlugin",
+            "fingerprint": "801c531921ff71ea",
+            "checked_at": "2026-09-13"
+          }
+        ],
+        "implementation_status": "源码已核对"
+      },
+      "sources": [
+        {
+          "path": "frontend/src/pages/ItineraryDetailPage.tsx",
+          "symbol": "ItineraryDetailPage",
+          "fingerprint": "f994e1c548375a40",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "frontend/src/hooks/useItinerary.ts",
+          "symbol": "useItinerary/useTripList",
+          "fingerprint": "9bc84585fffaa6ca",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "frontend/src/services/itineraryService.ts",
+          "symbol": "listItineraries/reviseItinerary/deleteItineraryCard",
+          "fingerprint": "c61ac79644d3b678",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "backend/src/api/routes/itineraries.py",
+          "symbol": "list_itineraries/delete_card",
+          "fingerprint": "bc8abfdbcab5d878",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "backend/src/services/revision.py",
+          "symbol": "known_revision_operations/apply_operations",
+          "fingerprint": "9e991297a47f1bf7",
+          "checked_at": "2026-09-13"
+        }
+      ],
+      "implementation_status": "源码已核对"
+    },
+    {
+      "id": "feat-item-edit",
+      "name": "逐项改（删卡）",
+      "trigger": "行程卡片删除。不经过对话、不重跑专员。",
+      "input": "itineraryId + cardId。",
+      "output": "更新后的同一份 ItineraryPublic；受影响天重算 legs。",
+      "flow": [
+        {
+          "actor": "ItineraryCard",
+          "action": "onDelete → deleteItineraryCard",
+          "data": "DELETE /itineraries/:id/cards/:cardId",
+          "branch": "Mock 走本地删卡"
+        },
+        {
+          "actor": "ItineraryService.delete_card",
+          "action": "apply_remove_card + recalc_days + 有金额才重算预算",
+          "data": "ItineraryPublic",
+          "branch": "找不到卡 → 找不到这张卡片"
+        },
+        {
+          "actor": "前端",
+          "action": "只 setItinerary，不调规划启动",
+          "data": "planning 仅回读核对",
+          "branch": "与侧栏修订分开"
+        }
+      ],
+      "api_ids": [
+        "api-009"
+      ],
+      "sources": [
+        {
+          "path": "frontend/src/pages/ItineraryDetailPage.tsx",
+          "symbol": "ItineraryDetailPage",
+          "fingerprint": "f994e1c548375a40",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "frontend/src/hooks/useItinerary.ts",
+          "symbol": "useItinerary/useTripList",
+          "fingerprint": "9bc84585fffaa6ca",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "frontend/src/services/itineraryService.ts",
+          "symbol": "listItineraries/reviseItinerary/deleteItineraryCard",
+          "fingerprint": "c61ac79644d3b678",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "backend/src/api/routes/itineraries.py",
+          "symbol": "list_itineraries/delete_card",
+          "fingerprint": "bc8abfdbcab5d878",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "backend/src/services/revision.py",
+          "symbol": "known_revision_operations/apply_operations",
+          "fingerprint": "9e991297a47f1bf7",
+          "checked_at": "2026-09-13"
+        }
+      ],
+      "implementation_status": "源码已核对"
+    },
+    {
+      "id": "feat-revise",
+      "name": "对话修订与快捷芯片",
+      "trigger": "详情侧栏发送，或点击最多 4 条 quick_suggestions。与删卡接口分开。",
+      "input": "自然语言或芯片原文。",
+      "output": "同一 itinerary_id 更新；Coco 固定回复或模型回复。换目的地/大改天数请去新建计划。",
+      "flow": [
+        {
+          "actor": "页面 pushTurn",
+          "action": "真实模式 sendRevision = sendMessage + getItinerary",
+          "data": "content",
+          "branch": "Mock 只改侧栏文案"
+        },
+        {
+          "actor": "ManagerService._revise",
+          "action": "先 known_revision_operations，再修订模型 JSON",
+          "data": "operations",
+          "branch": "is_major_replan 则行程不动"
+        },
+        {
+          "actor": "ItineraryService.apply_revision",
+          "action": "apply_operations 后只 recalc 受影响天",
+          "data": "changed bool",
+          "branch": "未改到天则 UNMAPPED_REPLY"
+        }
+      ],
+      "api_ids": [
+        "api-004",
+        "api-007"
+      ],
+      "algorithm": {
+        "subject": "写死快捷芯片映射到修订 operations",
+        "steps": [
+          "规划成功时 quick_suggestions 写死三条文案：第三天不要排那么满；白天少走路，多坐公交；换一家更安静的推荐住宿。",
+          "详情侧栏点击芯片或用户发送相同句式 → POST /messages，不走 DELETE 卡片。",
+          "known_revision_operations 正则匹配后直接 apply_revision，不调修订模型。",
+          "未匹配再走经理 JSON（action=revise + operations）；换目的地或天数差≥3 → suggest_new_plan，行程不动。"
+        ],
+        "branches": [
+          "第三天不要排那么满 → {op:set_day_pace, day_index:3, max_major_points:1}，只留 1 个非住宿主点+住宿。",
+          "少走路.*公交|公交.*少走路 → {op:prefer_transit}，受影响天重算腿。",
+          "更安静的推荐住宿|换一家更安静 → {op:replace_lodging}，改第一家住宿标题/介绍，没有则在最后一天补一张。",
+          "Mock 详情页点芯片只改侧栏文案，不打真实修订接口。"
+        ],
+        "parameters": [
+          {
+            "key": "LOOSEN_DAY3_RE",
+            "value": "第三天不要排那么满",
+            "value_kind": "source_default",
+            "location": "revision.known_revision_operations",
+            "impact": "芯片原文精确匹配"
+          },
+          {
+            "key": "PREFER_TRANSIT_RE",
+            "value": "少走路.*公交|公交.*少走路",
+            "value_kind": "source_default",
+            "location": "revision.py",
+            "impact": "第二条芯片命中 prefer_transit"
+          },
+          {
+            "key": "QUIET_LODGING_RE",
+            "value": "更安静的推荐住宿|换一家更安静",
+            "value_kind": "source_default",
+            "location": "revision.py",
+            "impact": "第三条芯片命中 replace_lodging"
+          },
+          {
+            "key": "天数大改阈值",
+            "value": "3",
+            "value_kind": "source_default",
+            "location": "revision.is_major_replan",
+            "impact": "改天数绝对值≥3 视为大改"
+          }
+        ],
+        "selection": "先正则已知操作，再模型 operations；与 DELETE 卡片分开。",
+        "failures": "操作未改到任何天：UNMAPPED_REPLY。大改：NEW_PLAN_REPLY。",
+        "sources": [
+          {
+            "path": "backend/src/services/revision.py",
+            "symbol": "known_revision_operations/apply_operations",
+            "fingerprint": "9e991297a47f1bf7",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/src/services/planning.py",
+            "symbol": "execute_planning/_PlanningSession.run_loop",
+            "fingerprint": "c5cda53035ab9237",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/src/services/manager.py",
+            "symbol": "finalize_intake/send_message/_revise",
+            "fingerprint": "8640db39eeccb7bf",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "frontend/src/pages/ItineraryDetailPage.tsx",
+            "symbol": "ItineraryDetailPage",
+            "fingerprint": "f994e1c548375a40",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "frontend/src/services/itineraryService.ts",
+            "symbol": "listItineraries/reviseItinerary/deleteItineraryCard",
+            "fingerprint": "c61ac79644d3b678",
+            "checked_at": "2026-09-13"
+          }
+        ],
+        "implementation_status": "源码已核对"
+      },
+      "sources": [
+        {
+          "path": "frontend/src/pages/ItineraryDetailPage.tsx",
+          "symbol": "ItineraryDetailPage",
+          "fingerprint": "f994e1c548375a40",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "frontend/src/hooks/useItinerary.ts",
+          "symbol": "useItinerary/useTripList",
+          "fingerprint": "9bc84585fffaa6ca",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "frontend/src/services/itineraryService.ts",
+          "symbol": "listItineraries/reviseItinerary/deleteItineraryCard",
+          "fingerprint": "c61ac79644d3b678",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "backend/src/services/manager.py",
+          "symbol": "finalize_intake/send_message/_revise",
+          "fingerprint": "8640db39eeccb7bf",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "backend/src/services/revision.py",
+          "symbol": "known_revision_operations/apply_operations",
+          "fingerprint": "9e991297a47f1bf7",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "backend/src/services/planning.py",
+          "symbol": "execute_planning/_PlanningSession.run_loop",
+          "fingerprint": "c5cda53035ab9237",
+          "checked_at": "2026-09-13"
+        }
+      ],
+      "implementation_status": "源码已核对"
+    }
+  ],
+  "apis": [
+    {
+      "id": "api-001",
+      "name": "新建对话",
+      "method": "POST",
+      "url": "/api/conversations",
+      "request": [
+        {
+          "name": "origin_city",
+          "in": "body",
+          "type": "string|null"
+        },
+        {
+          "name": "region",
+          "in": "body",
+          "type": "domestic|outbound|null"
+        },
+        {
+          "name": "destination_text / destination_city",
+          "in": "body",
+          "type": "string|null"
+        },
+        {
+          "name": "duration_days",
+          "in": "body",
+          "type": "int 1–14 | null"
+        },
+        {
+          "name": "date_start / date_end / date_month",
+          "in": "body",
+          "type": "string|null"
+        },
+        {
+          "name": "companion_type",
+          "in": "body",
+          "type": "solo|couple|family|friends|parent_child|unknown|null"
+        },
+        {
+          "name": "adults / children",
+          "in": "body",
+          "type": "int>=0 | null"
+        },
+        {
+          "name": "children_age_bands",
+          "in": "body",
+          "type": "string[]|null"
+        },
+        {
+          "name": "budget_amount_cny",
+          "in": "body",
+          "type": "number>=0 | null"
+        },
+        {
+          "name": "budget_tier",
+          "in": "body",
+          "type": "economy|comfort|premium|中文别名"
+        },
+        {
+          "name": "pace",
+          "in": "body",
+          "type": "relaxed|moderate|packed|中文别名"
+        },
+        {
+          "name": "wish_text",
+          "in": "body",
+          "type": "string|null"
+        },
+        {
+          "name": "空 body",
+          "in": "body",
+          "type": "视为 ConversationCreate()"
+        }
+      ],
+      "response": "201 JSON 信封 data=ConversationPublic：id,title,intake,map_hint,planning,messages,created_at,updated_at。信封字段 success/data/error/error_code/message/timestamp/request_id/metadata。",
+      "algorithm": null,
+      "module_ids": [
+        "mod-coco"
+      ],
+      "sources": [
+        {
+          "path": "backend/src/api/routes/conversations.py",
+          "symbol": "create_conversation/send_message",
+          "fingerprint": "db6311d282d6bd54",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "backend/src/services/manager.py",
+          "symbol": "finalize_intake/send_message/_revise",
+          "fingerprint": "8640db39eeccb7bf",
+          "checked_at": "2026-09-13"
+        }
+      ],
+      "implementation_status": "源码已核对"
+    },
+    {
+      "id": "api-003",
+      "name": "对话详情",
+      "method": "GET",
+      "url": "/api/conversations/{conversation_id}",
+      "request": [
+        {
+          "name": "conversation_id",
+          "in": "path",
+          "type": "string"
+        }
+      ],
+      "response": "200 data=ConversationPublic。404 NotFoundError。planning 含 status/specialists/activity_log/error_message/itinerary_id。",
+      "algorithm": null,
+      "module_ids": [
+        "mod-coco"
+      ],
+      "sources": [
+        {
+          "path": "backend/src/api/routes/conversations.py",
+          "symbol": "create_conversation/send_message",
+          "fingerprint": "db6311d282d6bd54",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "backend/src/services/manager.py",
+          "symbol": "finalize_intake/send_message/_revise",
+          "fingerprint": "8640db39eeccb7bf",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "frontend/src/services/conversationService.ts",
+          "symbol": "createConversation/sendMessage",
+          "fingerprint": "ed63cc57b14507c1",
+          "checked_at": "2026-09-13"
+        }
+      ],
+      "implementation_status": "源码已核对"
+    },
+    {
+      "id": "api-004",
+      "name": "发送消息（问诊或修订）",
+      "method": "POST",
+      "url": "/api/conversations/{conversation_id}/messages",
+      "request": [
+        {
+          "name": "conversation_id",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "content",
+          "in": "body",
+          "type": "string 1–2000 非空白"
+        }
+      ],
+      "response": "200 data=MessageTurnPublic：user_message, assistant_message, intake, planning。问诊就绪时 planning.status 常为 running。修订成功仍为原 itinerary。",
+      "algorithm": {
+        "subject": "问诊槽合并、硬默认与 ready 判定",
+        "steps": [
+          "用户消息先 extract_from_text 抽城市/天数/预算/节奏/同行，再与已有槽 merge_intake；模型 JSON 的 intake_patch 再合并，空白字段不覆盖。",
+          "finalize_intake：couple 且 adults 空则 adults=2；children 空则 0。",
+          "_apply_hard_defaults：海边愿望词且无城市时 destination_city=青岛；亲子缺年龄段时 children_age_bands=['学龄儿童']；region 由城市名单/出境词推断。",
+          "compute_missing_fields 得到 missing_fields；ready = (missing_fields 为空)。",
+          "模型输出 action 归一化为 ask/ready/stop/revise/suggest_new_plan。若槽已 ready，强制 action=ready；模型自称 ready 但槽未齐：followup 未满则改 ask，已满则 stop。",
+          "action=ask 时 followup_rounds_used +1；used>=intake_max_followups 且未 ready → stop，不启动规划。",
+          "action=ready 才调用 start_planning_stub 建规划任务。回复若仍在追问城市/出境则改成就绪话术。"
+        ],
+        "branches": [
+          "planning.status==running：不调模型，回复「专员还在做」。",
+          "已有 ready 行程且消息不是继续提示：走修订，不再问诊。",
+          "缺 DeepSeek Key：MissingModelKeyError；模型不可用：ManagerUnavailableError。",
+          "出境只根据 OUTBOUND_PLACES/出境词推断 region，没有护照签证必验步骤。"
+        ],
+        "parameters": [
+          {
+            "key": "intake_max_followups",
+            "value": "2",
+            "value_kind": "source_default",
+            "location": "backend/src/config/settings.py AppSettings；backend/.env.example",
+            "impact": "超过 2 轮仍缺槽则 stop，不出假装完整方案"
+          },
+          {
+            "key": "manager_history_limit",
+            "value": "20",
+            "value_kind": "source_default",
+            "location": "settings.py / .env.example",
+            "impact": "问诊只带最近 20 条非 system 消息"
+          },
+          {
+            "key": "manager_thinking_enabled",
+            "value": "false",
+            "value_kind": "source_default",
+            "location": "settings.py / .env.example；llm_client.chat_completion",
+            "impact": "Coco 请求 thinking.type=disabled（D-007 A）"
+          },
+          {
+            "key": "DEFAULT_SEA_CITY",
+            "value": "青岛",
+            "value_kind": "source_default",
+            "location": "manager.py",
+            "impact": "「想看海」且无城市时补青岛"
+          },
+          {
+            "key": "DEFAULT_CHILD_AGE_BAND",
+            "value": "学龄儿童",
+            "value_kind": "source_default",
+            "location": "manager.py",
+            "impact": "亲子缺年龄时补默认段"
+          },
+          {
+            "key": "duration_days",
+            "value": "1–14",
+            "value_kind": "source_default",
+            "location": "ConversationCreate Field ge=1 le=14",
+            "impact": "新建对话天数越界校验失败"
+          }
+        ],
+        "selection": "ready 只看 missing_fields 是否为空，不看模型有没有说「可以出方案」。",
+        "failures": "空消息 ValidationAppError；模型 JSON 修一次仍失败则 ManagerUnavailableError；stop 时回「还缺…这轮先不出假装完整的旅行计划」。未找到出境必验或 PDF 导出。",
+        "sources": [
+          {
+            "path": "backend/src/services/manager.py",
+            "symbol": "finalize_intake/send_message/_revise",
+            "fingerprint": "8640db39eeccb7bf",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/src/services/llm_client.py",
+            "symbol": "chat_json",
+            "fingerprint": "ddca723680b1f237",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/src/config/settings.py",
+            "symbol": "AppSettings",
+            "fingerprint": "6b572f9d00cb85d1",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/.env.example",
+            "symbol": "字段占位",
+            "fingerprint": "54409c11c5576a5c",
+            "checked_at": "2026-09-13"
+          }
+        ],
+        "implementation_status": "源码已核对"
+      },
+      "module_ids": [
+        "mod-coco",
+        "mod-revision"
+      ],
+      "sources": [
+        {
+          "path": "backend/src/api/routes/conversations.py",
+          "symbol": "create_conversation/send_message",
+          "fingerprint": "db6311d282d6bd54",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "backend/src/services/manager.py",
+          "symbol": "finalize_intake/send_message/_revise",
+          "fingerprint": "8640db39eeccb7bf",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "frontend/src/services/conversationService.ts",
+          "symbol": "createConversation/sendMessage",
+          "fingerprint": "ed63cc57b14507c1",
+          "checked_at": "2026-09-13"
+        }
+      ],
+      "implementation_status": "源码已核对"
+    },
+    {
+      "id": "api-005",
+      "name": "规划进度 SSE",
+      "method": "GET",
+      "url": "/api/conversations/{conversation_id}/events",
+      "request": [
+        {
+          "name": "conversation_id",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "Accept",
+          "in": "header",
+          "type": "text/event-stream 或 */*"
+        }
+      ],
+      "response": "text/event-stream。事件：planning.updated{status,specialists,itinerary_id}；planning.log{entry:id,kind,specialist,title,clickable,detail,created_at}；itinerary.ready{status,itinerary_id,specialists}；planning.failed{status,failure_reason,coco_message_id,specialists}；heartbeat{ts}。404 会话不存在。",
+      "algorithm": {
+        "subject": "三专员编排与工具观察循环",
+        "steps": [
+          "start_planning_stub 建 PlanningJob，后台 _run_job 用 planning_timeout_seconds 包一层 wait_for。",
+          "先 run_research（千问、关思考、最多 8 轮、工具 geocode_city/search_poi/get_poi_detail/get_weather）。研究把目的地改写成另一座已知城市则当 destination_not_found。",
+          "研究成功后并行 run_budget（千问、无工具、1 轮）与 run_itinerary（DeepSeek、开思考 reasoning_effort=high、最多 12 轮、工具 search_poi/get_poi_detail/route_walking/route_transit）。",
+          "run_loop：模型可 tool_calls → registry.execute → 观察 JSON 回灌；末两轮提示立刻出 JSON；超轮次 reason_code=iteration_limit。",
+          "工具步与思考步写入 activity_log 并 publish planning.log；日志脱敏去掉 key/polyline，正文最多 4000 字，最多 80 条。",
+          "行程卡片金额与预算总额差超过 20% 时再跑一次预算。成功写 Itinerary 并 SSE itinerary.ready；失败 assemble_coco_failure，不造完整方案。"
+        ],
+        "branches": [
+          "研究失败：整次 failed，预算/行程不启动。",
+          "预算或行程失败：keep_others=True，已成功专员状态保留。",
+          "看门狗超时：按 iteration_limit 失败。",
+          "缺模型/高德 Key：专员返回 model_error / amap_unavailable，不是 Mock 顶替。"
+        ],
+        "parameters": [
+          {
+            "key": "planning_timeout_seconds",
+            "value": "180",
+            "value_kind": "source_default",
+            "location": "settings.py / .env.example；planning._run_job",
+            "impact": "整次规划超时=失败"
+          },
+          {
+            "key": "max_tool_iterations_research",
+            "value": "8",
+            "value_kind": "source_default",
+            "location": "settings.py；research.run_research",
+            "impact": "研究工具循环上限"
+          },
+          {
+            "key": "max_tool_iterations_itinerary",
+            "value": "12",
+            "value_kind": "source_default",
+            "location": "settings.py；itinerary.run_itinerary",
+            "impact": "行程工具循环上限"
+          },
+          {
+            "key": "itinerary_thinking_enabled",
+            "value": "true",
+            "value_kind": "source_default",
+            "location": "settings.py / .env.example",
+            "impact": "仅行程专员开思考；研究/预算硬编码 False"
+          },
+          {
+            "key": "llm_timeout_seconds",
+            "value": "60",
+            "value_kind": "source_default",
+            "location": "settings.py",
+            "impact": "单次模型 HTTP 超时"
+          },
+          {
+            "key": "llm_max_retries",
+            "value": "1",
+            "value_kind": "source_default",
+            "location": "settings.py",
+            "impact": "超时/429/5xx 再试 1 次"
+          },
+          {
+            "key": "BUDGET_RECOMPUTE_RATIO",
+            "value": "0.2",
+            "value_kind": "source_default",
+            "location": "planning.py",
+            "impact": "卡片金额相对预算偏差超过 20% 重算预算"
+          },
+          {
+            "key": "HEARTBEAT_SECONDS",
+            "value": "15",
+            "value_kind": "source_default",
+            "location": "events.py",
+            "impact": "SSE 空闲心跳；同时前端 2s 轮询对话详情兜底"
+          }
+        ],
+        "selection": "Coco 不选工具。研究/行程由模型在允许的 Plugin 名内 tool_choice=auto；预算无 tools。",
+        "failures": "reason_code：destination_not_found / poi_empty / amap_unavailable / iteration_limit / model_error。观察与日志不含密钥。未实现 PDF 导出。",
+        "sources": [
+          {
+            "path": "backend/src/services/planning.py",
+            "symbol": "execute_planning/_PlanningSession.run_loop",
+            "fingerprint": "c5cda53035ab9237",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/src/services/specialists/research.py",
+            "symbol": "run_research",
+            "fingerprint": "7c202f890a158c99",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/src/services/specialists/budget.py",
+            "symbol": "run_budget",
+            "fingerprint": "0445a71dbef70b88",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/src/services/specialists/itinerary.py",
+            "symbol": "run_itinerary",
+            "fingerprint": "5bf1b20fa355f87c",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/src/plugins/amap.py",
+            "symbol": "create_amap_registry",
+            "fingerprint": "40948f4b4f3fc5e4",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/src/services/activity_log.py",
+            "symbol": "build_entry",
+            "fingerprint": "28145133c2a9d1a4",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/src/api/routes/events.py",
+            "symbol": "conversation_events",
+            "fingerprint": "c19ea95f236b80d4",
+            "checked_at": "2026-09-13"
+          }
+        ],
+        "implementation_status": "源码已核对"
+      },
+      "module_ids": [
+        "mod-research",
+        "mod-budget",
+        "mod-itinerary"
+      ],
+      "sources": [
+        {
+          "path": "backend/src/api/routes/events.py",
+          "symbol": "conversation_events",
+          "fingerprint": "c19ea95f236b80d4",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "backend/src/services/planning.py",
+          "symbol": "execute_planning/_PlanningSession.run_loop",
+          "fingerprint": "c5cda53035ab9237",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "frontend/src/hooks/usePlanningEvents.ts",
+          "symbol": "usePlanningEvents",
+          "fingerprint": "9156b30ddb889f6e",
+          "checked_at": "2026-09-13"
+        }
+      ],
+      "implementation_status": "源码已核对"
+    },
+    {
+      "id": "api-006",
+      "name": "行程列表",
+      "method": "GET",
+      "url": "/api/itineraries",
+      "request": [
+        {
+          "name": "page",
+          "in": "query",
+          "type": "int>=1 默认 1"
+        },
+        {
+          "name": "page_size",
+          "in": "query",
+          "type": "int 1–50 默认 20"
+        }
+      ],
+      "response": "分页信封 data=ItineraryListItem[]：id,title,destination_city,duration_days,pace,updated_at,conversation_id。",
+      "algorithm": null,
+      "module_ids": [
+        "mod-revision"
+      ],
+      "sources": [
+        {
+          "path": "backend/src/api/routes/itineraries.py",
+          "symbol": "list_itineraries/delete_card",
+          "fingerprint": "bc8abfdbcab5d878",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "frontend/src/services/itineraryService.ts",
+          "symbol": "listItineraries/reviseItinerary/deleteItineraryCard",
+          "fingerprint": "c61ac79644d3b678",
+          "checked_at": "2026-09-13"
+        }
+      ],
+      "implementation_status": "源码已核对"
+    },
+    {
+      "id": "api-007",
+      "name": "行程详情",
+      "method": "GET",
+      "url": "/api/itineraries/{itinerary_id}",
+      "request": [
+        {
+          "name": "itinerary_id",
+          "in": "path",
+          "type": "string"
+        }
+      ],
+      "response": "200 data=ItineraryPublic：days[].cards/legs、budget.over_cap、checklist、map_center、quick_suggestions≤4、status=ready。404 找不到这份行程。",
+      "algorithm": {
+        "subject": "卡间交通补腿",
+        "steps": [
+          "有相邻卡片坐标时算 haversine 距离。",
+          "distance < walk_threshold_m 且未 prefer_transit → 步行，否则公交。",
+          "无 amap_web_key 或高德失败：估算，步行 80 m/min、公交 250 m/min，source=estimate。",
+          "有 Key：RouteWalkingPlugin 或 RouteTransitPlugin，成功则 source=amap。"
+        ],
+        "branches": [
+          "prefer_transit=true（芯片「少走路/公交」）强制不走步行分支。",
+          "公交缺 citycode：估算。",
+          "删卡/修订只 recalc 受影响天，不重跑三专员。"
+        ],
+        "parameters": [
+          {
+            "key": "walk_threshold_m",
+            "value": "1200",
+            "value_kind": "source_default",
+            "location": "settings.py / .env.example；revision.default_resolve_leg",
+            "impact": "小于 1200 米优先步行（未强制公交时）"
+          },
+          {
+            "key": "WALK_SPEED_M_PER_MIN",
+            "value": "80",
+            "value_kind": "source_default",
+            "location": "revision.py",
+            "impact": "估算步行分钟"
+          },
+          {
+            "key": "TRANSIT_SPEED_M_PER_MIN",
+            "value": "250",
+            "value_kind": "source_default",
+            "location": "revision.py",
+            "impact": "估算公交分钟"
+          },
+          {
+            "key": "amap_timeout_seconds",
+            "value": "10",
+            "value_kind": "source_default",
+            "location": "settings.py / .env.example",
+            "impact": "高德单次 HTTP 超时"
+          }
+        ],
+        "selection": "只比较直线距离与阈值，不估爬升或实时路况。",
+        "failures": "高德失败改估算，不中断整份行程。",
+        "sources": [
+          {
+            "path": "backend/src/services/revision.py",
+            "symbol": "known_revision_operations/apply_operations",
+            "fingerprint": "9e991297a47f1bf7",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/src/config/settings.py",
+            "symbol": "AppSettings",
+            "fingerprint": "6b572f9d00cb85d1",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/src/plugins/route_walking.py",
+            "symbol": "RouteWalkingPlugin",
+            "fingerprint": "9abb240d7ce2f569",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/src/plugins/route_transit.py",
+            "symbol": "RouteTransitPlugin",
+            "fingerprint": "801c531921ff71ea",
+            "checked_at": "2026-09-13"
+          }
+        ],
+        "implementation_status": "源码已核对"
+      },
+      "module_ids": [
+        "mod-revision"
+      ],
+      "sources": [
+        {
+          "path": "backend/src/api/routes/itineraries.py",
+          "symbol": "list_itineraries/delete_card",
+          "fingerprint": "bc8abfdbcab5d878",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "backend/src/services/revision.py",
+          "symbol": "known_revision_operations/apply_operations",
+          "fingerprint": "9e991297a47f1bf7",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "frontend/src/services/itineraryService.ts",
+          "symbol": "listItineraries/reviseItinerary/deleteItineraryCard",
+          "fingerprint": "c61ac79644d3b678",
+          "checked_at": "2026-09-13"
+        }
+      ],
+      "implementation_status": "源码已核对"
+    },
+    {
+      "id": "api-008",
+      "name": "补丁改卡片",
+      "method": "PATCH",
+      "url": "/api/itineraries/{itinerary_id}/cards/{card_id}",
+      "request": [
+        {
+          "name": "title",
+          "in": "body",
+          "type": "string 非空可选"
+        },
+        {
+          "name": "start_time",
+          "in": "body",
+          "type": "HH:MM 可选"
+        },
+        {
+          "name": "day_index",
+          "in": "body",
+          "type": "int>=1 可选"
+        },
+        {
+          "name": "sort_order",
+          "in": "body",
+          "type": "int>=0 可选"
+        }
+      ],
+      "response": "200 ItineraryPublic。至少改一项。前端详情页当前未调用此接口，只接了删除。",
+      "algorithm": null,
+      "module_ids": [
+        "mod-revision"
+      ],
+      "sources": [
+        {
+          "path": "backend/src/api/routes/itineraries.py",
+          "symbol": "list_itineraries/delete_card",
+          "fingerprint": "bc8abfdbcab5d878",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "backend/src/services/revision.py",
+          "symbol": "known_revision_operations/apply_operations",
+          "fingerprint": "9e991297a47f1bf7",
+          "checked_at": "2026-09-13"
+        }
+      ],
+      "implementation_status": "源码已核对",
+      "design_vs_source": "后端已实现；行程详情 UI 未挂 PATCH。"
+    },
+    {
+      "id": "api-009",
+      "name": "删除卡片",
+      "method": "DELETE",
+      "url": "/api/itineraries/{itinerary_id}/cards/{card_id}",
+      "request": [
+        {
+          "name": "itinerary_id",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "card_id",
+          "in": "path",
+          "type": "string"
+        }
+      ],
+      "response": "200 ItineraryPublic。404 找不到行程或卡片。不创建新规划任务。",
+      "algorithm": {
+        "subject": "卡间交通补腿",
+        "steps": [
+          "有相邻卡片坐标时算 haversine 距离。",
+          "distance < walk_threshold_m 且未 prefer_transit → 步行，否则公交。",
+          "无 amap_web_key 或高德失败：估算，步行 80 m/min、公交 250 m/min，source=estimate。",
+          "有 Key：RouteWalkingPlugin 或 RouteTransitPlugin，成功则 source=amap。"
+        ],
+        "branches": [
+          "prefer_transit=true（芯片「少走路/公交」）强制不走步行分支。",
+          "公交缺 citycode：估算。",
+          "删卡/修订只 recalc 受影响天，不重跑三专员。"
+        ],
+        "parameters": [
+          {
+            "key": "walk_threshold_m",
+            "value": "1200",
+            "value_kind": "source_default",
+            "location": "settings.py / .env.example；revision.default_resolve_leg",
+            "impact": "小于 1200 米优先步行（未强制公交时）"
+          },
+          {
+            "key": "WALK_SPEED_M_PER_MIN",
+            "value": "80",
+            "value_kind": "source_default",
+            "location": "revision.py",
+            "impact": "估算步行分钟"
+          },
+          {
+            "key": "TRANSIT_SPEED_M_PER_MIN",
+            "value": "250",
+            "value_kind": "source_default",
+            "location": "revision.py",
+            "impact": "估算公交分钟"
+          },
+          {
+            "key": "amap_timeout_seconds",
+            "value": "10",
+            "value_kind": "source_default",
+            "location": "settings.py / .env.example",
+            "impact": "高德单次 HTTP 超时"
+          }
+        ],
+        "selection": "只比较直线距离与阈值，不估爬升或实时路况。",
+        "failures": "高德失败改估算，不中断整份行程。",
+        "sources": [
+          {
+            "path": "backend/src/services/revision.py",
+            "symbol": "known_revision_operations/apply_operations",
+            "fingerprint": "9e991297a47f1bf7",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/src/config/settings.py",
+            "symbol": "AppSettings",
+            "fingerprint": "6b572f9d00cb85d1",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/src/plugins/route_walking.py",
+            "symbol": "RouteWalkingPlugin",
+            "fingerprint": "9abb240d7ce2f569",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/src/plugins/route_transit.py",
+            "symbol": "RouteTransitPlugin",
+            "fingerprint": "801c531921ff71ea",
+            "checked_at": "2026-09-13"
+          }
+        ],
+        "implementation_status": "源码已核对"
+      },
+      "module_ids": [
+        "mod-revision"
+      ],
+      "sources": [
+        {
+          "path": "backend/src/api/routes/itineraries.py",
+          "symbol": "list_itineraries/delete_card",
+          "fingerprint": "bc8abfdbcab5d878",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "backend/src/services/revision.py",
+          "symbol": "known_revision_operations/apply_operations",
+          "fingerprint": "9e991297a47f1bf7",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "frontend/src/services/itineraryService.ts",
+          "symbol": "listItineraries/reviseItinerary/deleteItineraryCard",
+          "fingerprint": "c61ac79644d3b678",
+          "checked_at": "2026-09-13"
+        }
+      ],
+      "implementation_status": "源码已核对"
+    },
+    {
+      "id": "api-010",
+      "name": "灵感列表",
+      "method": "GET",
+      "url": "/api/inspirations",
+      "request": [],
+      "response": "200 data=[{id,city,title,description,image_url}]，来自 backend/src/data/inspirations.json。",
+      "algorithm": null,
+      "module_ids": [],
+      "sources": [
+        {
+          "path": "backend/src/api/routes/inspirations.py",
+          "symbol": "list_inspirations",
+          "fingerprint": "c297b3fa09f8f494",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "frontend/src/services/inspirationService.ts",
+          "symbol": "listInspirations",
+          "fingerprint": "cdce92750ca80e7b",
+          "checked_at": "2026-09-13"
+        }
+      ],
+      "implementation_status": "源码已核对"
+    }
+  ],
+  "modules": [
+    {
+      "id": "mod-coco",
+      "name": "规划经理 Coco",
+      "kind": "固定 JSON 决策流水线",
+      "responsibility": "问诊槽合并、决定 ask/ready/stop，或在已有行程上输出修订 operations。不调用高德 Plugin，不能自由选工具。",
+      "input": "intake json + 最近 manager_history_limit 条消息；修订时加行程摘要。",
+      "output": "{action, reply, intake_patch, recommended_destination, operations}",
+      "algorithm": {
+        "subject": "经理模型调用",
+        "steps": [
+          "chat_json → DeepSeek Chat Completions，response_format=json_object。",
+          "thinking 取 manager_thinking_enabled，默认 false。",
+          "解析失败再修一次「只输出 json」，仍失败 ManagerUnavailableError。",
+          "无 API Key：MissingModelKeyError。"
+        ],
+        "branches": [
+          "不是 Agent 工具循环，没有 tools 参数"
+        ],
+        "parameters": [
+          {
+            "key": "deepseek_model",
+            "value": "deepseek-flash",
+            "value_kind": "source_default",
+            "location": "settings.py / .env.example",
+            "impact": "经理与行程专员模型名"
+          },
+          {
+            "key": "deepseek_base_url",
+            "value": "https://api.deepseek.com",
+            "value_kind": "source_default",
+            "location": "settings.py / .env.example",
+            "impact": "代码拼 /chat/completions"
+          },
+          {
+            "key": "deepseek_api_key",
+            "value": "（空字符串占位）",
+            "value_kind": "source_default",
+            "location": "settings.py / .env.example 字段名",
+            "impact": "只列字段名，不写真实值"
+          }
+        ],
+        "selection": "输出必须落在固定 action 集合。",
+        "failures": "无 Key / 超时 / 非 JSON。",
+        "sources": [
+          {
+            "path": "backend/src/services/llm_client.py",
+            "symbol": "chat_json",
+            "fingerprint": "ddca723680b1f237",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/src/services/manager.py",
+            "symbol": "finalize_intake/send_message/_revise",
+            "fingerprint": "8640db39eeccb7bf",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/src/config/settings.py",
+            "symbol": "AppSettings",
+            "fingerprint": "6b572f9d00cb85d1",
+            "checked_at": "2026-09-13"
+          }
+        ],
+        "implementation_status": "源码已核对"
+      },
+      "sources": [
+        {
+          "path": "backend/src/services/manager.py",
+          "symbol": "finalize_intake/send_message/_revise",
+          "fingerprint": "8640db39eeccb7bf",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "backend/src/services/llm_client.py",
+          "symbol": "chat_json",
+          "fingerprint": "ddca723680b1f237",
+          "checked_at": "2026-09-13"
+        }
+      ],
+      "implementation_status": "源码已核对"
+    },
+    {
+      "id": "mod-research",
+      "name": "目的地研究专员",
+      "kind": "模型 + Plugin 工具循环",
+      "responsibility": "先工具后 JSON 结论，收集带坐标 POI 与天气。",
+      "input": "intake json + 节奏/同行筛选说明",
+      "output": "{ok, destination_city, weather_summary, pois, warnings} 或失败 reason_code",
+      "agent": {
+        "model": "qwen-plus（settings.qwen_model），provider=qwen",
+        "prompt": "backend/src/prompts/destination_research.md",
+        "tools": [
+          "geocode_city",
+          "search_poi",
+          "get_poi_detail",
+          "get_weather"
+        ],
+        "observation": "PluginResult 脱敏后以 role=tool 回灌",
+        "loop": "最多 max_tool_iterations_research 轮；模型 tool_choice=auto",
+        "stop": "输出 ok JSON，或 geocode destination_not_found 立即返回，或轮次用尽",
+        "limits": "thinking_enabled=False；enable_thinking=False。qwen_api_key 只列字段名。",
+        "result": "研究失败则整次规划失败"
+      },
+      "sources": [
+        {
+          "path": "backend/src/services/specialists/research.py",
+          "symbol": "run_research",
+          "fingerprint": "7c202f890a158c99",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "backend/src/services/planning.py",
+          "symbol": "execute_planning/_PlanningSession.run_loop",
+          "fingerprint": "c5cda53035ab9237",
+          "checked_at": "2026-09-13"
+        }
+      ],
+      "implementation_status": "源码已核对"
+    },
+    {
+      "id": "mod-budget",
+      "name": "预算专家",
+      "kind": "模型 JSON（无工具）",
+      "responsibility": "按问诊与研究结果估分类花费，标 over_cap。",
+      "input": "intake + research 摘要 + 可选 itinerary_draft",
+      "output": "{ok, currency, total_amount, categories, includes_note, over_cap, cap_amount}",
+      "agent": {
+        "model": "qwen-plus",
+        "prompt": "backend/src/prompts/budget_expert.md",
+        "tools": [],
+        "observation": "无工具观察",
+        "loop": "max_iter=1",
+        "stop": "只输出 json",
+        "limits": "thinking_enabled=False；无 Plugin",
+        "result": "cap 来自 intake.budget_amount_cny；总额超 cap 则 over_cap=true"
+      },
+      "sources": [
+        {
+          "path": "backend/src/services/specialists/budget.py",
+          "symbol": "run_budget",
+          "fingerprint": "0445a71dbef70b88",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "backend/src/services/planning.py",
+          "symbol": "execute_planning/_PlanningSession.run_loop",
+          "fingerprint": "c5cda53035ab9237",
+          "checked_at": "2026-09-13"
+        }
+      ],
+      "implementation_status": "源码已核对"
+    },
+    {
+      "id": "mod-itinerary",
+      "name": "行程设计专员",
+      "kind": "模型 + Plugin 工具循环",
+      "responsibility": "按天排卡片和交通，再按节奏裁主点。",
+      "input": "intake + research pois/天气",
+      "output": "{ok, days, summary}；轻松 1–2 主点，适中 2–3，紧凑 3–4",
+      "agent": {
+        "model": "deepseek-flash，thinking 开，reasoning_effort=high",
+        "prompt": "backend/src/prompts/itinerary_design.md",
+        "tools": [
+          "search_poi",
+          "get_poi_detail",
+          "route_walking",
+          "route_transit"
+        ],
+        "observation": "工具结果脱敏回灌；思考摘录最多 280 字写入 thought 日志",
+        "loop": "最多 12 轮",
+        "stop": "合法 JSON 或轮次用尽",
+        "limits": "itinerary_thinking_enabled 默认 true；卡片必须有 lng/lat 否则丢弃",
+        "result": "apply_pace_and_companion 后再入库"
+      },
+      "sources": [
+        {
+          "path": "backend/src/services/specialists/itinerary.py",
+          "symbol": "run_itinerary",
+          "fingerprint": "5bf1b20fa355f87c",
+          "checked_at": "2026-09-13"
+        },
+        {
+          "path": "backend/src/services/planning.py",
+          "symbol": "execute_planning/_PlanningSession.run_loop",
+          "fingerprint": "c5cda53035ab9237",
+          "checked_at": "2026-09-13"
+        }
+      ],
+      "implementation_status": "源码已核对"
+    },
+    {
+      "id": "mod-amap",
+      "name": "高德六工具",
+      "kind": "外部服务 Plugin",
+      "responsibility": "国内地理/POI/天气/步行公交。失败 reason=amap_unavailable 或 destination_not_found。",
+      "input": "见各工具参数",
+      "output": "PluginResult.data 脱敏；不含 key 与 polyline",
+      "algorithm": {
+        "subject": "高德 Web 客户端",
+        "steps": [
+          "无 amap_web_key：直接失败 missing_key。",
+          "GET https://restapi.amap.com + path，timeout=amap_timeout_seconds。",
+          "status=1 且 infocode=10000 才算成功。"
+        ],
+        "branches": [
+          "超时/HTTP/非 JSON → amap_unavailable"
+        ],
+        "parameters": [
+          {
+            "key": "amap_web_key",
+            "value": "（空字符串占位）",
+            "value_kind": "source_default",
+            "location": "settings.py / .env.example 字段名",
+            "impact": "只列字段名"
+          },
+          {
+            "key": "amap_timeout_seconds",
+            "value": "10",
+            "value_kind": "source_default",
+            "location": "settings.py / .env.example",
+            "impact": "单次高德超时"
+          }
+        ],
+        "selection": "六工具全部注册，专员按白名单过滤。",
+        "failures": "观察与日志替换真实 Key 为 [redacted]",
+        "sources": [
+          {
+            "path": "backend/src/plugins/amap.py",
+            "symbol": "create_amap_registry",
+            "fingerprint": "40948f4b4f3fc5e4",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/src/plugins/geocode_city.py",
+            "symbol": "GeocodeCityPlugin",
+            "fingerprint": "f55686e8948687b4",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/src/plugins/search_poi.py",
+            "symbol": "SearchPoiPlugin",
+            "fingerprint": "a4d3400b9d3eb0cf",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/src/plugins/get_poi_detail.py",
+            "symbol": "GetPoiDetailPlugin",
+            "fingerprint": "c6d4b2637338f4b8",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/src/plugins/get_weather.py",
+            "symbol": "GetWeatherPlugin",
+            "fingerprint": "73acf6f682858b63",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/src/plugins/route_walking.py",
+            "symbol": "RouteWalkingPlugin",
+            "fingerprint": "9abb240d7ce2f569",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/src/plugins/route_transit.py",
+            "symbol": "RouteTransitPlugin",
+            "fingerprint": "801c531921ff71ea",
+            "checked_at": "2026-09-13"
+          }
+        ],
+        "implementation_status": "源码已核对"
+      },
+      "tools": [
+        {
+          "name": "geocode_city",
+          "input": "address 必填，city 可选",
+          "output": "location/adcode/citycode；空 geocodes → destination_not_found"
+        },
+        {
+          "name": "search_poi",
+          "input": "keywords 或 types，region 可选",
+          "output": "POI 列表，不编造"
+        },
+        {
+          "name": "get_poi_detail",
+          "input": "id=高德 POI ID",
+          "output": "详情，介绍优先 business/tag"
+        },
+        {
+          "name": "get_weather",
+          "input": "city=adcode",
+          "output": "昼夜天气气温"
+        },
+        {
+          "name": "route_walking",
+          "input": "origin/destination 经度,纬度",
+          "output": "距离米、耗时秒"
+        },
+        {
+          "name": "route_transit",
+          "input": "origin/destination/city1/city2",
+          "output": "公交距离耗时票价"
+        }
+      ],
+      "sources": [
+        {
+          "path": "backend/src/plugins/amap.py",
+          "symbol": "create_amap_registry",
+          "fingerprint": "40948f4b4f3fc5e4",
+          "checked_at": "2026-09-13"
+        }
+      ],
+      "implementation_status": "源码已核对"
+    },
+    {
+      "id": "mod-revision",
+      "name": "行程修订与逐项改",
+      "kind": "普通函数",
+      "responsibility": "同一 payload 上 apply operations 或删卡，不启动三专员。",
+      "input": "operations 或 card_id",
+      "output": "ItineraryPublic + changed",
+      "algorithm": {
+        "subject": "写死快捷芯片映射到修订 operations",
+        "steps": [
+          "规划成功时 quick_suggestions 写死三条文案：第三天不要排那么满；白天少走路，多坐公交；换一家更安静的推荐住宿。",
+          "详情侧栏点击芯片或用户发送相同句式 → POST /messages，不走 DELETE 卡片。",
+          "known_revision_operations 正则匹配后直接 apply_revision，不调修订模型。",
+          "未匹配再走经理 JSON（action=revise + operations）；换目的地或天数差≥3 → suggest_new_plan，行程不动。"
+        ],
+        "branches": [
+          "第三天不要排那么满 → {op:set_day_pace, day_index:3, max_major_points:1}，只留 1 个非住宿主点+住宿。",
+          "少走路.*公交|公交.*少走路 → {op:prefer_transit}，受影响天重算腿。",
+          "更安静的推荐住宿|换一家更安静 → {op:replace_lodging}，改第一家住宿标题/介绍，没有则在最后一天补一张。",
+          "Mock 详情页点芯片只改侧栏文案，不打真实修订接口。"
+        ],
+        "parameters": [
+          {
+            "key": "LOOSEN_DAY3_RE",
+            "value": "第三天不要排那么满",
+            "value_kind": "source_default",
+            "location": "revision.known_revision_operations",
+            "impact": "芯片原文精确匹配"
+          },
+          {
+            "key": "PREFER_TRANSIT_RE",
+            "value": "少走路.*公交|公交.*少走路",
+            "value_kind": "source_default",
+            "location": "revision.py",
+            "impact": "第二条芯片命中 prefer_transit"
+          },
+          {
+            "key": "QUIET_LODGING_RE",
+            "value": "更安静的推荐住宿|换一家更安静",
+            "value_kind": "source_default",
+            "location": "revision.py",
+            "impact": "第三条芯片命中 replace_lodging"
+          },
+          {
+            "key": "天数大改阈值",
+            "value": "3",
+            "value_kind": "source_default",
+            "location": "revision.is_major_replan",
+            "impact": "改天数绝对值≥3 视为大改"
+          }
+        ],
+        "selection": "先正则已知操作，再模型 operations；与 DELETE 卡片分开。",
+        "failures": "操作未改到任何天：UNMAPPED_REPLY。大改：NEW_PLAN_REPLY。",
+        "sources": [
+          {
+            "path": "backend/src/services/revision.py",
+            "symbol": "known_revision_operations/apply_operations",
+            "fingerprint": "9e991297a47f1bf7",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/src/services/planning.py",
+            "symbol": "execute_planning/_PlanningSession.run_loop",
+            "fingerprint": "c5cda53035ab9237",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "backend/src/services/manager.py",
+            "symbol": "finalize_intake/send_message/_revise",
+            "fingerprint": "8640db39eeccb7bf",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "frontend/src/pages/ItineraryDetailPage.tsx",
+            "symbol": "ItineraryDetailPage",
+            "fingerprint": "f994e1c548375a40",
+            "checked_at": "2026-09-13"
+          },
+          {
+            "path": "frontend/src/services/itineraryService.ts",
+            "symbol": "listItineraries/reviseItinerary/deleteItineraryCard",
+            "fingerprint": "c61ac79644d3b678",
+            "checked_at": "2026-09-13"
+          }
+        ],
+        "implementation_status": "源码已核对"
+      },
+      "sources": [
+        {
+          "path": "backend/src/services/revision.py",
+          "symbol": "known_revision_operations/apply_operations",
+          "fingerprint": "9e991297a47f1bf7",
+          "checked_at": "2026-09-13"
+        }
+      ],
+      "implementation_status": "源码已核对"
+    }
+  ],
+  "parameters": [
+    {
+      "key": "debug",
+      "value": "true",
+      "value_kind": "source_default",
+      "location": "settings.py / .env.example",
+      "impact": "文档与日志"
+    },
+    {
+      "key": "secret_key",
+      "value": "无默认，必须配置；.env.example 为 change-me 占位",
+      "value_kind": "source_default",
+      "location": "settings.py / .env.example 字段名",
+      "impact": "PyCore 要求；本期无会话签名。不展示真实值"
+    },
+    {
+      "key": "host",
+      "value": "127.0.0.1",
+      "value_kind": "source_default",
+      "location": "settings.py / .env.example",
+      "impact": "后端监听"
+    },
+    {
+      "key": "port",
+      "value": "8099",
+      "value_kind": "source_default",
+      "location": "settings.py / .env.example",
+      "impact": "后端监听"
+    },
+    {
+      "key": "database_path",
+      "value": "data/Travel_Helper.db",
+      "value_kind": "source_default",
+      "location": "settings.py / .env.example",
+      "impact": "相对 backend/ 解析"
+    },
+    {
+      "key": "deepseek_api_key",
+      "value": "空",
+      "value_kind": "source_default",
+      "location": "settings.py / .env.example 字段名",
+      "impact": "EXT-001，不写真实值"
+    },
+    {
+      "key": "deepseek_base_url",
+      "value": "https://api.deepseek.com",
+      "value_kind": "source_default",
+      "location": "settings.py / .env.example",
+      "impact": "拼 /chat/completions"
+    },
+    {
+      "key": "deepseek_model",
+      "value": "deepseek-flash",
+      "value_kind": "source_default",
+      "location": "settings.py / .env.example",
+      "impact": "D-007"
+    },
+    {
+      "key": "qwen_api_key",
+      "value": "空",
+      "value_kind": "source_default",
+      "location": "settings.py / .env.example 字段名",
+      "impact": "EXT-002，不写真实值"
+    },
+    {
+      "key": "qwen_base_url",
+      "value": "settings 默认 https://dashscope.aliyuncs.com/compatible-mode/v1；.env.example 该行留空",
+      "value_kind": "source_default",
+      "location": "settings.py / .env.example",
+      "impact": "空则代码回退同一默认"
+    },
+    {
+      "key": "qwen_model",
+      "value": "qwen-plus",
+      "value_kind": "source_default",
+      "location": "settings.py / .env.example",
+      "impact": "研究与预算"
+    },
+    {
+      "key": "manager_thinking_enabled",
+      "value": "false",
+      "value_kind": "source_default",
+      "location": "settings.py / .env.example",
+      "impact": "D-007：经理关思考"
+    },
+    {
+      "key": "itinerary_thinking_enabled",
+      "value": "true",
+      "value_kind": "source_default",
+      "location": "settings.py / .env.example",
+      "impact": "D-007：行程开思考"
+    },
+    {
+      "key": "llm_timeout_seconds",
+      "value": "60",
+      "value_kind": "source_default",
+      "location": "settings.py / .env.example",
+      "impact": "单次模型 HTTP"
+    },
+    {
+      "key": "llm_max_retries",
+      "value": "1",
+      "value_kind": "source_default",
+      "location": "settings.py / .env.example",
+      "impact": "超时/429"
+    },
+    {
+      "key": "amap_web_key",
+      "value": "空",
+      "value_kind": "source_default",
+      "location": "settings.py / .env.example 字段名",
+      "impact": "EXT-003，不写真实值"
+    },
+    {
+      "key": "amap_timeout_seconds",
+      "value": "10",
+      "value_kind": "source_default",
+      "location": "settings.py / .env.example",
+      "impact": "高德 HTTP"
+    },
+    {
+      "key": "planning_timeout_seconds",
+      "value": "180",
+      "value_kind": "source_default",
+      "location": "settings.py / .env.example",
+      "impact": "整次规划看门狗"
+    },
+    {
+      "key": "max_tool_iterations_research",
+      "value": "8",
+      "value_kind": "source_default",
+      "location": "settings.py / .env.example",
+      "impact": "研究循环"
+    },
+    {
+      "key": "max_tool_iterations_itinerary",
+      "value": "12",
+      "value_kind": "source_default",
+      "location": "settings.py / .env.example",
+      "impact": "行程循环"
+    },
+    {
+      "key": "walk_threshold_m",
+      "value": "1200",
+      "value_kind": "source_default",
+      "location": "settings.py / .env.example",
+      "impact": "先步行后公交"
+    },
+    {
+      "key": "manager_history_limit",
+      "value": "20",
+      "value_kind": "source_default",
+      "location": "settings.py / .env.example",
+      "impact": "问诊上下文条数"
+    },
+    {
+      "key": "intake_max_followups",
+      "value": "2",
+      "value_kind": "source_default",
+      "location": "settings.py / .env.example",
+      "impact": "追问最多 2 轮"
+    },
+    {
+      "key": "VITE_API_BASE_URL",
+      "value": "/api",
+      "value_kind": "source_default",
+      "location": "frontend/.env.example",
+      "impact": "Axios 相对路径"
+    },
+    {
+      "key": "VITE_BACKEND_PROXY_TARGET",
+      "value": "http://localhost:8099",
+      "value_kind": "source_default",
+      "location": "frontend/.env.example",
+      "impact": "仅 Vite 代理"
+    },
+    {
+      "key": "VITE_USE_MOCK",
+      "value": "true",
+      "value_kind": "source_default",
+      "location": "frontend/.env.example",
+      "impact": "true 走 frontend/src/mocks"
+    },
+    {
+      "key": "VITE_AMAP_JS_KEY",
+      "value": "空",
+      "value_kind": "source_default",
+      "location": "frontend/.env.example 字段名",
+      "impact": "空则「地图未配置」"
+    },
+    {
+      "key": "VITE_AMAP_SECURITY_JS_CODE",
+      "value": "空",
+      "value_kind": "source_default",
+      "location": "frontend/.env.example 字段名",
+      "impact": "只列字段名"
+    },
+    {
+      "key": "SEND_MESSAGE_TIMEOUT_MS",
+      "value": "180000",
+      "value_kind": "source_default",
+      "location": "conversationService.ts",
+      "impact": "与规划看门狗对齐"
+    }
+  ],
+  "sources_index": [
+    {
+      "id": "router",
+      "path": "frontend/src/router/index.tsx",
+      "sha256_16": "45c254c17f330d1a",
+      "fn": "AppRoutes",
+      "checked_at": "2026-09-13"
+    },
+    {
+      "id": "workbench",
+      "path": "frontend/src/pages/WorkbenchPage.tsx",
+      "sha256_16": "b11384fc9185a32f",
+      "fn": "WorkbenchPage",
+      "checked_at": "2026-09-13"
+    },
+    {
+      "id": "trips",
+      "path": "frontend/src/pages/TripListPage.tsx",
+      "sha256_16": "7c7a806a0cafd1c9",
+      "fn": "TripListPage",
+      "checked_at": "2026-09-13"
+    },
+    {
+      "id": "detail",
+      "path": "frontend/src/pages/ItineraryDetailPage.tsx",
+      "sha256_16": "f994e1c548375a40",
+      "fn": "ItineraryDetailPage",
+      "checked_at": "2026-09-13"
+    },
+    {
+      "id": "conv_svc",
+      "path": "frontend/src/services/conversationService.ts",
+      "sha256_16": "ed63cc57b14507c1",
+      "fn": "createConversation/sendMessage",
+      "checked_at": "2026-09-13"
+    },
+    {
+      "id": "itn_svc",
+      "path": "frontend/src/services/itineraryService.ts",
+      "sha256_16": "c61ac79644d3b678",
+      "fn": "listItineraries/reviseItinerary/deleteItineraryCard",
+      "checked_at": "2026-09-13"
+    },
+    {
+      "id": "insp_svc",
+      "path": "frontend/src/services/inspirationService.ts",
+      "sha256_16": "cdce92750ca80e7b",
+      "fn": "listInspirations",
+      "checked_at": "2026-09-13"
+    },
+    {
+      "id": "use_conv",
+      "path": "frontend/src/hooks/useConversation.ts",
+      "sha256_16": "7fd53dd8175eea04",
+      "fn": "useConversation",
+      "checked_at": "2026-09-13"
+    },
+    {
+      "id": "use_itn",
+      "path": "frontend/src/hooks/useItinerary.ts",
+      "sha256_16": "9bc84585fffaa6ca",
+      "fn": "useItinerary/useTripList",
+      "checked_at": "2026-09-13"
+    },
+    {
+      "id": "use_sse",
+      "path": "frontend/src/hooks/usePlanningEvents.ts",
+      "sha256_16": "9156b30ddb889f6e",
+      "fn": "usePlanningEvents",
+      "checked_at": "2026-09-13"
+    },
+    {
+      "id": "app",
+      "path": "frontend/src/stores/AppProvider.tsx",
+      "sha256_16": "5311416442e587c6",
+      "fn": "submitNewPlan/draftToPayload",
+      "checked_at": "2026-09-13"
+    },
+    {
+      "id": "sidebar",
+      "path": "frontend/src/components/layout/Sidebar.tsx",
+      "sha256_16": "18afedac73f9a1e7",
+      "fn": "Sidebar",
+      "checked_at": "2026-09-13"
+    },
+    {
+      "id": "chat",
+      "path": "frontend/src/components/chat/ChatThread.tsx",
+      "sha256_16": "1cea252561ac99c0",
+      "fn": "ChatThread",
+      "checked_at": "2026-09-13"
+    },
+    {
+      "id": "newplan",
+      "path": "frontend/src/components/NewPlanModal.tsx",
+      "sha256_16": "576dbe65c069c144",
+      "fn": "NewPlanModal",
+      "checked_at": "2026-09-13"
+    },
+    {
+      "id": "r_conv",
+      "path": "backend/src/api/routes/conversations.py",
+      "sha256_16": "db6311d282d6bd54",
+      "fn": "create_conversation/send_message",
+      "checked_at": "2026-09-13"
+    },
+    {
+      "id": "r_itn",
+      "path": "backend/src/api/routes/itineraries.py",
+      "sha256_16": "bc8abfdbcab5d878",
+      "fn": "list_itineraries/delete_card",
+      "checked_at": "2026-09-13"
+    },
+    {
+      "id": "r_evt",
+      "path": "backend/src/api/routes/events.py",
+      "sha256_16": "c19ea95f236b80d4",
+      "fn": "conversation_events",
+      "checked_at": "2026-09-13"
+    },
+    {
+      "id": "r_insp",
+      "path": "backend/src/api/routes/inspirations.py",
+      "sha256_16": "c297b3fa09f8f494",
+      "fn": "list_inspirations",
+      "checked_at": "2026-09-13"
+    },
+    {
+      "id": "mgr",
+      "path": "backend/src/services/manager.py",
+      "sha256_16": "8640db39eeccb7bf",
+      "fn": "finalize_intake/send_message/_revise",
+      "checked_at": "2026-09-13"
+    },
+    {
+      "id": "plan",
+      "path": "backend/src/services/planning.py",
+      "sha256_16": "c5cda53035ab9237",
+      "fn": "execute_planning/_PlanningSession.run_loop",
+      "checked_at": "2026-09-13"
+    },
+    {
+      "id": "rev",
+      "path": "backend/src/services/revision.py",
+      "sha256_16": "9e991297a47f1bf7",
+      "fn": "known_revision_operations/apply_operations",
+      "checked_at": "2026-09-13"
+    },
+    {
+      "id": "llm",
+      "path": "backend/src/services/llm_client.py",
+      "sha256_16": "ddca723680b1f237",
+      "fn": "chat_json",
+      "checked_at": "2026-09-13"
+    },
+    {
+      "id": "alog",
+      "path": "backend/src/services/activity_log.py",
+      "sha256_16": "28145133c2a9d1a4",
+      "fn": "build_entry",
+      "checked_at": "2026-09-13"
+    },
+    {
+      "id": "res",
+      "path": "backend/src/services/specialists/research.py",
+      "sha256_16": "7c202f890a158c99",
+      "fn": "run_research",
+      "checked_at": "2026-09-13"
+    },
+    {
+      "id": "bud",
+      "path": "backend/src/services/specialists/budget.py",
+      "sha256_16": "0445a71dbef70b88",
+      "fn": "run_budget",
+      "checked_at": "2026-09-13"
+    },
+    {
+      "id": "itn_sp",
+      "path": "backend/src/services/specialists/itinerary.py",
+      "sha256_16": "5bf1b20fa355f87c",
+      "fn": "run_itinerary",
+      "checked_at": "2026-09-13"
+    },
+    {
+      "id": "amap",
+      "path": "backend/src/plugins/amap.py",
+      "sha256_16": "40948f4b4f3fc5e4",
+      "fn": "create_amap_registry",
+      "checked_at": "2026-09-13"
+    },
+    {
+      "id": "geo",
+      "path": "backend/src/plugins/geocode_city.py",
+      "sha256_16": "f55686e8948687b4",
+      "fn": "GeocodeCityPlugin",
+      "checked_at": "2026-09-13"
+    },
+    {
+      "id": "poi",
+      "path": "backend/src/plugins/search_poi.py",
+      "sha256_16": "a4d3400b9d3eb0cf",
+      "fn": "SearchPoiPlugin",
+      "checked_at": "2026-09-13"
+    },
+    {
+      "id": "det",
+      "path": "backend/src/plugins/get_poi_detail.py",
+      "sha256_16": "c6d4b2637338f4b8",
+      "fn": "GetPoiDetailPlugin",
+      "checked_at": "2026-09-13"
+    },
+    {
+      "id": "wth",
+      "path": "backend/src/plugins/get_weather.py",
+      "sha256_16": "73acf6f682858b63",
+      "fn": "GetWeatherPlugin",
+      "checked_at": "2026-09-13"
+    },
+    {
+      "id": "walk",
+      "path": "backend/src/plugins/route_walking.py",
+      "sha256_16": "9abb240d7ce2f569",
+      "fn": "RouteWalkingPlugin",
+      "checked_at": "2026-09-13"
+    },
+    {
+      "id": "bus",
+      "path": "backend/src/plugins/route_transit.py",
+      "sha256_16": "801c531921ff71ea",
+      "fn": "RouteTransitPlugin",
+      "checked_at": "2026-09-13"
+    },
+    {
+      "id": "set",
+      "path": "backend/src/config/settings.py",
+      "sha256_16": "6b572f9d00cb85d1",
+      "fn": "AppSettings",
+      "checked_at": "2026-09-13"
+    },
+    {
+      "id": "envb",
+      "path": "backend/.env.example",
+      "sha256_16": "54409c11c5576a5c",
+      "fn": "字段占位",
+      "checked_at": "2026-09-13"
+    },
+    {
+      "id": "envf",
+      "path": "frontend/.env.example",
+      "sha256_16": "6f8ede287fe011f9",
+      "fn": "字段占位",
+      "checked_at": "2026-09-13"
+    },
+    {
+      "id": "spec",
+      "path": "docs/tech-spec.md",
+      "sha256_16": "3342dea72759873c",
+      "fn": "七、项目本地层级设计",
+      "checked_at": "2026-09-13"
+    }
+  ],
+  "isolation_samples": {
+    "source_changed": {
+      "title": "源码变更待复核",
+      "banner": "隔离样例：backend/src/services/manager.py 指纹与核对基线不一致。问诊算法改为「来源已变化待复核」，不能只靠刷新时间冒充已重新核对。",
+      "stale_source_id": "mgr",
+      "expected_fingerprint": "8640db39eeccb7bf",
+      "observed_fingerprint": "deadbeef00000000",
+      "stale_feature_ids": [
+        "feat-intake"
+      ],
+      "stale_api_ids": [
+        "api-004"
+      ]
+    },
+    "source_missing": {
+      "title": "来源缺失",
+      "banner": "隔离样例：声明的来源 backend/src/services/not_implemented_export.py 不存在。相关能力标「未找到实现」，不编造 PDF 导出。",
+      "missing_path": "backend/src/services/not_implemented_export.py",
+      "missing_symbol": "export_pdf",
+      "ghost_feature": {
+        "id": "feat-pdf-missing",
+        "name": "导出 PDF（未找到实现）",
+        "trigger": "源码中无此入口",
+        "input": "无",
+        "output": "未找到实现",
+        "flow": [
+          {
+            "actor": "核对",
+            "action": "按路径查找 export_pdf / PDF 导出",
+            "data": "无匹配文件",
+            "branch": "降级为未找到实现"
+          }
+        ],
+        "api_ids": [],
+        "implementation_status": "未找到实现",
+        "sources": [
+          {
+            "path": "backend/src/services/not_implemented_export.py",
+            "symbol": "export_pdf",
+            "fingerprint": null,
+            "checked_at": "2026-09-13"
+          }
+        ]
+      }
+    },
+    "parse_error": {
+      "title": "解析错误",
+      "banner": "隔离样例：map JSON 无法解析。页面必须提示解析失败并转义原文片段，不得继续把算法标成源码已核对。",
+      "invalid_json": "{page: workbench, broken: true,}"
+    }
+  }
+}

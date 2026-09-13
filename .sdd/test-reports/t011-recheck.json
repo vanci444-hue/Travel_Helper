@@ -1,0 +1,152 @@
+{
+  "chrome": "Chrome/152.0.7977.84",
+  "acs": {
+    "AC-021": {
+      "result": "FAIL",
+      "after_scroll": "第 2 天",
+      "after_chip": "第 1 天",
+      "scrollTop": 510,
+      "chipScrollTop": 321
+    },
+    "AC-006": {
+      "result": "PASS",
+      "deleted": {
+        "opened": {
+          "ok": true,
+          "title": "📍雷峰塔景区"
+        },
+        "deleted": {
+          "ok": true
+        }
+      },
+      "before_n": 2,
+      "after_n": 1,
+      "after_titles": [
+        "杭州西湖风景名胜区"
+      ],
+      "planning": {
+        "http": 200,
+        "id": "conv_73b028b0acfb325a",
+        "planning": "succeeded",
+        "itinerary_id": "itn_e6e7ea18e5abc6c2",
+        "specs": [
+          {
+            "role": "destination_research",
+            "status": "succeeded"
+          },
+          {
+            "role": "budget_expert",
+            "status": "succeeded"
+          },
+          {
+            "role": "itinerary_design",
+            "status": "succeeded"
+          }
+        ],
+        "running": false,
+        "allSucceeded": true
+      },
+      "before_planning": "succeeded"
+    },
+    "AC-017": {
+      "result": "PASS",
+      "after_titles": [
+        "杭州西湖风景名胜区"
+      ],
+      "mapChips": [
+        "📍 杭州西湖风景名胜区"
+      ],
+      "map_has_deleted": false
+    },
+    "AC-019": {
+      "result": "FAIL",
+      "clicked": {
+        "ok": true,
+        "text": "🏨换一家更安静的推荐住宿"
+      },
+      "wait_seconds": 180.4,
+      "chips_gone": true,
+      "same_id": true,
+      "updated_changed": false,
+      "cocoLast": "Coco 暂时没有回复，请再试一次",
+      "users": [
+        "小众的，从北京出发",
+        "换一家更安静的推荐住宿"
+      ],
+      "before_days": [
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          5,
+          1
+        ]
+      ],
+      "after_days": [
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          5,
+          1
+        ]
+      ],
+      "planning": {
+        "http": 200,
+        "id": "conv_d4db2cfd218d672d",
+        "planning": "succeeded",
+        "itinerary_id": "itn_63f6c180617024d5",
+        "specs": [
+          {
+            "role": "destination_research",
+            "status": "succeeded"
+          },
+          {
+            "role": "budget_expert",
+            "status": "succeeded"
+          },
+          {
+            "role": "itinerary_design",
+            "status": "succeeded"
+          }
+        ],
+        "running": false,
+        "allSucceeded": true
+      },
+      "suggest_before": [
+        "🍃第三天不要排那么满",
+        "🚌白天少走路，多坐公交",
+        "🏨换一家更安静的推荐住宿"
+      ]
+    }
+  },
+  "tech": {
+    "src_hits": 36
+  }
+}

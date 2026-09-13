@@ -1,0 +1,420 @@
+{
+  "chrome": "Chrome/152.0.7977.84",
+  "cdp": "Target.createTarget + attachToTarget flatten + newWindow side-by-side",
+  "frontend": "http://127.0.0.1:5199",
+  "backend": "http://127.0.0.1:8099",
+  "vite_use_mock": false,
+  "src_curl": false,
+  "samples": {
+    "family": {
+      "dom": {
+        "path": "/itineraries/itn_d4d2b9088b2d5460",
+        "title": "成都 3 日轻松游",
+        "sub": "🍃 轻松 · 📍 成都 3 天",
+        "hasMock": false,
+        "days": [
+          {
+            "day": "1",
+            "label": "📅第 1 天",
+            "cardCount": 2,
+            "titles": [
+              "📍成都大熊猫繁育研究基地",
+              "📍成都动物园"
+            ]
+          },
+          {
+            "day": "2",
+            "label": "📅第 2 天",
+            "cardCount": 2,
+            "titles": [
+              "📍成都博物馆",
+              "📍成都鸟语林"
+            ]
+          },
+          {
+            "day": "3",
+            "label": "📅第 3 天",
+            "cardCount": 2,
+            "titles": [
+              "📍交子公园",
+              "📍桂溪生态公园"
+            ]
+          }
+        ],
+        "bodyHasMock": false
+      },
+      "api": {
+        "ok": true,
+        "status": 200,
+        "id": "itn_d4d2b9088b2d5460",
+        "conversation_id": "conv_6b51d34a70ee6fe9",
+        "destination_city": "成都",
+        "origin_city": "上海",
+        "duration_days": 3,
+        "pace": "relaxed",
+        "companion_type": "parent_child",
+        "title": "成都 3 日轻松游",
+        "days": [
+          {
+            "day_index": 1,
+            "attraction": 2,
+            "lodging": 0,
+            "other": 0,
+            "titles": [
+              "成都大熊猫繁育研究基地",
+              "成都动物园"
+            ],
+            "types": [
+              "attraction",
+              "attraction"
+            ],
+            "child_flags": [
+              true,
+              true
+            ],
+            "intro_heads": [
+              "亲子首选，园区开阔、坡道多，学龄儿童可近距离观察熊猫与幼崽，科普性强。避坑：建议",
+              "老牌综合动物园，熊猫馆、企鹅馆等分区明确，适合学龄儿童系统认知动物。避坑：16:"
+            ],
+            "intro_has_pitfall": [
+              true,
+              true
+            ],
+            "intro_has_couple": [
+              false,
+              false
+            ]
+          },
+          {
+            "day_index": 2,
+            "attraction": 2,
+            "lodging": 0,
+            "other": 0,
+            "titles": [
+              "成都博物馆",
+              "成都鸟语林"
+            ],
+            "types": [
+              "attraction",
+              "attraction"
+            ],
+            "child_flags": [
+              true,
+              true
+            ],
+            "intro_heads": [
+              "免费开放，常设“花重锦官城”通史展并有儿童互动区，适合学龄儿童了解本地文化。避坑",
+              "塔子山公园内的互动式鸟类园区，可投喂、近距离接触鹦鹉，趣味性强、人流相对可控。避"
+            ],
+            "intro_has_pitfall": [
+              true,
+              true
+            ],
+            "intro_has_couple": [
+              false,
+              false
+            ]
+          },
+          {
+            "day_index": 3,
+            "attraction": 2,
+            "lodging": 0,
+            "other": 0,
+            "titles": [
+              "交子公园",
+              "桂溪生态公园"
+            ],
+            "types": [
+              "attraction",
+              "attraction"
+            ],
+            "child_flags": [
+              true,
+              true
+            ],
+            "intro_heads": [
+              "滨水城市公园，有大型无动力儿童游乐设施、草坪与交子之环地标，探索与休憩兼顾。避坑",
+              "开放式生态公园，林荫步道、浅滩湿地与小沙池，节奏舒缓适合亲子慢游。避坑：园区面积"
+            ],
+            "intro_has_pitfall": [
+              true,
+              true
+            ],
+            "intro_has_couple": [
+              false,
+              false
+            ]
+          }
+        ],
+        "created_at": "2026-09-13T09:35:17Z",
+        "updated_at": "2026-09-13T09:35:17Z"
+      },
+      "shots": [
+        "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t012-shots/01-family-relaxed.png",
+        "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t012-shots/03-family-day2.png"
+      ]
+    },
+    "couple": {
+      "dom": {
+        "path": "/itineraries/itn_f173091eb7516ae0",
+        "title": "成都 3 日紧凑游",
+        "sub": "⚡ 紧凑 · 📍 成都 3 天",
+        "hasMock": false,
+        "days": [
+          {
+            "day": "1",
+            "label": "📅第 1 天",
+            "cardCount": 4,
+            "titles": [
+              "📍交子公园",
+              "📍交子之环",
+              "📍成都金融城双子塔",
+              "📍双子塔夜景打卡点"
+            ]
+          },
+          {
+            "day": "2",
+            "label": "📅第 2 天",
+            "cardCount": 4,
+            "titles": [
+              "📍人民公园",
+              "📍成都博物馆",
+              "📍成都太古里",
+              "📍安顺廊桥"
+            ]
+          },
+          {
+            "day": "3",
+            "label": "📅第 3 天",
+            "cardCount": 4,
+            "titles": [
+              "📍思巢·咖啡&水果-热植集合店(龙门巷店)",
+              "📍良木缘咖啡西餐(桐梓林店)",
+              "📍星巴克咖啡(成都银泰城店)",
+              "📍南湖公园"
+            ]
+          }
+        ],
+        "bodyHasMock": false
+      },
+      "api": {
+        "ok": true,
+        "status": 200,
+        "id": "itn_f173091eb7516ae0",
+        "conversation_id": "conv_1741ca8d3d536ae4",
+        "destination_city": "成都",
+        "origin_city": "上海",
+        "duration_days": 3,
+        "pace": "packed",
+        "companion_type": "couple",
+        "title": "成都 3 日紧凑游",
+        "days": [
+          {
+            "day_index": 1,
+            "attraction": 4,
+            "lodging": 0,
+            "other": 0,
+            "titles": [
+              "交子公园",
+              "交子之环",
+              "成都金融城双子塔",
+              "双子塔夜景打卡点"
+            ],
+            "types": [
+              "attraction",
+              "attraction",
+              "attraction",
+              "attraction"
+            ],
+            "child_flags": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "intro_heads": [
+              "临江开阔步道配灯光水景与现代雕塑，牵手慢行一圈约半小时，傍晚天光最柔和，适合作为",
+              "环形观景桥走一圈，黄昏到入夜光影层次最丰富，出片率高，建议在天色转暗前到达。。情",
+              "城南地标双塔，入夜灯光秀是整晚重点，塔下广场开阔，适合驻足等亮灯、拍剪影合影。。",
+              "正对双塔的滨水平台，19 点后灯光秀视野最佳，江风偏凉，夜里散步记得带件薄外套。"
+            ],
+            "intro_has_pitfall": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "intro_has_couple": [
+              true,
+              true,
+              true,
+              true
+            ]
+          },
+          {
+            "day_index": 2,
+            "attraction": 4,
+            "lodging": 0,
+            "other": 0,
+            "titles": [
+              "人民公园",
+              "成都博物馆",
+              "成都太古里",
+              "安顺廊桥"
+            ],
+            "types": [
+              "attraction",
+              "attraction",
+              "attraction",
+              "attraction"
+            ],
+            "child_flags": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "intro_heads": [
+              "老成都慢生活样本，竹林下坐一坐、看当地人喝茶摆龙门阵，适合两人安静聊天的上午。。",
+              "老城中心的城市博物馆，皮影与民俗常设展耐看，室内安静又避雨，适合午后慢慢逛两小时",
+              "青瓦与玻璃交错的街区，黄昏后灯光柔和，散步逛店顺便觅一杯咖啡；周末晚间人流偏大，",
+              "锦江上的仿古廊桥，亮灯后是成都最经典的水岸夜色，桥上与河堤都适合并肩久站看灯影。"
+            ],
+            "intro_has_pitfall": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "intro_has_couple": [
+              true,
+              true,
+              true,
+              true
+            ]
+          },
+          {
+            "day_index": 3,
+            "attraction": 4,
+            "lodging": 0,
+            "other": 0,
+            "titles": [
+              "思巢·咖啡&水果-热植集合店(龙门巷店)",
+              "良木缘咖啡西餐(桐梓林店)",
+              "星巴克咖啡(成都银泰城店)",
+              "南湖公园"
+            ],
+            "types": [
+              "attraction",
+              "attraction",
+              "attraction",
+              "attraction"
+            ],
+            "child_flags": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "intro_heads": [
+              "绿植环绕的治愈系咖啡空间，主打水果特调与轻食，适合上午慢聊、记录旅途片段。。情侣",
+              "老牌文艺咖啡馆兼西餐厅，双人餐与特色白咖啡值得一试，环境私密适合久坐聊天。。情侣",
+              "临窗位可观街景的咖啡馆，位置便利，适合作为城南段的补给与歇脚点。。情侣节奏：适合",
+              "城南滨湖公园，环湖步道开阔安静，日落时分光线柔和，适合悠闲散步作为行程收尾。。情"
+            ],
+            "intro_has_pitfall": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "intro_has_couple": [
+              true,
+              true,
+              true,
+              true
+            ]
+          }
+        ],
+        "created_at": "2026-09-13T09:36:51Z",
+        "updated_at": "2026-09-13T09:36:51Z"
+      },
+      "shots": [
+        "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t012-shots/02-couple-packed.png",
+        "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t012-shots/04-couple-day2.png"
+      ]
+    }
+  },
+  "acs": {
+    "AC-008": {
+      "result": "PASS",
+      "density_or_type": true,
+      "not_title_swap": true
+    }
+  },
+  "tech": {
+    "two_ids": true,
+    "ids": [
+      "itn_d4d2b9088b2d5460",
+      "itn_f173091eb7516ae0"
+    ],
+    "same_city_days": true,
+    "city": "成都",
+    "days": 3,
+    "family_pace_companion": [
+      "relaxed",
+      "parent_child"
+    ],
+    "couple_pace_companion": [
+      "packed",
+      "couple"
+    ],
+    "family_attraction_counts": [
+      2,
+      2,
+      2
+    ],
+    "couple_attraction_counts": [
+      4,
+      4,
+      4
+    ],
+    "density_ok": true,
+    "type_ok": true,
+    "family_pitfall": true,
+    "couple_intro_couple": true,
+    "same_payload_titles_only": false,
+    "no_mock_badge": true,
+    "not_hangzhou_main_path": true,
+    "api_via_vite_proxy": true,
+    "src_hits_in_cdp_listener": 46,
+    "itinerary_api_urls": [
+      {
+        "url": "http://127.0.0.1:5199/api/itineraries/itn_d4d2b9088b2d5460",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/itineraries/itn_d4d2b9088b2d5460",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/itineraries/itn_f173091eb7516ae0",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/itineraries/itn_f173091eb7516ae0",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/itineraries/itn_d4d2b9088b2d5460",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/itineraries/itn_f173091eb7516ae0",
+        "status": 200
+      }
+    ]
+  },
+  "experience": {},
+  "overall": "PASS"
+}

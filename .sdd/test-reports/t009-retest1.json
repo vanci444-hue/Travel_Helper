@@ -1,0 +1,300 @@
+{
+  "round": "retest-1",
+  "chrome": "Chrome/152.0.7977.84",
+  "cdp": "Target.createTarget + attachToTarget flatten",
+  "frontend": "http://127.0.0.1:5199",
+  "backend": "http://127.0.0.1:8099",
+  "vite_use_mock": false,
+  "acs": {
+    "AC-012": {
+      "result": "PASS",
+      "spot": true,
+      "hasMock": false,
+      "leftNav": [
+        "对话",
+        "行程",
+        "新建计划"
+      ],
+      "inspirationHead": "✨ 灵感",
+      "mapSlot": false,
+      "cards": [
+        {
+          "city": "杭州",
+          "title": "西湖边慢慢走",
+          "reason": "湖景、茶、短途高铁都合适，适合轻松几天。",
+          "imgOk": true,
+          "imgW": 1536,
+          "imgH": 1024,
+          "imgSrc": "/inspirations/hangzhou.jpg",
+          "overlay": false,
+          "captionBelow": true
+        },
+        {
+          "city": "成都",
+          "title": "熊猫与火锅",
+          "reason": "节奏可以很慢，吃和逛都适合情侣或家庭。",
+          "imgOk": true,
+          "imgW": 1536,
+          "imgH": 1024,
+          "imgSrc": "/inspirations/chengdu.jpg",
+          "overlay": false,
+          "captionBelow": true
+        },
+        {
+          "city": "大理",
+          "title": "风大，适合发呆",
+          "reason": "洱海边发呆就够了，不要把行程排太满。",
+          "imgOk": true,
+          "imgW": 1536,
+          "imgH": 1024,
+          "imgSrc": "/inspirations/dali.jpg",
+          "overlay": false,
+          "captionBelow": true
+        }
+      ]
+    },
+    "AC-020": {
+      "result": "PASS",
+      "spot": true,
+      "path": "/",
+      "tripsBefore": {
+        "http": 200,
+        "count": 0
+      },
+      "tripsAfter": {
+        "http": 200,
+        "count": 0
+      },
+      "tripLink": false,
+      "conversationId": null
+    },
+    "AC-009": {
+      "result": "PASS",
+      "city": "青岛",
+      "coco": "🧭 收到，我按北京出发、4 天、2 大 1 小学龄儿童、预算 8 千、节奏轻松来做，推荐去青岛看海，先给你排一版不赶的亲子海边行程。",
+      "allCoco": [
+        "🧭 收到，我按北京出发、4 天、2 大 1 小学龄儿童、预算 8 千、节奏轻松来做，推荐去青岛看海，先给你排一版不赶的亲子海边行程。"
+      ],
+      "api": {
+        "http": 200,
+        "id": "conv_3721cbd075ceb250",
+        "ready": true,
+        "missing": [],
+        "origin": "北京",
+        "dest": "青岛",
+        "region": "domestic",
+        "days": 4,
+        "pace": "relaxed",
+        "companions": "parent_child",
+        "children": [
+          "学龄儿童"
+        ],
+        "followups": 0,
+        "planning": "running",
+        "itinerary_id": null,
+        "specs": [
+          {
+            "role": "destination_research",
+            "status": "running"
+          },
+          {
+            "role": "budget_expert",
+            "status": "not_started"
+          },
+          {
+            "role": "itinerary_design",
+            "status": "not_started"
+          }
+        ],
+        "coco": [
+          "🧭 收到，我按北京出发、4 天、2 大 1 小学龄儿童、预算 8 千、节奏轻松来做，推荐去青岛看海，先给你排一版不赶的亲子海边行程。"
+        ],
+        "msg_count": 2
+      },
+      "askedOutbound": false,
+      "askedAge": false,
+      "askedPickCity": false,
+      "uiSpecs": [
+        "📍 目的地研究 · 进行中 · 正在查青岛点位与天气",
+        "💰 预算专家 · 未执行",
+        "🗓️ 行程设计 · 未执行"
+      ],
+      "sendError": "",
+      "hasMock": false
+    },
+    "AC-001": {
+      "result": "FAIL",
+      "coco": "新建对话失败",
+      "api": {
+        "error": "no conversation id"
+      },
+      "askedOutbound": false,
+      "uiSpecs": [
+        "📍 目的地研究 · 未执行",
+        "💰 预算专家 · 未执行",
+        "🗓️ 行程设计 · 未执行"
+      ]
+    },
+    "AC-002": {
+      "result": "FAIL",
+      "coco": "新建对话失败",
+      "api": {
+        "error": "no conversation id"
+      },
+      "mapHead": "🗺️ 地图",
+      "hasMock": false
+    },
+    "AC-013": {
+      "result": "PASS",
+      "spot": true,
+      "switched": true,
+      "mapCopy": "",
+      "amap": true,
+      "canvasCount": 1,
+      "hasAMap": true,
+      "tiles": "ok"
+    },
+    "AC-011": {
+      "result": "FAIL",
+      "rounds": [
+        "新建对话失败",
+        "新建对话失败",
+        "新建对话失败"
+      ],
+      "last": "新建对话失败",
+      "api": {
+        "error": "no conversation id"
+      },
+      "gapExplained": false,
+      "noPlan": true
+    },
+    "AC-014": {
+      "result": "FAIL",
+      "modalOpened": true,
+      "coco": "",
+      "askedPace": false,
+      "askedOrigin": false,
+      "api": {
+        "error": "no conversation id"
+      }
+    }
+  },
+  "experience": {
+    "sea_rule": {
+      "dest": "青岛",
+      "region": "domestic",
+      "children": [
+        "学龄儿童"
+      ],
+      "ready": true,
+      "missing": [],
+      "planning": "running",
+      "specs": [
+        {
+          "role": "destination_research",
+          "status": "running"
+        },
+        {
+          "role": "budget_expert",
+          "status": "not_started"
+        },
+        {
+          "role": "itinerary_design",
+          "status": "not_started"
+        }
+      ],
+      "model_ask_blocked_ready": false
+    }
+  },
+  "refresh": {
+    "result": "FAIL",
+    "id": null,
+    "users": [],
+    "api": {
+      "error": "no conversation id"
+    }
+  },
+  "network_api": [
+    {
+      "url": "http://127.0.0.1:5199/api/inspirations",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/inspirations",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/itineraries",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/itineraries",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/inspirations",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/inspirations",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/conversations",
+      "status": 201
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/conversations/conv_3721cbd075ceb250/messages",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/conversations/conv_3721cbd075ceb250/events",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/conversations/conv_3721cbd075ceb250",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/inspirations",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/inspirations",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/inspirations",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/inspirations",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/inspirations",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/inspirations",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/inspirations",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/inspirations",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/inspirations",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/inspirations",
+      "status": 200
+    }
+  ],
+  "hasMockAny": false
+}

@@ -1,0 +1,812 @@
+{
+  "chrome": "Chrome/152.0.7977.84",
+  "cdp": "Target.createTarget + attachToTarget flatten + newWindow",
+  "url": "http://127.0.0.1:8765/project-console.html",
+  "src_curl": false,
+  "paid_calls": false,
+  "read_real_env": false,
+  "shots": {
+    "desktop-boot": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t013-shots/desktop-boot.png",
+    "desktop-0": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t013-shots/desktop-page-0.png",
+    "desktop-1": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t013-shots/desktop-page-1.png",
+    "desktop-2": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t013-shots/desktop-page-2.png",
+    "desktop-expand": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t013-shots/desktop-expand.png",
+    "reload": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t013-shots/reload.png",
+    "source_changed": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t013-shots/sample-source_changed.png",
+    "source_missing": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t013-shots/sample-source_missing.png",
+    "parse_error": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t013-shots/sample-parse_error.png",
+    "live": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t013-shots/sample-live.png",
+    "file-picker": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t013-shots/file-picker.png",
+    "narrow-workbench": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t013-shots/narrow-workbench.png",
+    "narrow-detail": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t013-shots/narrow-detail.png",
+    "narrow-trips": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t013-shots/narrow-trips.png"
+  },
+  "checks": {
+    "desktop_boot": {
+      "title": "Xtrip 页面功能导航",
+      "href": "http://127.0.0.1:8765/project-console.html",
+      "viewport": {
+        "w": 1440,
+        "h": 900
+      },
+      "overflow": {
+        "htmlSW": 1440,
+        "htmlCW": 1440,
+        "bodySW": 1440,
+        "bodyCW": 1440,
+        "wrapSW": 1280,
+        "wrapCW": 1280,
+        "asideH": 900,
+        "mainW": 1020,
+        "xOverflow": false
+      },
+      "wrapDisplay": "flex",
+      "asidePosition": "sticky",
+      "navs": [
+        {
+          "name": "工作台",
+          "route": "/",
+          "on": true
+        },
+        {
+          "name": "行程列表",
+          "route": "/trips",
+          "on": false
+        },
+        {
+          "name": "行程详情",
+          "route": "/itineraries/:id",
+          "on": false
+        }
+      ],
+      "cards": [
+        {
+          "id": "feat-feat-new-plan",
+          "title": "新建计划预填",
+          "open": false
+        },
+        {
+          "id": "api-api-001",
+          "title": "POST /api/conversations",
+          "open": true
+        },
+        {
+          "id": "api-api-004",
+          "title": "POST /api/conversations/{conversation_id}/messages",
+          "open": true
+        },
+        {
+          "id": "mod-mod-coco",
+          "title": "规划经理 Coco",
+          "open": true
+        },
+        {
+          "id": "mod-mod-revision",
+          "title": "行程修订与逐项改",
+          "open": true
+        },
+        {
+          "id": "feat-feat-intake",
+          "title": "对话问诊与就绪",
+          "open": false
+        },
+        {
+          "id": "api-api-001",
+          "title": "POST /api/conversations",
+          "open": true
+        },
+        {
+          "id": "api-api-003",
+          "title": "GET /api/conversations/{conversation_id}",
+          "open": true
+        },
+        {
+          "id": "api-api-004",
+          "title": "POST /api/conversations/{conversation_id}/messages",
+          "open": true
+        },
+        {
+          "id": "mod-mod-coco",
+          "title": "规划经理 Coco",
+          "open": true
+        },
+        {
+          "id": "mod-mod-revision",
+          "title": "行程修订与逐项改",
+          "open": true
+        },
+        {
+          "id": "feat-feat-planning-log",
+          "title": "三专员规划与 SSE 运行日志",
+          "open": false
+        },
+        {
+          "id": "api-api-005",
+          "title": "GET /api/conversations/{conversation_id}/events",
+          "open": true
+        },
+        {
+          "id": "api-api-003",
+          "title": "GET /api/conversations/{conversation_id}",
+          "open": true
+        },
+        {
+          "id": "mod-mod-research",
+          "title": "目的地研究专员",
+          "open": true
+        },
+        {
+          "id": "mod-mod-budget",
+          "title": "预算专家",
+          "open": true
+        },
+        {
+          "id": "mod-mod-itinerary",
+          "title": "行程设计专员",
+          "open": true
+        },
+        {
+          "id": "mod-mod-coco",
+          "title": "规划经理 Coco",
+          "open": true
+        },
+        {
+          "id": "feat-feat-inspiration",
+          "title": "规划前国内灵感",
+          "open": false
+        },
+        {
+          "id": "api-api-010",
+          "title": "GET /api/inspirations",
+          "open": true
+        },
+        {
+          "id": "",
+          "title": "配置字段与源码默认值",
+          "open": true
+        }
+      ],
+      "banner": "",
+      "bannerClass": "",
+      "hasSix": false,
+      "hasCocoAgent": false,
+      "notesHasCocoPipeline": true,
+      "hasPdfLive": false,
+      "hasSecretLike": false,
+      "contentLen": 3149,
+      "h2": "工作台 /",
+      "staleChips": [],
+      "missChips": [],
+      "copyButtons": 88,
+      "apiLinks": [
+        "POST /api/conversations",
+        "POST /api/conversations/{conversation_id}/messages",
+        "POST /api/conversations",
+        "GET /api/conversations/{conversation_id}",
+        "POST /api/conversations/{conversation_id}/messages",
+        "GET /api/conversations/{conversation_id}/events",
+        "GET /api/conversations/{conversation_id}",
+        "GET /api/inspirations"
+      ]
+    },
+    "page_nav": {
+      "/": {
+        "h2": "工作台 /",
+        "navs": [
+          {
+            "name": "工作台",
+            "route": "/",
+            "on": true
+          },
+          {
+            "name": "行程列表",
+            "route": "/trips",
+            "on": false
+          },
+          {
+            "name": "行程详情",
+            "route": "/itineraries/:id",
+            "on": false
+          }
+        ],
+        "cards": [
+          {
+            "id": "feat-feat-new-plan",
+            "title": "新建计划预填",
+            "open": false
+          },
+          {
+            "id": "api-api-001",
+            "title": "POST /api/conversations",
+            "open": true
+          },
+          {
+            "id": "api-api-004",
+            "title": "POST /api/conversations/{conversation_id}/messages",
+            "open": true
+          },
+          {
+            "id": "mod-mod-coco",
+            "title": "规划经理 Coco",
+            "open": true
+          },
+          {
+            "id": "mod-mod-revision",
+            "title": "行程修订与逐项改",
+            "open": true
+          },
+          {
+            "id": "feat-feat-intake",
+            "title": "对话问诊与就绪",
+            "open": false
+          },
+          {
+            "id": "api-api-001",
+            "title": "POST /api/conversations",
+            "open": true
+          },
+          {
+            "id": "api-api-003",
+            "title": "GET /api/conversations/{conversation_id}",
+            "open": true
+          },
+          {
+            "id": "api-api-004",
+            "title": "POST /api/conversations/{conversation_id}/messages",
+            "open": true
+          },
+          {
+            "id": "mod-mod-coco",
+            "title": "规划经理 Coco",
+            "open": true
+          },
+          {
+            "id": "mod-mod-revision",
+            "title": "行程修订与逐项改",
+            "open": true
+          },
+          {
+            "id": "feat-feat-planning-log",
+            "title": "三专员规划与 SSE 运行日志",
+            "open": false
+          },
+          {
+            "id": "api-api-005",
+            "title": "GET /api/conversations/{conversation_id}/events",
+            "open": true
+          },
+          {
+            "id": "api-api-003",
+            "title": "GET /api/conversations/{conversation_id}",
+            "open": true
+          },
+          {
+            "id": "mod-mod-research",
+            "title": "目的地研究专员",
+            "open": true
+          },
+          {
+            "id": "mod-mod-budget",
+            "title": "预算专家",
+            "open": true
+          },
+          {
+            "id": "mod-mod-itinerary",
+            "title": "行程设计专员",
+            "open": true
+          },
+          {
+            "id": "mod-mod-coco",
+            "title": "规划经理 Coco",
+            "open": true
+          },
+          {
+            "id": "feat-feat-inspiration",
+            "title": "规划前国内灵感",
+            "open": false
+          },
+          {
+            "id": "api-api-010",
+            "title": "GET /api/inspirations",
+            "open": true
+          },
+          {
+            "id": "",
+            "title": "配置字段与源码默认值",
+            "open": true
+          }
+        ],
+        "xOverflow": false
+      },
+      "/trips": {
+        "h2": "行程列表 /trips",
+        "navs": [
+          {
+            "name": "工作台",
+            "route": "/",
+            "on": false
+          },
+          {
+            "name": "行程列表",
+            "route": "/trips",
+            "on": true
+          },
+          {
+            "name": "行程详情",
+            "route": "/itineraries/:id",
+            "on": false
+          }
+        ],
+        "cards": [
+          {
+            "id": "feat-feat-trip-list",
+            "title": "查看已出行程",
+            "open": false
+          },
+          {
+            "id": "api-api-006",
+            "title": "GET /api/itineraries",
+            "open": true
+          },
+          {
+            "id": "mod-mod-revision",
+            "title": "行程修订与逐项改",
+            "open": true
+          },
+          {
+            "id": "",
+            "title": "配置字段与源码默认值",
+            "open": true
+          }
+        ],
+        "xOverflow": false
+      },
+      "/itineraries/:id": {
+        "h2": "行程详情 /itineraries/:id",
+        "navs": [
+          {
+            "name": "工作台",
+            "route": "/",
+            "on": false
+          },
+          {
+            "name": "行程列表",
+            "route": "/trips",
+            "on": false
+          },
+          {
+            "name": "行程详情",
+            "route": "/itineraries/:id",
+            "on": true
+          }
+        ],
+        "cards": [
+          {
+            "id": "feat-feat-report",
+            "title": "网页行程报告",
+            "open": false
+          },
+          {
+            "id": "api-api-007",
+            "title": "GET /api/itineraries/{itinerary_id}",
+            "open": true
+          },
+          {
+            "id": "api-api-003",
+            "title": "GET /api/conversations/{conversation_id}",
+            "open": true
+          },
+          {
+            "id": "mod-mod-revision",
+            "title": "行程修订与逐项改",
+            "open": true
+          },
+          {
+            "id": "mod-mod-coco",
+            "title": "规划经理 Coco",
+            "open": true
+          },
+          {
+            "id": "feat-feat-item-edit",
+            "title": "逐项改（删卡）",
+            "open": false
+          },
+          {
+            "id": "api-api-009",
+            "title": "DELETE /api/itineraries/{itinerary_id}/cards/{card_id}",
+            "open": true
+          },
+          {
+            "id": "mod-mod-revision",
+            "title": "行程修订与逐项改",
+            "open": true
+          },
+          {
+            "id": "feat-feat-revise",
+            "title": "对话修订与快捷芯片",
+            "open": false
+          },
+          {
+            "id": "api-api-004",
+            "title": "POST /api/conversations/{conversation_id}/messages",
+            "open": true
+          },
+          {
+            "id": "api-api-007",
+            "title": "GET /api/itineraries/{itinerary_id}",
+            "open": true
+          },
+          {
+            "id": "mod-mod-coco",
+            "title": "规划经理 Coco",
+            "open": true
+          },
+          {
+            "id": "mod-mod-revision",
+            "title": "行程修订与逐项改",
+            "open": true
+          },
+          {
+            "id": "",
+            "title": "配置字段与源码默认值",
+            "open": true
+          }
+        ],
+        "xOverflow": false
+      }
+    },
+    "expand": {
+      "open_feat": [
+        {
+          "id": "feat-feat-new-plan",
+          "title": "新建计划预填",
+          "open": true
+        },
+        {
+          "id": "api-api-001",
+          "title": "POST /api/conversations",
+          "open": true
+        },
+        {
+          "id": "api-api-004",
+          "title": "POST /api/conversations/{conversation_id}/messages",
+          "open": true
+        },
+        {
+          "id": "mod-mod-coco",
+          "title": "规划经理 Coco",
+          "open": true
+        },
+        {
+          "id": "mod-mod-revision",
+          "title": "行程修订与逐项改",
+          "open": true
+        },
+        {
+          "id": "api-api-001",
+          "title": "POST /api/conversations",
+          "open": true
+        },
+        {
+          "id": "api-api-003",
+          "title": "GET /api/conversations/{conversation_id}",
+          "open": true
+        },
+        {
+          "id": "api-api-004",
+          "title": "POST /api/conversations/{conversation_id}/messages",
+          "open": true
+        },
+        {
+          "id": "mod-mod-coco",
+          "title": "规划经理 Coco",
+          "open": true
+        },
+        {
+          "id": "mod-mod-revision",
+          "title": "行程修订与逐项改",
+          "open": true
+        },
+        {
+          "id": "api-api-005",
+          "title": "GET /api/conversations/{conversation_id}/events",
+          "open": true
+        },
+        {
+          "id": "api-api-003",
+          "title": "GET /api/conversations/{conversation_id}",
+          "open": true
+        },
+        {
+          "id": "mod-mod-research",
+          "title": "目的地研究专员",
+          "open": true
+        },
+        {
+          "id": "mod-mod-budget",
+          "title": "预算专家",
+          "open": true
+        },
+        {
+          "id": "mod-mod-itinerary",
+          "title": "行程设计专员",
+          "open": true
+        },
+        {
+          "id": "mod-mod-coco",
+          "title": "规划经理 Coco",
+          "open": true
+        },
+        {
+          "id": "api-api-010",
+          "title": "GET /api/inspirations",
+          "open": true
+        },
+        {
+          "id": "",
+          "title": "配置字段与源码默认值",
+          "open": true
+        }
+      ],
+      "apiLinks": [
+        "POST /api/conversations",
+        "POST /api/conversations/{conversation_id}/messages",
+        "POST /api/conversations",
+        "GET /api/conversations/{conversation_id}",
+        "POST /api/conversations/{conversation_id}/messages",
+        "GET /api/conversations/{conversation_id}/events",
+        "GET /api/conversations/{conversation_id}",
+        "GET /api/inspirations"
+      ]
+    },
+    "feat_detail": {
+      "id": "feat-feat-new-plan",
+      "hasTrigger": true,
+      "hasInput": true,
+      "hasOutput": true,
+      "flowItems": 4,
+      "branches": [
+        "数据：destination_text/when_text/adults_text/children_text/budget_text/pace/wish_text；分支：全空也允许",
+        "数据：ConversationCreate；分支：解析不到数字则对应字段为 null",
+        "数据：201 ConversationPublic；分支：pace 非法返回校验错误",
+        "数据：MessageTurnPublic；分支：Mock 或无预填则不补发"
+      ],
+      "apiTexts": [
+        "POST /api/conversations",
+        "POST /api/conversations/{conversation_id}/messages"
+      ],
+      "hasAlgo": true
+    },
+    "api_jump": {
+      "found": true,
+      "id": "api-api-001",
+      "visible": true,
+      "top": -0.0859375,
+      "text": "POST /api/conversations"
+    },
+    "copy_success": {
+      "clicked": true,
+      "clipboard": "frontend/src/pages/WorkbenchPage.tsx",
+      "prompts": []
+    },
+    "copy_fail_prompt": [
+      {
+        "msg": "复制失败，请手选路径",
+        "def": "frontend/src/pages/WorkbenchPage.tsx"
+      }
+    ],
+    "reload": {
+      "banner": "",
+      "navs": [
+        {
+          "name": "工作台",
+          "route": "/",
+          "on": true
+        },
+        {
+          "name": "行程列表",
+          "route": "/trips",
+          "on": false
+        },
+        {
+          "name": "行程详情",
+          "route": "/itineraries/:id",
+          "on": false
+        }
+      ],
+      "network": []
+    },
+    "samples": {
+      "source_changed": {
+        "banner": "隔离样例：backend/src/services/manager.py 指纹与核对基线不一致。问诊算法改为「来源已变化待复核」，不能只靠刷新时间冒充已重新核对。 基线 8640db39eeccb7bf → 观察到 deadbeef00000000",
+        "bannerClass": "banner warn",
+        "staleChips": [
+          "来源已变化待复核",
+          "来源已变化待复核",
+          "来源已变化待复核",
+          "来源已变化待复核"
+        ],
+        "missChips": [],
+        "hasPdfLive": false,
+        "contentLen": 3152,
+        "navCount": 3,
+        "staleOnIntake": true
+      },
+      "source_missing": {
+        "banner": "隔离样例：声明的来源 backend/src/services/not_implemented_export.py 不存在。相关能力标「未找到实现」，不编造 PDF 导出。 缺失路径 backend/src/services/not_implemented_export.py",
+        "bannerClass": "banner err",
+        "staleChips": [],
+        "missChips": [
+          "未找到实现",
+          "未找到实现"
+        ],
+        "hasPdfLive": true,
+        "contentLen": 3182,
+        "navCount": 3,
+        "pdfCard": "导出 PDF（未找到实现）\n\n触发：源码中无此入口\n\n未找到实现"
+      },
+      "parse_error": {
+        "banner": "隔离样例：map JSON 无法解析。页面必须提示解析失败并转义原文片段，不得继续把算法标成源码已核对。\n{page: workbench, broken: true,}\n\n隔离样例 解析失败：Expected property name or '}' in JSON at position 1 (line 1 column 2)",
+        "bannerClass": "banner err",
+        "staleChips": [],
+        "missChips": [],
+        "hasPdfLive": false,
+        "contentLen": 0,
+        "navCount": 0,
+        "rawEscaped": "{page: workbench, broken: true,}",
+        "stillHasCheckedAlgo": false
+      },
+      "live": {
+        "banner": "",
+        "bannerClass": "",
+        "staleChips": [],
+        "missChips": [],
+        "hasPdfLive": false,
+        "contentLen": 3149,
+        "navCount": 3
+      }
+    },
+    "file_picker_error": "Page.handleFileChooser: {'code': -32601, 'message': \"'Page.handleFileChooser' wasn't found\"}",
+    "file_picker": {
+      "notes": "规划经理 Coco 是固定 JSON 决策流水线（action=ask/ready/stop/revise/suggest_new_plan），没有 Plugin 工具，不标可自由选工具的 Agent。\n三专员按 Plugin 工具循环呈现：研究 4 工具、行程 4 工具、预算 0 工具。\n高德六工具均在 create_amap_registry 注册：geocode_city、search_po",
+      "has_marker": false
+    },
+    "narrow_workbench": {
+      "viewport": {
+        "w": 439,
+        "h": 951
+      },
+      "overflow": {
+        "htmlSW": 439,
+        "htmlCW": 390,
+        "bodySW": 439,
+        "bodyCW": 390,
+        "wrapSW": 439,
+        "wrapCW": 390,
+        "asideH": 217.890625,
+        "mainW": 390,
+        "xOverflow": true
+      },
+      "wrapDisplay": "block",
+      "asidePosition": "relative",
+      "navs": [
+        {
+          "name": "工作台",
+          "route": "/",
+          "on": true
+        },
+        {
+          "name": "行程列表",
+          "route": "/trips",
+          "on": false
+        },
+        {
+          "name": "行程详情",
+          "route": "/itineraries/:id",
+          "on": false
+        }
+      ]
+    },
+    "narrow_detail": {
+      "h2": "行程详情 /itineraries/:id",
+      "overflow": {
+        "htmlSW": 439,
+        "htmlCW": 390,
+        "bodySW": 439,
+        "bodyCW": 390,
+        "wrapSW": 439,
+        "wrapCW": 390,
+        "asideH": 217.890625,
+        "mainW": 390,
+        "xOverflow": true
+      },
+      "cards": [
+        {
+          "id": "feat-feat-report",
+          "title": "网页行程报告",
+          "open": false
+        },
+        {
+          "id": "api-api-007",
+          "title": "GET /api/itineraries/{itinerary_id}",
+          "open": true
+        },
+        {
+          "id": "api-api-003",
+          "title": "GET /api/conversations/{conversation_id}",
+          "open": true
+        },
+        {
+          "id": "mod-mod-revision",
+          "title": "行程修订与逐项改",
+          "open": true
+        },
+        {
+          "id": "mod-mod-coco",
+          "title": "规划经理 Coco",
+          "open": true
+        },
+        {
+          "id": "feat-feat-item-edit",
+          "title": "逐项改（删卡）",
+          "open": false
+        },
+        {
+          "id": "api-api-009",
+          "title": "DELETE /api/itineraries/{itinerary_id}/cards/{card_id}",
+          "open": true
+        },
+        {
+          "id": "mod-mod-revision",
+          "title": "行程修订与逐项改",
+          "open": true
+        },
+        {
+          "id": "feat-feat-revise",
+          "title": "对话修订与快捷芯片",
+          "open": false
+        },
+        {
+          "id": "api-api-004",
+          "title": "POST /api/conversations/{conversation_id}/messages",
+          "open": true
+        },
+        {
+          "id": "api-api-007",
+          "title": "GET /api/itineraries/{itinerary_id}",
+          "open": true
+        },
+        {
+          "id": "mod-mod-coco",
+          "title": "规划经理 Coco",
+          "open": true
+        },
+        {
+          "id": "mod-mod-revision",
+          "title": "行程修订与逐项改",
+          "open": true
+        },
+        {
+          "id": "",
+          "title": "配置字段与源码默认值",
+          "open": true
+        }
+      ]
+    },
+    "narrow_trips": {
+      "h2": "行程列表 /trips",
+      "overflow": {
+        "htmlSW": 439,
+        "htmlCW": 390,
+        "bodySW": 439,
+        "bodyCW": 390,
+        "wrapSW": 439,
+        "wrapCW": 390,
+        "asideH": 217.890625,
+        "mainW": 390,
+        "xOverflow": true
+      }
+    }
+  },
+  "targetId": "D206AA66482048F04A3EC6420EC92379"
+}

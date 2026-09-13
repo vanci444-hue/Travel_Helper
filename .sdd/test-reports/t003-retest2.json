@@ -1,0 +1,575 @@
+{
+  "browser": "Chrome/152.0.7977.84",
+  "createTarget": true,
+  "afterChip3": {
+    "selected": "第 3 天",
+    "chips": [
+      {
+        "text": "第 1 天",
+        "selected": false
+      },
+      {
+        "text": "第 2 天",
+        "selected": false
+      },
+      {
+        "text": "第 3 天",
+        "selected": true
+      },
+      {
+        "text": "第 4 天",
+        "selected": false
+      },
+      {
+        "text": "第 5 天",
+        "selected": false
+      }
+    ],
+    "scrollTop": 807,
+    "clientHeight": 672,
+    "scrollHeight": 1987,
+    "maxScroll": 1315,
+    "endSpace": 672,
+    "days": [
+      {
+        "day": "1",
+        "rel": -489.8203125,
+        "height": 220.8828125,
+        "visible": 0
+      },
+      {
+        "day": "2",
+        "rel": -244.9375,
+        "height": 220.8828125,
+        "visible": 0
+      },
+      {
+        "day": "3",
+        "rel": -0.0546875,
+        "height": 220.8828125,
+        "visible": 220.828125
+      },
+      {
+        "day": "4",
+        "rel": 244.828125,
+        "height": 107.7421875,
+        "visible": 57.483984375000034
+      },
+      {
+        "day": "5",
+        "rel": 376.5703125,
+        "height": 107.7421875,
+        "visible": 0
+      }
+    ],
+    "pickDay": "3"
+  },
+  "scrollPath": [
+    {
+      "label": "top",
+      "selected": "第 1 天",
+      "scrollTop": 0,
+      "pickDay": null,
+      "days": [
+        {
+          "day": "1",
+          "rel": 317.1796875,
+          "height": 220.8828125,
+          "visible": 0
+        },
+        {
+          "day": "2",
+          "rel": 562.0625,
+          "height": 220.8828125,
+          "visible": 0
+        },
+        {
+          "day": "3",
+          "rel": 806.9453125,
+          "height": 220.8828125,
+          "visible": 0
+        },
+        {
+          "day": "4",
+          "rel": 1051.828125,
+          "height": 107.7421875,
+          "visible": 0
+        },
+        {
+          "day": "5",
+          "rel": 1183.5703125,
+          "height": 107.7421875,
+          "visible": 0
+        }
+      ],
+      "endSpace": 672
+    },
+    {
+      "step": 1,
+      "method": "scrollTop+scrollEvent",
+      "wheeled": "Input.dispatchMouseWheel: {'code': -32601, 'message': \"'Input.dispatchMouseWheel' wasn't found\"}",
+      "selected": "第 1 天",
+      "pickDay": "1",
+      "scrollTop": 220,
+      "maxScroll": 1315,
+      "days": [
+        {
+          "day": "1",
+          "rel": 97.1796875,
+          "height": 220.8828125,
+          "visible": 205.13242187500003
+        },
+        {
+          "day": "2",
+          "rel": 342.0625,
+          "height": 220.8828125,
+          "visible": 0
+        },
+        {
+          "day": "3",
+          "rel": 586.9453125,
+          "height": 220.8828125,
+          "visible": 0
+        },
+        {
+          "day": "4",
+          "rel": 831.828125,
+          "height": 107.7421875,
+          "visible": 0
+        },
+        {
+          "day": "5",
+          "rel": 963.5703125,
+          "height": 107.7421875,
+          "visible": 0
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "method": "scrollTop+scrollEvent",
+      "wheeled": "Input.dispatchMouseWheel: {'code': -32601, 'message': \"'Input.dispatchMouseWheel' wasn't found\"}",
+      "selected": "第 2 天",
+      "pickDay": "2",
+      "scrollTop": 440,
+      "maxScroll": 1315,
+      "days": [
+        {
+          "day": "1",
+          "rel": -122.8203125,
+          "height": 220.8828125,
+          "visible": 98.0625
+        },
+        {
+          "day": "2",
+          "rel": 122.0625,
+          "height": 220.8828125,
+          "visible": 180.24960937500003
+        },
+        {
+          "day": "3",
+          "rel": 366.9453125,
+          "height": 220.8828125,
+          "visible": 0
+        },
+        {
+          "day": "4",
+          "rel": 611.828125,
+          "height": 107.7421875,
+          "visible": 0
+        },
+        {
+          "day": "5",
+          "rel": 743.5703125,
+          "height": 107.7421875,
+          "visible": 0
+        }
+      ]
+    },
+    {
+      "step": 3,
+      "method": "scrollTop+scrollEvent",
+      "wheeled": "Input.dispatchMouseWheel: {'code': -32601, 'message': \"'Input.dispatchMouseWheel' wasn't found\"}",
+      "selected": "第 3 天",
+      "pickDay": "3",
+      "scrollTop": 660,
+      "maxScroll": 1315,
+      "days": [
+        {
+          "day": "1",
+          "rel": -342.8203125,
+          "height": 220.8828125,
+          "visible": 0
+        },
+        {
+          "day": "2",
+          "rel": -97.9375,
+          "height": 220.8828125,
+          "visible": 122.9453125
+        },
+        {
+          "day": "3",
+          "rel": 146.9453125,
+          "height": 220.8828125,
+          "visible": 155.36679687500003
+        },
+        {
+          "day": "4",
+          "rel": 391.828125,
+          "height": 107.7421875,
+          "visible": 0
+        },
+        {
+          "day": "5",
+          "rel": 523.5703125,
+          "height": 107.7421875,
+          "visible": 0
+        }
+      ]
+    },
+    {
+      "step": 4,
+      "method": "scrollTop+scrollEvent",
+      "wheeled": "Input.dispatchMouseWheel: {'code': -32601, 'message': \"'Input.dispatchMouseWheel' wasn't found\"}",
+      "selected": "第 3 天",
+      "pickDay": "3",
+      "scrollTop": 880,
+      "maxScroll": 1315,
+      "days": [
+        {
+          "day": "1",
+          "rel": -562.8203125,
+          "height": 220.8828125,
+          "visible": 0
+        },
+        {
+          "day": "2",
+          "rel": -317.9375,
+          "height": 220.8828125,
+          "visible": 0
+        },
+        {
+          "day": "3",
+          "rel": -73.0546875,
+          "height": 220.8828125,
+          "visible": 147.828125
+        },
+        {
+          "day": "4",
+          "rel": 171.828125,
+          "height": 107.7421875,
+          "visible": 107.7421875
+        },
+        {
+          "day": "5",
+          "rel": 303.5703125,
+          "height": 107.7421875,
+          "visible": 0
+        }
+      ]
+    },
+    {
+      "step": 5,
+      "method": "scrollTop+scrollEvent",
+      "wheeled": "Input.dispatchMouseWheel: {'code': -32601, 'message': \"'Input.dispatchMouseWheel' wasn't found\"}",
+      "selected": "第 5 天",
+      "pickDay": "5",
+      "scrollTop": 1100,
+      "maxScroll": 1315,
+      "days": [
+        {
+          "day": "1",
+          "rel": -782.8203125,
+          "height": 220.8828125,
+          "visible": 0
+        },
+        {
+          "day": "2",
+          "rel": -537.9375,
+          "height": 220.8828125,
+          "visible": 0
+        },
+        {
+          "day": "3",
+          "rel": -293.0546875,
+          "height": 220.8828125,
+          "visible": 0
+        },
+        {
+          "day": "4",
+          "rel": -48.171875,
+          "height": 107.7421875,
+          "visible": 59.5703125
+        },
+        {
+          "day": "5",
+          "rel": 83.5703125,
+          "height": 107.7421875,
+          "visible": 107.7421875
+        }
+      ]
+    },
+    {
+      "step": 6,
+      "method": "scrollTop+scrollEvent",
+      "wheeled": "Input.dispatchMouseWheel: {'code': -32601, 'message': \"'Input.dispatchMouseWheel' wasn't found\"}",
+      "selected": "第 5 天",
+      "pickDay": null,
+      "scrollTop": 1315.5,
+      "maxScroll": 1315,
+      "days": [
+        {
+          "day": "1",
+          "rel": -998.3203125,
+          "height": 220.8828125,
+          "visible": 0
+        },
+        {
+          "day": "2",
+          "rel": -753.4375,
+          "height": 220.8828125,
+          "visible": 0
+        },
+        {
+          "day": "3",
+          "rel": -508.5546875,
+          "height": 220.8828125,
+          "visible": 0
+        },
+        {
+          "day": "4",
+          "rel": -263.671875,
+          "height": 107.7421875,
+          "visible": 0
+        },
+        {
+          "day": "5",
+          "rel": -131.9296875,
+          "height": 107.7421875,
+          "visible": 0
+        }
+      ]
+    }
+  ],
+  "day3Hit": {
+    "step": 3,
+    "method": "scrollTop+scrollEvent",
+    "wheeled": "Input.dispatchMouseWheel: {'code': -32601, 'message': \"'Input.dispatchMouseWheel' wasn't found\"}",
+    "selected": "第 3 天",
+    "pickDay": "3",
+    "scrollTop": 660,
+    "maxScroll": 1315,
+    "days": [
+      {
+        "day": "1",
+        "rel": -342.8203125,
+        "height": 220.8828125,
+        "visible": 0
+      },
+      {
+        "day": "2",
+        "rel": -97.9375,
+        "height": 220.8828125,
+        "visible": 122.9453125
+      },
+      {
+        "day": "3",
+        "rel": 146.9453125,
+        "height": 220.8828125,
+        "visible": 155.36679687500003
+      },
+      {
+        "day": "4",
+        "rel": 391.828125,
+        "height": 107.7421875,
+        "visible": 0
+      },
+      {
+        "day": "5",
+        "rel": 523.5703125,
+        "height": 107.7421875,
+        "visible": 0
+      }
+    ]
+  },
+  "day5Hit": {
+    "step": 6,
+    "method": "scrollTop+scrollEvent",
+    "wheeled": "Input.dispatchMouseWheel: {'code': -32601, 'message': \"'Input.dispatchMouseWheel' wasn't found\"}",
+    "selected": "第 5 天",
+    "pickDay": null,
+    "scrollTop": 1315.5,
+    "maxScroll": 1315,
+    "days": [
+      {
+        "day": "1",
+        "rel": -998.3203125,
+        "height": 220.8828125,
+        "visible": 0
+      },
+      {
+        "day": "2",
+        "rel": -753.4375,
+        "height": 220.8828125,
+        "visible": 0
+      },
+      {
+        "day": "3",
+        "rel": -508.5546875,
+        "height": 220.8828125,
+        "visible": 0
+      },
+      {
+        "day": "4",
+        "rel": -263.671875,
+        "height": 107.7421875,
+        "visible": 0
+      },
+      {
+        "day": "5",
+        "rel": -131.9296875,
+        "height": 107.7421875,
+        "visible": 0
+      }
+    ]
+  },
+  "atMax": {
+    "selected": "第 5 天",
+    "chips": [
+      {
+        "text": "第 1 天",
+        "selected": false
+      },
+      {
+        "text": "第 2 天",
+        "selected": false
+      },
+      {
+        "text": "第 3 天",
+        "selected": false
+      },
+      {
+        "text": "第 4 天",
+        "selected": false
+      },
+      {
+        "text": "第 5 天",
+        "selected": true
+      }
+    ],
+    "scrollTop": 1315.5,
+    "clientHeight": 672,
+    "scrollHeight": 1987,
+    "maxScroll": 1315,
+    "endSpace": 672,
+    "days": [
+      {
+        "day": "1",
+        "rel": -998.3203125,
+        "height": 220.8828125,
+        "visible": 0
+      },
+      {
+        "day": "2",
+        "rel": -753.4375,
+        "height": 220.8828125,
+        "visible": 0
+      },
+      {
+        "day": "3",
+        "rel": -508.5546875,
+        "height": 220.8828125,
+        "visible": 0
+      },
+      {
+        "day": "4",
+        "rel": -263.671875,
+        "height": 107.7421875,
+        "visible": 0
+      },
+      {
+        "day": "5",
+        "rel": -131.9296875,
+        "height": 107.7421875,
+        "visible": 0
+      }
+    ],
+    "pickDay": null
+  },
+  "aroundDay3": {
+    "selected": "第 3 天",
+    "chips": [
+      {
+        "text": "第 1 天",
+        "selected": false
+      },
+      {
+        "text": "第 2 天",
+        "selected": false
+      },
+      {
+        "text": "第 3 天",
+        "selected": true
+      },
+      {
+        "text": "第 4 天",
+        "selected": false
+      },
+      {
+        "text": "第 5 天",
+        "selected": false
+      }
+    ],
+    "scrollTop": 787,
+    "clientHeight": 672,
+    "scrollHeight": 1987,
+    "maxScroll": 1315,
+    "endSpace": 672,
+    "days": [
+      {
+        "day": "1",
+        "rel": -469.8203125,
+        "height": 220.8828125,
+        "visible": 0
+      },
+      {
+        "day": "2",
+        "rel": -224.9375,
+        "height": 220.8828125,
+        "visible": 0
+      },
+      {
+        "day": "3",
+        "rel": 19.9453125,
+        "height": 220.8828125,
+        "visible": 220.8828125
+      },
+      {
+        "day": "4",
+        "rel": 264.828125,
+        "height": 107.7421875,
+        "visible": 37.483984375000034
+      },
+      {
+        "day": "5",
+        "rel": 396.5703125,
+        "height": 107.7421875,
+        "visible": 0
+      }
+    ],
+    "pickDay": "3"
+  },
+  "shots": {
+    "chip3": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t003-retest2-chip3.png",
+    "top": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t003-retest2-top.png",
+    "max": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t003-retest2-scroll-max.png",
+    "aroundD3": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t003-retest2-around-day3.png"
+  },
+  "asserts": {
+    "chip3": true,
+    "scrollSelectsDay3": true,
+    "maxSelectsDay5": true,
+    "maxNotDay2": true,
+    "spacer": true
+  }
+}

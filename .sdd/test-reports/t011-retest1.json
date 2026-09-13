@@ -1,0 +1,382 @@
+{
+  "round": "retest1",
+  "chrome": "Chrome/152.0.7977.84",
+  "cdp": "Target.createTarget + attachToTarget flatten",
+  "frontend": "http://127.0.0.1:5199",
+  "backend": "http://127.0.0.1:8099",
+  "vite_use_mock": false,
+  "reused_services": {
+    "backend_8099": {
+      "note": "开发残留 PID 28142 在本轮开始后已退出；Tester 用项目 .venv 重新拉起",
+      "tester_started": true
+    },
+    "frontend_5199": {
+      "pid": 98000,
+      "started": "2026-09-13 16:46:48",
+      "tester_started": false
+    }
+  },
+  "samples": {
+    "ac019": "itn_541d4713e1061407",
+    "ac018": "itn_63f6c180617024d5",
+    "spot": "itn_8d75be294e483e2a",
+    "excluded_dev_only": [
+      "itn_15845ef143d2cc56",
+      "itn_e6e7ea18e5abc6c2"
+    ]
+  },
+  "acs": {
+    "AC-019": {
+      "result": "PASS",
+      "clicked_row": true,
+      "chip_click": {
+        "ok": true,
+        "box": {
+          "x": 1260.5,
+          "y": 742.70703125,
+          "w": 327,
+          "h": 36.1953125
+        }
+      },
+      "wait_seconds": 1.0,
+      "user_has_text": true,
+      "chips_before": [
+        "🍃第三天不要排那么满",
+        "🚌白天少走路，多坐公交",
+        "🏨换一家更安静的推荐住宿"
+      ],
+      "chips_immediate": [],
+      "chips_gone": true,
+      "same_id": true,
+      "timeout_ui": false,
+      "coco_replied": true,
+      "coco_last": "👍 白天这段我改成多坐公交、少走路，还是这一份行程。",
+      "revising_end": false,
+      "observable": true,
+      "delta": {
+        "updated_changed": true,
+        "id_same": true,
+        "cards_changed": false,
+        "legs_changed": true,
+        "lodging_changed": false,
+        "before_days": [
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            5,
+            1
+          ]
+        ],
+        "after_days": [
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            5,
+            1
+          ]
+        ],
+        "before_legs": [
+          {
+            "day": 1,
+            "mode": "walking",
+            "duration_min": 15,
+            "summary": "步行约 15 分钟",
+            "source": "amap"
+          },
+          {
+            "day": 2,
+            "mode": "walking",
+            "duration_min": 63,
+            "summary": "沿龙井路步行约 63 分钟（可现场改乘公交）",
+            "source": "amap"
+          },
+          {
+            "day": 4,
+            "mode": "walking",
+            "duration_min": 50,
+            "summary": "沿南山路步行约 50 分钟（可现场改乘公交）",
+            "source": "amap"
+          }
+        ],
+        "after_legs": [
+          {
+            "day": 1,
+            "mode": "transit",
+            "duration_min": 32,
+            "summary": "公交约 32 分钟",
+            "source": "amap"
+          },
+          {
+            "day": 2,
+            "mode": "transit",
+            "duration_min": 60,
+            "summary": "公交约 60 分钟",
+            "source": "amap"
+          },
+          {
+            "day": 4,
+            "mode": "transit",
+            "duration_min": 63,
+            "summary": "公交约 63 分钟",
+            "source": "amap"
+          }
+        ],
+        "before_lodging": [],
+        "after_lodging": []
+      },
+      "before_plan": {
+        "planning": "succeeded",
+        "user_n": 4
+      },
+      "after_plan": {
+        "http": 200,
+        "id": "conv_a66b5537023f598c",
+        "planning": "succeeded",
+        "itinerary_id": "itn_541d4713e1061407",
+        "specs": [
+          {
+            "role": "destination_research",
+            "status": "succeeded"
+          },
+          {
+            "role": "budget_expert",
+            "status": "succeeded"
+          },
+          {
+            "role": "itinerary_design",
+            "status": "succeeded"
+          }
+        ],
+        "running": false,
+        "allSucceeded": true,
+        "user_n": 5,
+        "last_user": "白天少走路，多坐公交",
+        "last_assistant": "👍 白天这段我改成多坐公交、少走路，还是这一份行程。"
+      }
+    },
+    "AC-018": {
+      "result": "PASS",
+      "clicked_row": true,
+      "send": {
+        "ok": true,
+        "box": {
+          "x": 1401,
+          "y": 852,
+          "w": 36,
+          "h": 36
+        }
+      },
+      "wait_seconds": 1.1,
+      "user_has_text": true,
+      "same_id": true,
+      "timeout_ui": false,
+      "coco_replied": true,
+      "coco_last": "👍 第三天我帮你排松一点，还是这一份行程。",
+      "day3_before_n": 2,
+      "day3_after_n": 1,
+      "day3_before_titles": [
+        "假日海滩旅游区",
+        "西岸超级海滩"
+      ],
+      "day3_after_titles": [
+        "假日海滩旅游区"
+      ],
+      "loosened": true,
+      "after_plan": {
+        "http": 200,
+        "id": "conv_d4db2cfd218d672d",
+        "planning": "succeeded",
+        "itinerary_id": "itn_63f6c180617024d5",
+        "specs": [
+          {
+            "role": "destination_research",
+            "status": "succeeded"
+          },
+          {
+            "role": "budget_expert",
+            "status": "succeeded"
+          },
+          {
+            "role": "itinerary_design",
+            "status": "succeeded"
+          }
+        ],
+        "running": false,
+        "allSucceeded": true,
+        "user_n": 4,
+        "last_user": "第三天不要排那么满",
+        "last_assistant": "👍 第三天我帮你排松一点，还是这一份行程。"
+      },
+      "suggest_after": []
+    },
+    "spot_report_map": {
+      "result": "PASS",
+      "path": "/itineraries/itn_8d75be294e483e2a",
+      "hasBudget": true,
+      "hasChecklist": true,
+      "hasMapBtn": true,
+      "dayCount": 5,
+      "hasMock": false,
+      "mapUnconfigured": false
+    }
+  },
+  "tech": {
+    "src_hits": 92,
+    "api_sample": [
+      {
+        "url": "http://127.0.0.1:5199/api/itineraries",
+        "status": 200,
+        "type": "XHR"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/itineraries",
+        "status": 200,
+        "type": "Fetch"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/itineraries/itn_63f6c180617024d5",
+        "status": 200,
+        "type": "XHR"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/itineraries/itn_63f6c180617024d5",
+        "status": 200,
+        "type": "XHR"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/conversations/conv_d4db2cfd218d672d",
+        "status": 200,
+        "type": "XHR"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/conversations/conv_d4db2cfd218d672d",
+        "status": 200,
+        "type": "XHR"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/itineraries/itn_63f6c180617024d5",
+        "status": 200,
+        "type": "Fetch"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/conversations/conv_d4db2cfd218d672d",
+        "status": 200,
+        "type": "Fetch"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/itineraries/itn_63f6c180617024d5",
+        "status": 200,
+        "type": "Fetch"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/conversations/conv_d4db2cfd218d672d/messages",
+        "status": 200,
+        "type": "XHR"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/itineraries/itn_63f6c180617024d5",
+        "status": 200,
+        "type": "XHR"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/itineraries/itn_63f6c180617024d5",
+        "status": 200,
+        "type": "Fetch"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/conversations/conv_d4db2cfd218d672d",
+        "status": 200,
+        "type": "Fetch"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/itineraries",
+        "status": 200,
+        "type": "XHR"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/itineraries",
+        "status": 200,
+        "type": "XHR"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/itineraries",
+        "status": 200,
+        "type": "Fetch"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/itineraries/itn_8d75be294e483e2a",
+        "status": 200,
+        "type": "XHR"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/itineraries/itn_8d75be294e483e2a",
+        "status": 200,
+        "type": "XHR"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/conversations/conv_1ae58454ffbb99a0",
+        "status": 200,
+        "type": "XHR"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/conversations/conv_1ae58454ffbb99a0",
+        "status": 200,
+        "type": "XHR"
+      }
+    ]
+  },
+  "experience": {
+    "timeout_180s": {
+      "ac019_wait": 1.0,
+      "ac019_timeout_ui": false,
+      "ac018_wait": 1.1,
+      "ac018_timeout_ui": false
+    },
+    "chip_mapping": {
+      "observable": true,
+      "legs_changed": true,
+      "cards_changed": false,
+      "lodging_changed": false
+    },
+    "no_curl_src": {
+      "src_hits": 92,
+      "tester_curled_src": false
+    }
+  },
+  "home": {
+    "hasMock": false,
+    "path": "/"
+  },
+  "trips": {
+    "rows": 7,
+    "hasMock": false
+  }
+}

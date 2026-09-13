@@ -1,0 +1,450 @@
+{
+  "chrome": "Chrome/152.0.7977.84",
+  "cdp": "Target.createTarget + attachToTarget flatten",
+  "frontend": "http://127.0.0.1:5199",
+  "backend": "http://127.0.0.1:8099",
+  "vite_use_mock": false,
+  "acs": {
+    "AC-012": {
+      "result": "PASS",
+      "leftNav": [
+        "对话",
+        "行程",
+        "新建计划"
+      ],
+      "composer": true,
+      "inspirationHead": "✨ 灵感",
+      "mapSlot": false,
+      "hasMock": false,
+      "cards": [
+        {
+          "city": "杭州",
+          "title": "西湖边慢慢走",
+          "reason": "湖景、茶、短途高铁都合适，适合轻松几天。",
+          "imgOk": true,
+          "imgW": 1536,
+          "imgH": 1024,
+          "imgSrc": "/inspirations/hangzhou.jpg",
+          "overlay": false,
+          "captionBelow": true
+        },
+        {
+          "city": "成都",
+          "title": "熊猫与火锅",
+          "reason": "节奏可以很慢，吃和逛都适合情侣或家庭。",
+          "imgOk": true,
+          "imgW": 1536,
+          "imgH": 1024,
+          "imgSrc": "/inspirations/chengdu.jpg",
+          "overlay": false,
+          "captionBelow": true
+        },
+        {
+          "city": "大理",
+          "title": "风大，适合发呆",
+          "reason": "洱海边发呆就够了，不要把行程排太满。",
+          "imgOk": true,
+          "imgW": 1536,
+          "imgH": 1024,
+          "imgSrc": "/inspirations/dali.jpg",
+          "overlay": false,
+          "captionBelow": true
+        }
+      ],
+      "path": "/"
+    },
+    "AC-020": {
+      "result": "PASS",
+      "path": "/",
+      "tripsBefore": {
+        "http": 200,
+        "count": 0
+      },
+      "tripsAfter": {
+        "http": 200,
+        "count": 0
+      },
+      "tripLink": false,
+      "conversationId": null
+    },
+    "AC-002": {
+      "result": "PASS",
+      "coco": "📝 好呀，我来帮你把这趟旅行定下来～先确认几件事：你从哪个城市出发？想在国内玩还是出国？打算玩几天？和谁一起去（几位大人、有没有小朋友及年龄）？预算大概多少？想要轻松慢玩、一般节奏，还是紧凑打卡？",
+      "api": {
+        "http": 200,
+        "id": "conv_436bbc7bcac7b7ed",
+        "ready": false,
+        "missing": [
+          "origin_city",
+          "region",
+          "duration_days",
+          "companion",
+          "budget",
+          "pace"
+        ],
+        "origin": null,
+        "dest": null,
+        "region": null,
+        "days": null,
+        "pace": null,
+        "followups": 1,
+        "planning": "idle",
+        "itinerary_id": null,
+        "specs": [
+          {
+            "role": "destination_research",
+            "status": "not_started"
+          },
+          {
+            "role": "budget_expert",
+            "status": "not_started"
+          },
+          {
+            "role": "itinerary_design",
+            "status": "not_started"
+          }
+        ],
+        "coco": [
+          "📝 好呀，我来帮你把这趟旅行定下来～先确认几件事：你从哪个城市出发？想在国内玩还是出国？打算玩几天？和谁一起去（几位大人、有没有小朋友及年龄）？预算大概多少？想要轻松慢玩、一般节奏，还是紧凑打卡？"
+        ],
+        "msg_count": 2
+      },
+      "mapHead": "🗺️ 地图",
+      "hasMock": false
+    },
+    "AC-013": {
+      "result": "PASS",
+      "switched": true,
+      "mapCopy": "",
+      "amap": true,
+      "canvasCount": 0,
+      "hasAMap": true,
+      "tiles": "ok"
+    },
+    "AC-001": {
+      "result": "PASS",
+      "coco": "🧭 信息齐了，上海出发带配偶去杭州 5 天、预算 2 万、走轻松不赶的节奏，我这就按这个方向给你排一版行程。",
+      "api": {
+        "http": 200,
+        "id": "conv_8d2ec6721f0734f0",
+        "ready": true,
+        "missing": [],
+        "origin": "上海",
+        "dest": "杭州",
+        "region": "domestic",
+        "days": 5,
+        "pace": "relaxed",
+        "followups": 0,
+        "planning": "running",
+        "itinerary_id": null,
+        "specs": [
+          {
+            "role": "destination_research",
+            "status": "running"
+          },
+          {
+            "role": "budget_expert",
+            "status": "not_started"
+          },
+          {
+            "role": "itinerary_design",
+            "status": "not_started"
+          }
+        ],
+        "coco": [
+          "🧭 信息齐了，上海出发带配偶去杭州 5 天、预算 2 万、走轻松不赶的节奏，我这就按这个方向给你排一版行程。"
+        ],
+        "msg_count": 2
+      },
+      "askedOutbound": false,
+      "uiSpecs": [
+        "📍 目的地研究 · 进行中 · 正在查杭州点位与天气",
+        "💰 预算专家 · 未执行",
+        "🗓️ 行程设计 · 未执行"
+      ]
+    },
+    "AC-009": {
+      "result": "FAIL",
+      "city": null,
+      "coco": "服务器内部错误",
+      "api": {
+        "error": "no conversation id"
+      },
+      "askedPickCity": false
+    },
+    "AC-011": {
+      "result": "PASS",
+      "rounds": [
+        "📝 好的，和朋友去海边、预算一万、节奏轻松，我先记下了。还需要确认三件事：你们从哪个城市出发？打算玩几天？想看国内的海还是出境海岛？",
+        "📝 收到，两人国内海边游。还差两点：你们从哪个城市出发？计划玩几天？",
+        "📌 先停一下，我们还缺两个关键信息：出发城市和旅行天数，这两项定了我才能帮你排海边行程。等你确认后我们马上继续。"
+      ],
+      "last": "📌 先停一下，我们还缺两个关键信息：出发城市和旅行天数，这两项定了我才能帮你排海边行程。等你确认后我们马上继续。",
+      "api": {
+        "http": 200,
+        "id": "conv_4251463d77bfde8c",
+        "ready": false,
+        "missing": [
+          "origin_city",
+          "duration_days"
+        ],
+        "origin": null,
+        "dest": "海边",
+        "region": "domestic",
+        "days": null,
+        "pace": "relaxed",
+        "followups": 2,
+        "planning": "idle",
+        "itinerary_id": null,
+        "specs": [
+          {
+            "role": "destination_research",
+            "status": "not_started"
+          },
+          {
+            "role": "budget_expert",
+            "status": "not_started"
+          },
+          {
+            "role": "itinerary_design",
+            "status": "not_started"
+          }
+        ],
+        "coco": [
+          "📝 好的，和朋友去海边、预算一万、节奏轻松，我先记下了。还需要确认三件事：你们从哪个城市出发？打算玩几天？想看国内的海还是出境海岛？",
+          "📝 收到，两人国内海边游。还差两点：你们从哪个城市出发？计划玩几天？",
+          "📌 先停一下，我们还缺两个关键信息：出发城市和旅行天数，这两项定了我才能帮你排海边行程。等你确认后我们马上继续。"
+        ],
+        "msg_count": 6
+      },
+      "gapExplained": true,
+      "noPlan": true
+    },
+    "AC-014": {
+      "result": "FAIL",
+      "modalOpened": true,
+      "coco": "📝 还差一个出发城市，告诉我从哪出发，我就能把杭州 5 天轻松行程定下来啦。",
+      "askedPace": true,
+      "askedOrigin": true,
+      "api": {
+        "http": 200,
+        "id": "conv_67c9c78ab269efef",
+        "ready": false,
+        "missing": [
+          "origin_city"
+        ],
+        "origin": null,
+        "dest": "杭州",
+        "region": "domestic",
+        "days": 5,
+        "pace": "relaxed",
+        "followups": 1,
+        "planning": "idle",
+        "itinerary_id": null,
+        "specs": [
+          {
+            "role": "destination_research",
+            "status": "not_started"
+          },
+          {
+            "role": "budget_expert",
+            "status": "not_started"
+          },
+          {
+            "role": "itinerary_design",
+            "status": "not_started"
+          }
+        ],
+        "coco": [
+          "📝 还差一个出发城市，告诉我从哪出发，我就能把杭州 5 天轻松行程定下来啦。"
+        ],
+        "msg_count": 2
+      }
+    }
+  },
+  "refresh": {
+    "result": "PASS",
+    "id": "conv_436bbc7bcac7b7ed",
+    "users": [
+      "想出去玩"
+    ],
+    "api": {
+      "http": 200,
+      "id": "conv_436bbc7bcac7b7ed",
+      "ready": false,
+      "missing": [
+        "origin_city",
+        "region",
+        "duration_days",
+        "companion",
+        "budget",
+        "pace"
+      ],
+      "origin": null,
+      "dest": null,
+      "region": null,
+      "days": null,
+      "pace": null,
+      "followups": 1,
+      "planning": "idle",
+      "itinerary_id": null,
+      "specs": [
+        {
+          "role": "destination_research",
+          "status": "not_started"
+        },
+        {
+          "role": "budget_expert",
+          "status": "not_started"
+        },
+        {
+          "role": "itinerary_design",
+          "status": "not_started"
+        }
+      ],
+      "coco": [
+        "📝 好呀，我来帮你把这趟旅行定下来～先确认几件事：你从哪个城市出发？想在国内玩还是出国？打算玩几天？和谁一起去（几位大人、有没有小朋友及年龄）？预算大概多少？想要轻松慢玩、一般节奏，还是紧凑打卡？"
+      ],
+      "msg_count": 2
+    }
+  },
+  "network_api": [
+    {
+      "url": "http://127.0.0.1:5199/api/inspirations",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/inspirations",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/itineraries",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/itineraries",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/conversations",
+      "status": 201
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/conversations/conv_436bbc7bcac7b7ed/messages",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/conversations/conv_436bbc7bcac7b7ed",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/inspirations",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/conversations/conv_436bbc7bcac7b7ed",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/inspirations",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/conversations/conv_436bbc7bcac7b7ed",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/conversations/conv_436bbc7bcac7b7ed",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/inspirations",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/inspirations",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/conversations",
+      "status": 201
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/conversations/conv_8d2ec6721f0734f0/messages",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/conversations/conv_8d2ec6721f0734f0/events",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/conversations/conv_8d2ec6721f0734f0",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/inspirations",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/inspirations",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/conversations",
+      "status": 500
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/inspirations",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/inspirations",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/conversations",
+      "status": 201
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/conversations/conv_4251463d77bfde8c/messages",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/conversations/conv_4251463d77bfde8c/messages",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/conversations/conv_4251463d77bfde8c/messages",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/conversations/conv_4251463d77bfde8c",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/inspirations",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/inspirations",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/conversations",
+      "status": 201
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/conversations/conv_67c9c78ab269efef/messages",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/conversations/conv_67c9c78ab269efef",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/api/conversations/conv_67c9c78ab269efef",
+      "status": 200
+    }
+  ],
+  "hasMockAny": false
+}

@@ -1,0 +1,1315 @@
+{
+  "project": "Xtrip",
+  "project_type": "web",
+  "specification": "default",
+  "created": "2026-09-13",
+  "max_retries": 2,
+  "execution_mode": "automatic",
+  "step_gate": {
+    "kind": "task_review",
+    "task_id": null,
+    "status": "pending",
+    "user_confirmation": null
+  },
+  "source_files": {
+    "prd": "docs/PRD.md",
+    "tech_spec": "docs/tech-spec.md",
+    "ui_style": "docs/ui-style.md",
+    "prototype": "docs/prototypes/index.html"
+  },
+  "external_services": [
+    {
+      "name": "DeepSeek",
+      "config_keys": [
+        "deepseek_api_key",
+        "deepseek_base_url",
+        "deepseek_model",
+        "manager_thinking_enabled",
+        "itinerary_thinking_enabled"
+      ],
+      "tester_access_required": true,
+      "required": true,
+      "fallback_allowed": false,
+      "status": "confirmed"
+    },
+    {
+      "name": "百炼千问",
+      "config_keys": [
+        "qwen_api_key",
+        "qwen_base_url",
+        "qwen_model"
+      ],
+      "tester_access_required": true,
+      "required": true,
+      "fallback_allowed": false,
+      "status": "confirmed"
+    },
+    {
+      "name": "高德 Web 服务",
+      "config_keys": [
+        "amap_web_key"
+      ],
+      "tester_access_required": true,
+      "required": true,
+      "fallback_allowed": true,
+      "status": "confirmed"
+    },
+    {
+      "name": "高德 JS API",
+      "config_keys": [
+        "VITE_AMAP_JS_KEY",
+        "VITE_AMAP_SECURITY_JS_CODE"
+      ],
+      "tester_access_required": true,
+      "required": true,
+      "fallback_allowed": true,
+      "status": "confirmed"
+    }
+  ],
+  "features": [
+    {
+      "id": "F-001",
+      "title": "与规划经理 Coco 多轮对话收齐开工最小集后再派专员",
+      "source_requirements": [
+        "REQ-001"
+      ]
+    },
+    {
+      "id": "F-002",
+      "title": "Coco 分派三专员，展示可展开运行日志，失败必须说明原因",
+      "source_requirements": [
+        "REQ-002"
+      ]
+    },
+    {
+      "id": "F-003",
+      "title": "在网页行程详情阅读按天报告、预算、地图与行前清单，并逐项或对话修改",
+      "source_requirements": [
+        "REQ-003",
+        "REQ-006"
+      ]
+    },
+    {
+      "id": "F-004",
+      "title": "不同人群与节奏得到可区分的行程排法",
+      "source_requirements": [
+        "REQ-004"
+      ]
+    },
+    {
+      "id": "F-005",
+      "title": "无登录三栏工作台、灵感卡片、新建计划预填与行程列表",
+      "source_requirements": [
+        "REQ-005"
+      ]
+    },
+    {
+      "id": "F-DELIVERY",
+      "title": "理解各页面功能及其接口算法与实现位置",
+      "source_requirements": [
+        "SDD-DELIVERY"
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "id": "T-001",
+      "title": "前端工程、三栏外壳、规划前灵感与新建计划 Mock",
+      "type": "frontend",
+      "description": "初始化 React+TypeScript+Vite 前端并入本任务：路由 `/` 与 `/itineraries/:id`、无登录、产品名 Xtrip、左栏对话/行程/新建计划、中栏欢迎+composer、右栏国内灵感卡。实现 axios 单例、与 tech-spec 对齐的 DTO/Mock（集中 frontend/src/mocks/，界面可见 [Mock]）、VITE_USE_MOCK、/api 代理到 8099。新建计划弹层含去哪/何时/和谁/预算/节奏三档，提交不立刻出方案。灵感卡有图有描述、点击不进详情、不生成行程。行程详情页与对话/日志组件允许占位，由 T-002/T-003 填满。本阶段无独立业务 AC；AC-012/020 由 T-009 真实验收，AC-014 由 T-009。",
+      "source_feature": "F-005",
+      "acceptanceCriteria": [],
+      "technicalChecks": [
+        "frontend 可在 127.0.0.1:5199 启动；type-check 与 build 通过；JSX 使用 .tsx，createRoot 挂载。",
+        "vite 配置 /api 代理，baseURL 来自 VITE_API_BASE_URL，禁止硬编码后端主机；组件内无直接 axios 调用。",
+        "打开 `/`：左栏 260px 可见 Xtrip 与「Demo · 无登录」，中栏可输入，右侧至少 3 张国内灵感卡（图+标题+最多两行描述），右栏不是地图。",
+        "点击灵感卡仍停在工作台，无详情路由、不新建行程；cursor 为默认，无「查看详情」。",
+        "新建计划为模态：去哪、何时、成人/儿童、预算、节奏 chip（轻松/适中/紧凑）、目前已知的计划；全空也可「开始聊」；不在弹层出方案。",
+        "空输入发送禁用；composer 贴中栏底部不被挤掉；配色/字阶/圆角对照 ui-style 二、全局视觉系统与 UI-001/UI-003；控件覆盖 enabled/hover/focus/disabled。",
+        "Mock 信封含 success/data/error/error_code/message/timestamp/request_id/metadata，字段 snake_case 与 API-001/010 一致；界面可见 [Mock]。",
+        "后续验收：AC-012/013/014/020→T-009；AC-015→T-011。"
+      ],
+      "externalServices": [],
+      "dependencies": [],
+      "priority": 1,
+      "context_files": [
+        {
+          "path": "docs/PRD.md",
+          "section": "REQ-005 三栏工作台与新建计划预填"
+        },
+        {
+          "path": "docs/PRD.md",
+          "section": "界面约定"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "二、前后端怎么分工，接口怎么拆"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "二、前后端怎么分工，接口怎么拆 > API-001 新建对话"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "二、前后端怎么分工，接口怎么拆 > API-010 目的地灵感"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "七、项目本地层级设计"
+        },
+        {
+          "path": "docs/ui-style.md",
+          "section": "二、全局视觉系统"
+        },
+        {
+          "path": "docs/ui-style.md",
+          "section": "三、全局组件与状态"
+        },
+        {
+          "path": "docs/ui-style.md",
+          "section": "UI-001 规划前工作台"
+        },
+        {
+          "path": "docs/ui-style.md",
+          "section": "UI-003 新建计划"
+        },
+        {
+          "path": "docs/decisions.md",
+          "section": "D-002 工作台页面架构（参考 Mindtrip 信息结构，不复制其品牌与文案）"
+        },
+        {
+          "path": "docs/decisions.md",
+          "section": "D-004 本期定位为无登录的 Multi-Agent Demo"
+        },
+        {
+          "path": "docs/decisions.md",
+          "section": "D-009 产品显示名与界面气质"
+        },
+        {
+          "path": "docs/prototypes/workbench.html",
+          "section": "#p-home / #p-create"
+        }
+      ],
+      "rules_files": [
+        "specification/default/frontend/tech-stack.md",
+        "specification/default/frontend/api-client.md",
+        "specification/default/frontend/mock.md",
+        "specification/default/frontend/style.md",
+        "specification/default/frontend/acceptance.md",
+        "specification/default/shared/naming.md",
+        "specification/default/shared/env-policy.md",
+        "specification/default/shared/security.md"
+      ],
+      "write_scope": [
+        "frontend/package.json",
+        "frontend/package-lock.json",
+        "frontend/vite.config.ts",
+        "frontend/tsconfig.json",
+        "frontend/tsconfig.app.json",
+        "frontend/tsconfig.node.json",
+        "frontend/eslint.config.js",
+        "frontend/index.html",
+        "frontend/.env.example",
+        "frontend/.gitignore",
+        "frontend/public/inspirations/",
+        "frontend/src/vite-env.d.ts",
+        "frontend/src/main.tsx",
+        "frontend/src/App.tsx",
+        "frontend/src/index.css",
+        "frontend/src/router/index.tsx",
+        "frontend/src/pages/WorkbenchPage.tsx",
+        "frontend/src/components/layout/AppShell.tsx",
+        "frontend/src/components/layout/Sidebar.tsx",
+        "frontend/src/components/InspirationPanel.tsx",
+        "frontend/src/components/NewPlanModal.tsx",
+        "frontend/src/components/Composer.tsx",
+        "frontend/src/stores/AppProvider.tsx",
+        "frontend/src/services/",
+        "frontend/src/types/",
+        "frontend/src/mocks/inspirations.ts",
+        "frontend/src/mocks/conversations.ts"
+      ],
+      "status": "passed",
+      "retry_count": 1,
+      "notes": "2026-09-13 Tester FAIL（SVG 破图）→ 第1次返工 → 复验 PASS（前端 Mock）。5199 复验时仍被客服占用（BLOCKED 子项，不拉低总结果）；其后用户授权把 5199 给 Xtrip。经验已沉淀：SVG 作为 img 必须良构。证据 .sdd/test-reports/test-T-001.md。"
+    },
+    {
+      "id": "T-002",
+      "title": "前端对话、Coco 运行日志与右栏地图槽 Mock",
+      "type": "frontend",
+      "description": "在 T-001 外壳上实现 UI-002：中栏与 Coco 对话（assistant 展示名固定 Coco，用户浅灰气泡），规划中在 Coco 消息下插入可展开 Agent 运行日志（摘要+逐步中文动作，默认进行中展开、完成后可收起）。clickable 步骤点击弹出只读细节（heading+body），Esc/遮罩关闭后仍停在对话；日志与弹窗不得出现密钥、模型品牌或整份按天方案。第一条出行消息发送成功后右栏由灵感改为地图槽（无 JS Key 显示「地图未配置」）。Mock API-003/004/005：问诊追问时无日志且专员 not_started；ready 后日志逐条增加；失败时 Coco 气泡含原因且无「查看行程」。本阶段 AC=[]，不把 Mock 对话计为业务通过。关联 AC-001/002/009/011/013 由 T-009 真实验收；AC-003/004/024 由 T-010。",
+      "source_feature": "F-002",
+      "acceptanceCriteria": [],
+      "technicalChecks": [
+        "发送后用户气泡立刻出现，Coco 处三点加载；回复展示名必为 Coco，不是模型品牌。",
+        "Mock 最小集未齐：Coco 追问，无运行日志，过程视图三专员均为未执行。",
+        "Mock 已齐：Coco 告知开始出方案，出现可展开运行日志，展开后至少 4 条中文逐步动作（含 tool 与 thought）；点「搜索景点 西湖」类步骤弹出细节且无密钥，关闭后仍在对话。",
+        "Mock 研究失败：Coco 说明无法完成的原因，日志保留失败步可点开，无「查看行程」主按钮、无假行程入口。",
+        "Mock 成功：Coco 告知可查看行程 + 白底主按钮「查看行程」；日志可收起回看。",
+        "发出第一条出行消息后右栏变为地图槽；无 VITE_AMAP_JS_KEY 时居中「地图未配置」，对话仍可用。",
+        "SSE 用 EventSource（Mock 可用 EventSource polyfill 或 mock stream），失败则每 2s 拉 API-003；Axios 超时 API-004 为 30s。",
+        "对照 UI-002、D-010、原型 #p-chat；规划中再发送 Mock 回复「专员还在做」，不新开第二份日志。",
+        "后续验收：AC-001/002/009/011/013→T-009；AC-003/004/024→T-010。"
+      ],
+      "externalServices": [],
+      "dependencies": [
+        "T-001"
+      ],
+      "priority": 1,
+      "context_files": [
+        {
+          "path": "docs/PRD.md",
+          "section": "REQ-001 规划经理多轮对话收敛需求"
+        },
+        {
+          "path": "docs/PRD.md",
+          "section": "REQ-002 规划经理分派专员并汇总"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "二、前后端怎么分工，接口怎么拆 > API-003 对话详情"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "二、前后端怎么分工，接口怎么拆 > API-004 发送消息给规划经理"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "二、前后端怎么分工，接口怎么拆 > API-005 规划进度 SSE"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "三、接口请求数据的类型选型"
+        },
+        {
+          "path": "docs/ui-style.md",
+          "section": "UI-002 对话与规划中"
+        },
+        {
+          "path": "docs/ui-style.md",
+          "section": "三、全局组件与状态"
+        },
+        {
+          "path": "docs/decisions.md",
+          "section": "D-008 规划经理对外名称与失败必须说明原因"
+        },
+        {
+          "path": "docs/decisions.md",
+          "section": "D-010 规划过程展示可展开的 Agent 运行日志"
+        },
+        {
+          "path": "docs/prototypes/workbench.html",
+          "section": "#p-chat"
+        }
+      ],
+      "rules_files": [
+        "specification/default/frontend/api-client.md",
+        "specification/default/frontend/mock.md",
+        "specification/default/frontend/style.md",
+        "specification/default/frontend/acceptance.md",
+        "specification/default/shared/naming.md"
+      ],
+      "write_scope": [
+        "frontend/src/components/chat/ChatThread.tsx",
+        "frontend/src/components/chat/MessageBubble.tsx",
+        "frontend/src/components/ActivityLog.tsx",
+        "frontend/src/components/LogDetailModal.tsx",
+        "frontend/src/components/MapSlot.tsx",
+        "frontend/src/components/SpecialistStatus.tsx",
+        "frontend/src/hooks/useConversation.ts",
+        "frontend/src/hooks/usePlanningEvents.ts",
+        "frontend/src/mocks/planning.ts",
+        "frontend/src/services/conversationService.ts"
+      ],
+      "status": "passed",
+      "retry_count": 0,
+      "notes": "2026-09-13 Tester PASS（前端 Mock）。Chrome 点选：追问无日志、成功有日志与查看行程、失败含原因、首条后地图槽。未判 AC-001/002/009/011/013/003/004/024。证据 .sdd/test-reports/test-T-002.md。"
+    },
+    {
+      "id": "T-003",
+      "title": "前端行程列表与网页行程详情 Mock",
+      "type": "frontend",
+      "description": "实现 UI-004/UI-005 Mock：左侧点「行程」进入列表（仅 ready，规划中会话不出现）；点一行进入 `/itineraries/:id` 网页报告（非 PDF、不把按天方案贴进对话）。详情顶日期 chip 与滚动同步；每天地点/景点卡片，卡间交通条；点卡片开简介微详情（名称+介绍或地址，无支付/支出）；可删第 2 天某点（Mock 本地更新）；侧栏 Coco + 高频修改快捷建议 chip（点选等于发该句）。预算区展示合计与是否超出上限文字；行前清单无护照签证。地图模式点位与当天卡片一致，无 Key 显示「地图未配置」。本阶段 AC=[]。关联 AC-005/006/007/015～023 由 T-011 真实验收，AC-008 由 T-012。",
+      "source_feature": "F-003",
+      "acceptanceCriteria": [],
+      "technicalChecks": [
+        "行程列表：标题、目的地、天数、节奏中文、更新时间；空态「还没有行程，先和 Coco 聊一趟」；规划中项不出现。",
+        "详情为网页报告：5 天 Mock 杭州行程同时有按天卡片、预算、地图入口、行前清单；无 PDF 下载、对话区无整份按天粘贴。",
+        "顶部日期 chip 可点并 scrollIntoView；向下滚到第 3 天时第 3 天 chip 高亮（交叉观察）。",
+        "连续两卡之间有交通文案（如「公交约 25 分钟」），不是地点名硬接。",
+        "点卡片打开微详情（名称+介绍或地址），无支付/支出金额；关闭回到当天列表。",
+        "删第 2 天一张卡后该点从列表消失，地图当天点同步移除（Mock）。",
+        "快捷建议最多 4 条，点击后侧栏出现对等用户消息；换目的地类大改 Mock 为 Coco 提示去新建计划。",
+        "对照 UI-004/UI-005、D-006、原型 #p-trips / #p-detail；侧栏 composer 不被中栏滚动挤掉。",
+        "后续验收：AC-015/016/017/018/019/021/022/023 与 AC-005/006/007→T-011；AC-008→T-012。"
+      ],
+      "externalServices": [],
+      "dependencies": [
+        "T-001"
+      ],
+      "priority": 1,
+      "context_files": [
+        {
+          "path": "docs/PRD.md",
+          "section": "REQ-003 交付可改的行程、预算、地图与行前清单"
+        },
+        {
+          "path": "docs/PRD.md",
+          "section": "REQ-006 行程详情：按天卡片逐项改与对话改"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "二、前后端怎么分工，接口怎么拆 > API-006 行程列表"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "二、前后端怎么分工，接口怎么拆 > API-007 行程详情"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "二、前后端怎么分工，接口怎么拆 > API-008 逐项改卡片"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "二、前后端怎么分工，接口怎么拆 > API-009 删除卡片"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "五、接口逻辑算法设计 > 日期滚动"
+        },
+        {
+          "path": "docs/ui-style.md",
+          "section": "UI-004 行程列表"
+        },
+        {
+          "path": "docs/ui-style.md",
+          "section": "UI-005 行程详情"
+        },
+        {
+          "path": "docs/decisions.md",
+          "section": "D-006 节奏分档与行程详情按日滚动"
+        },
+        {
+          "path": "docs/prototypes/workbench.html",
+          "section": "#p-trips / #p-detail"
+        }
+      ],
+      "rules_files": [
+        "specification/default/frontend/api-client.md",
+        "specification/default/frontend/mock.md",
+        "specification/default/frontend/style.md",
+        "specification/default/frontend/acceptance.md",
+        "specification/default/shared/naming.md"
+      ],
+      "write_scope": [
+        "frontend/src/pages/TripListPage.tsx",
+        "frontend/src/pages/ItineraryDetailPage.tsx",
+        "frontend/src/components/itinerary/DayChips.tsx",
+        "frontend/src/components/itinerary/ItineraryCard.tsx",
+        "frontend/src/components/itinerary/TransitLeg.tsx",
+        "frontend/src/components/itinerary/MicroDetailModal.tsx",
+        "frontend/src/components/itinerary/BudgetPanel.tsx",
+        "frontend/src/components/itinerary/ChecklistPanel.tsx",
+        "frontend/src/components/itinerary/QuickSuggestions.tsx",
+        "frontend/src/hooks/useItinerary.ts",
+        "frontend/src/mocks/itineraries.ts",
+        "frontend/src/services/itineraryService.ts"
+      ],
+      "status": "passed",
+      "retry_count": 1,
+      "notes": "2026-09-13 Tester FAIL TC-03 → 第1次返工 → 复验 PASS（前端 Mock）。滚到第 3/5 天 chip 跟随。证据 .sdd/test-reports/test-T-003.md。经验已沉淀：短尾滚动观察带；Mock 删点模块内存。"
+    },
+    {
+      "id": "T-004",
+      "title": "前端 Mock 整体收口与用户门禁",
+      "type": "frontend",
+      "description": "承接 T-001～T-003，做全部页面 Mock 主流程与跨页收口：规划前工作台 → 点灵感不进详情 → 新建计划预填进入对话 → 开聊后右栏地图槽 → 问诊/规划日志/失败原因/查看行程 → 列表进入同一份详情 → 日期滚动、微详情、删点、快捷建议。补齐 <1100 右栏抽屉与 <768 侧栏抽屉、当前页互斥、刷新 URL 与导航一致。本任务是唯一 frontend user_gate；Tester 通过后停止新派发，等用户认可 Mock 并在本地填写模型与高德配置。本阶段 AC=[]，业务 AC 全部留 T-009～T-012。",
+      "source_feature": "F-005",
+      "acceptanceCriteria": [],
+      "technicalChecks": [
+        "浏览器按原型走通：#p-home 灵感与新建计划、#p-chat 对话与运行日志弹窗、#p-trips 列表、#p-detail 报告与侧聊，均为 Mock 且带 [Mock]。",
+        "跨页：工作台发第一条消息后右栏改地图槽；成功出方案后「查看行程」进入同一 Mock 行程；列表再进详情仍是同一 id。",
+        "失败 Mock 与成功 Mock 可切换演示：失败无详情入口，成功无整份报告贴进气泡或日志。",
+        "1440×900 三栏同时可见；<1100 右栏为覆盖层且有「地图/灵感」入口；<768 左侧抽屉；composer 始终可见。",
+        "无登录墙、无旅行中/社区占位导航、无 PDF 导出、无彩色主按钮；对照 ui-style 五、使用与验收。",
+        "复用 T-001～T-003 稳定证据，只补测跨页、窄屏与本任务改动。",
+        "后续验收：全部业务 AC→T-009～T-012，须前端门禁 passed 且配置齐备。"
+      ],
+      "externalServices": [],
+      "dependencies": [
+        "T-002",
+        "T-003"
+      ],
+      "priority": 1,
+      "context_files": [
+        {
+          "path": "docs/PRD.md",
+          "section": "界面约定"
+        },
+        {
+          "path": "docs/PRD.md",
+          "section": "用户目标与完整流程"
+        },
+        {
+          "path": "docs/ui-style.md",
+          "section": "一、设计目标与风格判断"
+        },
+        {
+          "path": "docs/ui-style.md",
+          "section": "二、全局视觉系统"
+        },
+        {
+          "path": "docs/ui-style.md",
+          "section": "五、使用与验收"
+        },
+        {
+          "path": "docs/decisions.md",
+          "section": "D-003 本期只做旅行前出报告；旅行中 / 旅行后放第二期"
+        },
+        {
+          "path": "docs/decisions.md",
+          "section": "D-009 产品显示名与界面气质"
+        },
+        {
+          "path": "docs/prototypes/index.html",
+          "section": "Xtrip 原型索引"
+        },
+        {
+          "path": "docs/prototypes/workbench.html",
+          "section": "#p-home / #p-chat / #p-create / #p-trips / #p-detail"
+        }
+      ],
+      "rules_files": [
+        "specification/default/frontend/acceptance.md",
+        "specification/default/frontend/style.md",
+        "specification/default/frontend/mock.md",
+        "specification/default/shared/env-policy.md"
+      ],
+      "write_scope": [
+        "frontend/src/index.css",
+        "frontend/src/App.tsx",
+        "frontend/src/components/layout/AppShell.tsx",
+        "frontend/src/pages/WorkbenchPage.tsx"
+      ],
+      "user_gate": {
+        "kind": "frontend_mock_review",
+        "frontend_task_ids": [
+          "T-001",
+          "T-002",
+          "T-003",
+          "T-004"
+        ],
+        "required_services": [
+          "DeepSeek",
+          "百炼千问",
+          "高德 Web 服务",
+          "高德 JS API"
+        ],
+        "status": "passed",
+        "user_confirmation": "2026-09-13 用户原文：Mock 可以。5199 假数据界面认可。",
+        "configuration_confirmation": "2026-09-13 四项 required_services 均为 confirmed（仅核本机非空）。真连通性交 T-009 起。",
+        "rework_task_ids": []
+      },
+      "status": "passed",
+      "retry_count": 0,
+      "notes": "2026-09-13 Tester PASS（前端 Mock）。跨页 itn_mock_01、失败无查看行程、1440/1099/768 抽屉。未判业务 AC。证据 .sdd/test-reports/test-T-004.md。经验已沉淀：同一 Mock id；/ 不叠列表。"
+    },
+    {
+      "id": "T-005",
+      "title": "后端工程、会话持久化、灵感接口与 Coco 问诊",
+      "type": "backend",
+      "description": "后端初始化并入本任务：探测 Python 3.11+、项目根 .venv、PyCore APIServer、SQLAlchemy asyncio+aiosqlite、SQLite backend/data/Travel_Helper.db。落 conversations/messages/planning_jobs/itineraries 表。实现 API-001/002/003/004 问诊路径与 API-010 静态灵感。规划经理用 DeepSeek Flash、thinking disabled，输出 JSON；后端规则合并 intake 后再判定 ready，模型假 ready 则改回 ask/stop。最小集与最多 2 轮追问、国内模糊描述可推荐目的地、亲子须儿童年龄段，按 D-001。ready 时创建 planning_job 并将 destination_research 置 running，后台工人由 T-007 替换 stub（本任务 stub 只保证 API-004 立即 200 且 status=running，不跑三专员）。创建后前端约定的「请根据已填写的计划继续」由契约保证经理不重问已填节奏。无 Key 用 httpx mock 验编排与 500「未配置模型密钥」；真实口吻与 AC 由 T-009 验收。禁止 dashscope SDK 与 os.getenv 读业务配置。",
+      "source_feature": "F-001",
+      "acceptanceCriteria": [],
+      "technicalChecks": [
+        "backend 可在 127.0.0.1:8099 启动；CORS 含 5199/5175/8099/8003；pytest backend/tests --timeout=120 覆盖问诊。",
+        "API-001 空体 201，planning.status=idle，专员均为 not_started；预填杭州 5 天/情侣/2 万/轻松后 intake.missing_fields 不含已填项；非法 pace 返回 400 中文「节奏只能是轻松、适中或紧凑」。",
+        "API-010 至少 1 条国内灵感，image_url 指向前端静态资源路径。",
+        "Mock 经理 ask：API-004 200，Coco display_name，专员 not_started，followup_rounds_used +1。",
+        "Mock 经理 ready（上海→杭州 5 天情侣 2 万轻松）：不再追问出境，planning.status=running 且 destination_research=running。",
+        "已追问 2 轮仍缺出发地或时长：action 强制 stop，无 planning_job，不写 itinerary。",
+        "国内无城市有画面：recommended_destination 写入 destination_city 且可 ready。",
+        "缺 deepseek_api_key：API-004 500，error「未配置模型密钥」；用户消息已落库。",
+        "ConfigManager.load(..., use_env=False)；.env.example 含配置表字段占位，无真实 Key。",
+        "后续验收：AC-001/002/009/011/014→T-009。"
+      ],
+      "externalServices": [
+        "DeepSeek"
+      ],
+      "dependencies": [],
+      "priority": 2,
+      "context_files": [
+        {
+          "path": "docs/PRD.md",
+          "section": "REQ-001 规划经理多轮对话收敛需求"
+        },
+        {
+          "path": "docs/PRD.md",
+          "section": "REQ-005 三栏工作台与新建计划预填"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "二、前后端怎么分工，接口怎么拆 > API-001 新建对话"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "二、前后端怎么分工，接口怎么拆 > API-002 对话列表"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "二、前后端怎么分工，接口怎么拆 > API-003 对话详情"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "二、前后端怎么分工，接口怎么拆 > API-004 发送消息给规划经理"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "二、前后端怎么分工，接口怎么拆 > API-010 目的地灵感"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "三、接口请求数据的类型选型"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "四、模型选型与提示词设计 > 规划经理 Coco（问诊）"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "五、接口逻辑算法设计 > 共用：问诊槽与就绪"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "五、接口逻辑算法设计 > API-001"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "五、接口逻辑算法设计 > API-004"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "六、接口失败异常设计 > API-004"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "七、项目本地层级设计 > 配置表"
+        },
+        {
+          "path": "docs/decisions.md",
+          "section": "D-001 规划经理如何澄清出行需求"
+        },
+        {
+          "path": "docs/decisions.md",
+          "section": "D-007 规划经理与专员用哪家模型、问诊要不要开思考"
+        },
+        {
+          "path": "docs/decisions.md",
+          "section": "D-008 规划经理对外名称与失败必须说明原因"
+        }
+      ],
+      "rules_files": [
+        "specification/default/backend/tech-stack.md",
+        "specification/default/backend/layers.md",
+        "specification/default/backend/api-design.md",
+        "specification/default/backend/workflow.md",
+        "specification/default/backend/error-handling.md",
+        "specification/default/shared/naming.md",
+        "specification/default/shared/env-policy.md",
+        "specification/default/shared/security.md"
+      ],
+      "write_scope": [
+        "pyproject.toml",
+        "backend/requirements.txt",
+        "backend/.env.example",
+        "backend/.gitignore",
+        "backend/src/main.py",
+        "backend/src/config/settings.py",
+        "backend/src/api/deps.py",
+        "backend/src/api/routes/conversations.py",
+        "backend/src/api/routes/inspirations.py",
+        "backend/src/models/",
+        "backend/src/db/models.py",
+        "backend/src/db/session.py",
+        "backend/src/repositories/conversations.py",
+        "backend/src/repositories/messages.py",
+        "backend/src/repositories/planning.py",
+        "backend/src/repositories/itineraries.py",
+        "backend/src/services/manager.py",
+        "backend/src/services/planning.py",
+        "backend/src/services/llm_client.py",
+        "backend/src/prompts/manager_intake.md",
+        "backend/src/data/inspirations.json",
+        "backend/tests/test_intake.py",
+        "backend/tests/test_inspirations.py"
+      ],
+      "status": "passed",
+      "retry_count": 0,
+      "notes": "2026-09-13 Tester PASS（Mock HTTP）。12+23 pytest。AC-001/002/009/011/014→T-009。证据 .sdd/test-reports/test-T-005.md。已知：后端灵感 image_url 为 /inspirations/*.jpg（杭州/成都/厦门），前端现为 svg（杭州/成都/大理）。"
+    },
+    {
+      "id": "T-006",
+      "title": "高德六工具 Plugin 与国内检索降级",
+      "type": "backend",
+      "description": "实现高德 Web 服务六工具 Plugin（geocode_city、search_poi、get_poi_detail、get_weather、route_walking、route_transit），httpx.AsyncClient(trust_env=False)，禁止把 Key 回传模型或写入 activity 日志。解析 status/infocode、空数组字段与本项目取用字段。配额或超时按第六层：研究侧空结果不得编造 POI；单段路线失败允许 estimate。本任务不注册到规划循环（T-007 接线）。无 Key 用 mock httpx 验解析与脱敏日志；不把 mock 当真实地理编码通过。",
+      "source_feature": "F-002",
+      "acceptanceCriteria": [],
+      "technicalChecks": [
+        "六个 Plugin 均继承 BasePlugin，经 PluginRegistry 可按名执行；测试用 mock HTTP，不读真实 .env 值。",
+        "成功路径取用 tech-spec EXT-003 字段：location/adcode、pois id/name/location、weather casts、paths distance 与 cost.duration。",
+        "status 非 1 或 infocode 非 10000 返回失败观察，不含 Key、不含完整 polyline。",
+        "日志只记 URL 路径、infocode、poi 数量。",
+        "无 dashscope、无任意 URL/文件系统工具。",
+        "后续验收：研究失败 AC-004→T-010；卡间交通 AC-022→T-011。"
+      ],
+      "externalServices": [
+        "高德 Web 服务"
+      ],
+      "dependencies": [],
+      "priority": 2,
+      "context_files": [
+        {
+          "path": "docs/tech-spec.md",
+          "section": "二、前后端怎么分工，接口怎么拆 > EXT-003 高德 Web 服务"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "四、模型选型与提示词设计 > 工具权限边界"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "六、接口失败异常设计 > 专员与高德"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "七、项目本地层级设计 > 外部服务清单"
+        },
+        {
+          "path": "docs/decisions.md",
+          "section": "D-005 本期模型、地图与验收用例（国内）"
+        }
+      ],
+      "rules_files": [
+        "specification/default/backend/plugin.md",
+        "specification/default/backend/error-handling.md",
+        "specification/default/shared/security.md",
+        "specification/default/shared/env-policy.md"
+      ],
+      "write_scope": [
+        "backend/src/plugins/amap.py",
+        "backend/src/plugins/geocode_city.py",
+        "backend/src/plugins/search_poi.py",
+        "backend/src/plugins/get_poi_detail.py",
+        "backend/src/plugins/get_weather.py",
+        "backend/src/plugins/route_walking.py",
+        "backend/src/plugins/route_transit.py",
+        "backend/tests/test_amap_plugins.py"
+      ],
+      "status": "passed",
+      "retry_count": 0,
+      "notes": "2026-09-13 Tester PASS（Mock HTTP，11 pytest）。未验真实高德；AC-004→T-010，AC-022→T-011。未接规划循环。"
+    },
+    {
+      "id": "T-007",
+      "title": "三专员规划任务、运行日志与 SSE",
+      "type": "backend",
+      "description": "替换 T-005 的 planning stub：最小集 ready 后先跑目的地研究（千问 Plus、关思考、工具循环最多 8 轮），成功后再并行预算专家（千问 Plus、JSON、无工具）与行程设计（DeepSeek Flash、开思考 reasoning_effort=high、工具循环最多 12 轮）。每步结束写 planning.log（中文 title，clickable 须有脱敏 detail，禁止 Key/完整 polyline/原始 HTTP），经 API-005 推 planning.updated / planning.log / itinerary.ready / planning.failed / heartbeat。任一路失败：用专员 reason 组装 Coco 消息（必须含无法完成的原因，禁止只说失败、禁止再调问诊模型润色），不写假行程。成功写入 itineraries ready、Coco 只告知可去详情、不贴按天报告。D-007 方案 A 配置写入 settings 默认值。无 Key 用 mock LLM+Plugin 验编排、日志与失败模板；上海→杭州真方案与 AC 由 T-010/T-011 验收。",
+      "source_feature": "F-002",
+      "acceptanceCriteria": [],
+      "technicalChecks": [
+        "manager_thinking_enabled 默认 false，itinerary_thinking_enabled 默认 true；deepseek_model=deepseek-flash，qwen_model=qwen-plus；禁止 dashscope SDK。",
+        "Mock 研究成功后预算与行程并行；都成功则 itineraries.status=ready，API-003 planning.status=succeeded 且有 itinerary_id。",
+        "SSE：Accept text/event-stream；逐步推 planning.log；终态 ready/failed 后关闭；heartbeat 约 15s；断开不取消 job。",
+        "activity_log 顺序与 SSE 一致，最多 80 条，超出丢最早 thought；clickable=true 必有 detail.heading 与 body（≤4000，截断标明）。",
+        "Mock 研究失败（destination_not_found/poi_empty/amap_unavailable）：插入 Coco 消息含具体 reason，planning.failed.failure_reason 非空且非「失败」，无 itinerary 行。",
+        "预算超上限 Mock：over_cap=true 且 total_amount>cap_amount。",
+        "行程提示词含轻松 1–2 / 适中 2–3 / 紧凑 3–4 与亲子避坑；国内清单不含护照签证；未交代交通写公交+步行假设。",
+        "规划中再 POST 开工类消息：200 说明等待，不新开第二个 job。",
+        "后续验收：AC-001/009→T-009；AC-003/004/024→T-010；AC-007/008→T-011/T-012。"
+      ],
+      "externalServices": [
+        "DeepSeek",
+        "百炼千问",
+        "高德 Web 服务"
+      ],
+      "dependencies": [
+        "T-005",
+        "T-006"
+      ],
+      "priority": 2,
+      "context_files": [
+        {
+          "path": "docs/PRD.md",
+          "section": "REQ-002 规划经理分派专员并汇总"
+        },
+        {
+          "path": "docs/PRD.md",
+          "section": "REQ-004 人群与节奏约束规划结果"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "二、前后端怎么分工，接口怎么拆 > API-005 规划进度 SSE"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "二、前后端怎么分工，接口怎么拆 > EXT-001 DeepSeek Chat Completions"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "二、前后端怎么分工，接口怎么拆 > EXT-002 百炼千问 OpenAI 兼容"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "四、模型选型与提示词设计 > 已确认配置（D-007 方案 A）"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "四、模型选型与提示词设计 > 目的地研究（工具循环）"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "四、模型选型与提示词设计 > 预算专家"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "四、模型选型与提示词设计 > 行程设计（工具循环）"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "五、接口逻辑算法设计 > API-005"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "六、接口失败异常设计 > 专员与高德"
+        },
+        {
+          "path": "docs/decisions.md",
+          "section": "D-007 规划经理与专员用哪家模型、问诊要不要开思考"
+        },
+        {
+          "path": "docs/decisions.md",
+          "section": "D-008 规划经理对外名称与失败必须说明原因"
+        },
+        {
+          "path": "docs/decisions.md",
+          "section": "D-010 规划过程展示可展开的 Agent 运行日志"
+        }
+      ],
+      "rules_files": [
+        "specification/default/backend/layers.md",
+        "specification/default/backend/api-design.md",
+        "specification/default/backend/plugin.md",
+        "specification/default/backend/error-handling.md",
+        "specification/default/backend/workflow.md",
+        "specification/default/shared/security.md"
+      ],
+      "write_scope": [
+        "backend/src/main.py",
+        "backend/src/services/planning.py",
+        "backend/src/services/specialists/research.py",
+        "backend/src/services/specialists/budget.py",
+        "backend/src/services/specialists/itinerary.py",
+        "backend/src/services/activity_log.py",
+        "backend/src/api/routes/events.py",
+        "backend/src/prompts/destination_research.md",
+        "backend/src/prompts/budget_expert.md",
+        "backend/src/prompts/itinerary_design.md",
+        "backend/tests/test_planning.py",
+        "backend/tests/test_sse.py"
+      ],
+      "status": "passed",
+      "retry_count": 0,
+      "notes": "2026-09-13 Tester PASS（Mock）。14+37 pytest。未判 AC-001/009/003/004/024/007/008。证据 .sdd/test-reports/test-T-007.md。经验已沉淀：无金额勿按天数重算预算；httpx 测 SSE 不要等实时 heartbeat。"
+    },
+    {
+      "id": "T-008",
+      "title": "行程报告读写、逐项改与对话修订",
+      "type": "backend",
+      "description": "实现 API-006/007/008/009：列表只返回 ready；详情含 days/cards/legs/budget/checklist/map_center/quick_suggestions。PATCH/DELETE 更新同一 itinerary_id，重算受影响 legs（高德超时则 source=estimate），planning 不改回 running、不重跑三专员。实现修订提示词与 services/revision：已有行程时 API-004 走 revise/suggest_new_plan，执行 operations 后专员保持上次 succeeded。换目的地或大幅改天数返回 suggest_new_plan，卡片不变。本任务可对 fixture 行程做 CRUD，不依赖 T-007 已跑出真方案。无 Key 时补腿走 estimate。业务 AC 由 T-011 页面闭环。",
+      "source_feature": "F-003",
+      "acceptanceCriteria": [],
+      "technicalChecks": [
+        "API-006 分页只含 status=ready；未知 id 的 007/008/009 返回 404 中文。",
+        "API-007 字段能填满 ItineraryPublic；超支样例 over_cap=true；国内 checklist 无护照签证。",
+        "PATCH 改 start_time 或 DELETE 一张卡后返回整份报告，该点从 cards 与当天坐标点消失；planning.status 仍为 succeeded。",
+        "修订 Mock：operations remove_card 或 set_day_pace 作用于同一 itinerary_id；无法映射时 reply 说明、行程不变。",
+        "suggest_new_plan 不改卡片。",
+        "后续验收：AC-005/006/007/015～023→T-011。"
+      ],
+      "externalServices": [
+        "DeepSeek",
+        "高德 Web 服务"
+      ],
+      "dependencies": [
+        "T-005"
+      ],
+      "priority": 2,
+      "context_files": [
+        {
+          "path": "docs/PRD.md",
+          "section": "REQ-003 交付可改的行程、预算、地图与行前清单"
+        },
+        {
+          "path": "docs/PRD.md",
+          "section": "REQ-006 行程详情：按天卡片逐项改与对话改"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "二、前后端怎么分工，接口怎么拆 > API-006 行程列表"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "二、前后端怎么分工，接口怎么拆 > API-007 行程详情"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "二、前后端怎么分工，接口怎么拆 > API-008 逐项改卡片"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "二、前后端怎么分工，接口怎么拆 > API-009 删除卡片"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "四、模型选型与提示词设计 > 规划经理 Coco（问诊）"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "五、接口逻辑算法设计 > API-008 / API-009"
+        },
+        {
+          "path": "docs/decisions.md",
+          "section": "D-006 节奏分档与行程详情按日滚动"
+        }
+      ],
+      "rules_files": [
+        "specification/default/backend/api-design.md",
+        "specification/default/backend/layers.md",
+        "specification/default/backend/error-handling.md",
+        "specification/default/backend/workflow.md",
+        "specification/default/shared/naming.md"
+      ],
+      "write_scope": [
+        "backend/src/api/routes/itineraries.py",
+        "backend/src/services/revision.py",
+        "backend/src/prompts/manager_revise.md",
+        "backend/src/services/manager.py",
+        "backend/tests/test_itineraries.py",
+        "backend/tests/test_revision.py"
+      ],
+      "status": "passed",
+      "retry_count": 0,
+      "notes": "2026-09-13 Tester PASS（fixture + Mock LLM）。12+49 pytest。未判 AC-005/006/007/015～023。证据 .sdd/test-reports/test-T-008.md。"
+    },
+    {
+      "id": "T-009",
+      "title": "联调：工作台开聊、新建计划与问诊最小集",
+      "type": "integration",
+      "description": "前端门禁通过且 VITE_USE_MOCK=false 后，用真实 API-001/004/010 验收无登录三栏、灵感不可点进、开聊后右栏地图、新建计划预填、以及 Coco 问诊。必验国内：上海出发带配偶去杭州 5 天、预算 2 万、不要太赶 → 最小集已齐、专员进入进行中、不再追问出境。缺 Key 时只保留配置错误与灵感静态路径证据，不得用 Mock 顶替 AC-001/009。AC-010 本期不验收。",
+      "source_feature": "F-001",
+      "acceptanceCriteria": [
+        "[AC-001] Coco 判定最小集已齐，进入分派专员，不再追问国内还是出境。",
+        "[AC-002] 经理追问缺口（至少包含出发地或国内/出境、时长、和谁等仍缺项），三个专员均未开始。",
+        "[AC-009] 经理推荐一个国内目的地并进入出计划（专员启动），而不是要求客户先点选城市才能继续。",
+        "[AC-011] 说明还缺什么，不出假装完整的旅行计划，专员不上场。",
+        "[AC-012] 左侧为菜单，中间可聊天，右侧为至少一张目的地灵感卡片（可见图片、城市名和推荐理由，文字不叠在照片上），右栏不是地图。",
+        "[AC-013] 右栏变为地图。",
+        "[AC-014] Coco 已掌握这些字段，只追问仍缺的最小集（如出发城市），不会把已填的节奏再问一遍。",
+        "[AC-020] 不进入目的地详情页，也不因此开始一份新行程。"
+      ],
+      "technicalChecks": [
+        "浏览器打开用户验收端口（前端 5175 / 后端 8003）或开发端口，确认无 [Mock] 标识后走主路径。",
+        "AC-001：对话后 GET API-003 见 planning.status=running 且至少 destination_research=running。",
+        "AC-002：只说「想出去玩」后 specialists 均为 not_started，无 itinerary_id。",
+        "AC-009：北京出发带小孩想看海 4 天 8 千别太赶，回复或 intake 出现被推荐国内城市且专员已启动。",
+        "AC-011：追问满 2 轮仍缺出发地或时长，对话说明缺口，无按天方案。",
+        "AC-013：有 JS Key 时右栏为高德地图；仅缺 JS Key 时「地图未配置」可记未验地图瓦片，不得否定对话切换。",
+        "刷新后同一本地后端仍能看到该会话（D-004）。",
+        "缺 DeepSeek Key：AC-001/002/009/011/014 标 BLOCKED，AC-012/020 仍须通过。"
+      ],
+      "externalServices": [
+        "DeepSeek",
+        "高德 JS API"
+      ],
+      "dependencies": [
+        "T-004",
+        "T-007"
+      ],
+      "priority": 3,
+      "context_files": [
+        {
+          "path": "docs/PRD.md",
+          "section": "REQ-001 规划经理多轮对话收敛需求"
+        },
+        {
+          "path": "docs/PRD.md",
+          "section": "REQ-005 三栏工作台与新建计划预填"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "五、接口逻辑算法设计 > 共用：问诊槽与就绪"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "二、前后端怎么分工，接口怎么拆 > EXT-004 高德 JS API 2.0（前端）"
+        },
+        {
+          "path": "docs/ui-style.md",
+          "section": "UI-001 规划前工作台"
+        },
+        {
+          "path": "docs/ui-style.md",
+          "section": "UI-002 对话与规划中"
+        },
+        {
+          "path": "docs/ui-style.md",
+          "section": "UI-003 新建计划"
+        },
+        {
+          "path": "docs/decisions.md",
+          "section": "D-001 规划经理如何澄清出行需求"
+        },
+        {
+          "path": "docs/decisions.md",
+          "section": "D-005 本期模型、地图与验收用例（国内）"
+        }
+      ],
+      "rules_files": [
+        "specification/default/frontend/acceptance.md",
+        "specification/default/frontend/api-client.md",
+        "specification/default/backend/workflow.md",
+        "specification/default/shared/env-policy.md"
+      ],
+      "write_scope": [
+        "frontend/src/hooks/useConversation.ts",
+        "frontend/src/services/conversationService.ts",
+        "frontend/src/components/MapSlot.tsx"
+      ],
+      "status": "passed",
+      "retry_count": 1,
+      "notes": "2026-09-13 Tester FAIL AC-009 → 第1次返工 → 复验 PASS。看海推荐青岛并开工。回归 AC-001/002/011/014 与抽检 AC-012/013/020/刷新过。AC-010 不验。证据 .sdd/test-reports/test-T-009.md。已沉淀：国内只有画面须规则层推荐城。SQLite locked 未消掉，不沉淀为有效修复。"
+    },
+    {
+      "id": "T-010",
+      "title": "联调：专员规划、运行日志弹窗与失败原因",
+      "type": "integration",
+      "description": "在真实规划链路上验收 REQ-002：上海→杭州咨询齐集后等待专员完成，对话出现可展开运行日志，点带结果的步骤弹窗看中文细节且无密钥；Coco 汇总并给出网页详情入口，不把整份报告贴进对话。另用无法研究的国内乱码地名走失败：Coco 必须说出无法完成的原因，日志失败步可点开，无假装完整方案。缺模型或高德 Web Key 时不得用 Mock 或 stub 标 AC-003/004/024 通过。",
+      "source_feature": "F-002",
+      "acceptanceCriteria": [
+        "[AC-003] 能看到 Coco 以及三名专员的分派与完成情况；对话里出现可展开的运行日志，展开后至少能看到多条逐步动作；最终由 Coco 汇总出一份方案。",
+        "[AC-024] 弹出该步细节（中文说明 + 结果摘要），不是空白、不含密钥；关闭弹窗后仍停在对话。",
+        "[AC-004] 对话里出现 Coco 的回复，明确说明无法完成以及原因（例如找不到该目的地、检索无结果、地图服务不可用等真实原因，不编造）；日志里该失败步骤可点开看到对应失败细节；没有一份假装完整的方案。"
+      ],
+      "technicalChecks": [
+        "AC-003：过程中可见三专员状态；展开日志≥2 条中文动作；完成后 Coco 有查看行程入口，气泡内无按天卡片全文。",
+        "AC-024：点搜索景点或查询公交等 clickable 步，弹窗 heading+body 有内容、无 API Key、无原始 HTTP；关后记录仍在 activity_log。",
+        "AC-004：乱码或不存在地名 → Coco 文案含原因，SSE/API-003 error_message 与该文案一致，itinerary_id 为空。",
+        "可用秒表记录「开始出方案」到列表出现行程的等待（D-007 估计约 40–90 秒，超时 180s 为失败）。",
+        "EventSource 断开时 2s 轮询 API-003 仍能到达 succeeded/failed。",
+        "缺 Key：三项 AC 标 BLOCKED，保留配置错误证据。"
+      ],
+      "externalServices": [
+        "DeepSeek",
+        "百炼千问",
+        "高德 Web 服务"
+      ],
+      "dependencies": [
+        "T-009"
+      ],
+      "priority": 3,
+      "context_files": [
+        {
+          "path": "docs/PRD.md",
+          "section": "REQ-002 规划经理分派专员并汇总"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "二、前后端怎么分工，接口怎么拆 > API-005 规划进度 SSE"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "五、接口逻辑算法设计 > API-005"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "六、接口失败异常设计 > 专员与高德"
+        },
+        {
+          "path": "docs/ui-style.md",
+          "section": "UI-002 对话与规划中"
+        },
+        {
+          "path": "docs/decisions.md",
+          "section": "D-007 规划经理与专员用哪家模型、问诊要不要开思考"
+        },
+        {
+          "path": "docs/decisions.md",
+          "section": "D-008 规划经理对外名称与失败必须说明原因"
+        },
+        {
+          "path": "docs/decisions.md",
+          "section": "D-010 规划过程展示可展开的 Agent 运行日志"
+        }
+      ],
+      "rules_files": [
+        "specification/default/frontend/acceptance.md",
+        "specification/default/backend/workflow.md",
+        "specification/default/shared/security.md"
+      ],
+      "write_scope": [
+        "frontend/src/components/ActivityLog.tsx",
+        "frontend/src/components/LogDetailModal.tsx",
+        "frontend/src/hooks/usePlanningEvents.ts"
+      ],
+      "status": "passed",
+      "retry_count": 1,
+      "notes": "2026-09-13 Tester FAIL AC-004 → 第1次返工 → 复验 PASS。AC-003 63.9s 出方案；AC-024 日志可点；AC-004 乱码 69.7s failed，原因与弹窗过，未改口杭州。证据 .sdd/test-reports/test-T-010.md。已沉淀：点名国内城须规则层开工。json_object 根因未验证不沉淀。"
+    },
+    {
+      "id": "T-011",
+      "title": "联调：网页行程详情、逐项改、对话改与快捷建议",
+      "type": "integration",
+      "description": "用 T-010 成功的上海→杭州 5 天方案验收网页报告（非 PDF）：按天卡片、预算、地图或地图入口、行前清单、日期滚动同步、卡间交通、微详情。再验收删/改卡片不重跑专员、侧边「第三天不要排那么满」与点击快捷建议改同一份报告。另用明显偏低预算上限跑一次，预算区须标明超出上限。缺 Key 不得用 Mock 行程顶替 AC-005。",
+      "source_feature": "F-003",
+      "acceptanceCriteria": [
+        "[AC-005] 同时有按天卡片、预算、地图或地图入口、行前清单；有日期切换；行程为 5 天；地图点能对上当天地点。",
+        "[AC-006] 该天卡片更新；专员不因这次逐项改自动重新跑一轮。",
+        "[AC-007] 预算区域标明超出上限。",
+        "[AC-015] 能看到该行程入口并可点进详情。",
+        "[AC-016] 按天列出卡片，每天能看到位置和景点；顶部能看到各天日期。",
+        "[AC-021] 当前日期高亮与可见内容是同一天；滚动切天与点日期切天都能用。",
+        "[AC-022] 能看到推荐交通方式及大约距离或时间，不是只有两个地点名硬接。",
+        "[AC-023] 出现该点的简介级说明（至少有名称和一段介绍或地址），没有支付/支出金额；关闭后回到当天列表。",
+        "[AC-017] 第 2 天不再显示该点；地图若已有该点则不再当作当天行程点。",
+        "[AC-018] 第三天卡片变少或变松，且与逐项改走的是同一份方案。",
+        "[AC-019] 等效于向 Coco 发出该修改，方案随之更新。"
+      ],
+      "technicalChecks": [
+        "从左侧列表进入的详情与对话入口的 itinerary_id 一致；刷新后同一份仍在。",
+        "AC-006/017：改或删后 GET 行程已变，planning.specialists 仍为 succeeded，无新的 running job。",
+        "AC-007：用明显偏低上限的新咨询出方案，UI 出现「超出上限」，over_cap=true。",
+        "AC-021：从第 1 天滚到第 3 天，chip 高亮变为第 3 天；再点第 1 天 chip 滚回。",
+        "AC-022：允许单腿 source=estimate 且文案含「约」，仅当高德该段失败。",
+        "国内清单不含护照签证；无 PDF/导出。",
+        "缺 Key：已有 T-010 真行程时 AC-015/016/021/023 可继续；无真行程则本任务 BLOCKED。"
+      ],
+      "externalServices": [
+        "DeepSeek",
+        "高德 Web 服务",
+        "高德 JS API"
+      ],
+      "dependencies": [
+        "T-008",
+        "T-010"
+      ],
+      "priority": 3,
+      "context_files": [
+        {
+          "path": "docs/PRD.md",
+          "section": "REQ-003 交付可改的行程、预算、地图与行前清单"
+        },
+        {
+          "path": "docs/PRD.md",
+          "section": "REQ-006 行程详情：按天卡片逐项改与对话改"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "二、前后端怎么分工，接口怎么拆 > API-007 行程详情"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "五、接口逻辑算法设计 > API-008 / API-009"
+        },
+        {
+          "path": "docs/ui-style.md",
+          "section": "UI-004 行程列表"
+        },
+        {
+          "path": "docs/ui-style.md",
+          "section": "UI-005 行程详情"
+        },
+        {
+          "path": "docs/decisions.md",
+          "section": "D-006 节奏分档与行程详情按日滚动"
+        }
+      ],
+      "rules_files": [
+        "specification/default/frontend/acceptance.md",
+        "specification/default/frontend/api-client.md",
+        "specification/default/backend/workflow.md"
+      ],
+      "write_scope": [
+        "frontend/src/pages/ItineraryDetailPage.tsx",
+        "frontend/src/pages/TripListPage.tsx",
+        "frontend/src/hooks/useItinerary.ts",
+        "frontend/src/services/itineraryService.ts"
+      ],
+      "status": "passed",
+      "retry_count": 1,
+      "notes": "2026-09-13 Tester FAIL AC-019 → 第1次返工 → 复验 PASS。点「白天少走路，多坐公交」约 1s 改成公交；手打改松未回退。其余 AC 上轮已过。证据 .sdd/test-reports/test-T-011.md。已沉淀：写死芯片须落到修订操作。180s 上限本轮未证不单独立条。"
+    },
+    {
+      "id": "T-012",
+      "title": "联调：亲子轻松与情侣紧凑行程可区分",
+      "type": "integration",
+      "description": "同一国内目的地、同一天数，分别跑亲子+轻松与情侣+紧凑各一次，并排对照两份网页行程：疏密或活动类型可区分（轻松约 1–2 个主要点、紧凑约 3–4 个，不验精确分钟和精确个数）。不重跑已通过的杭州情侣主路径作为唯一样本。缺 Key 则本 AC BLOCKED，不得用 Mock 两份模板换标题充数。",
+      "source_feature": "F-004",
+      "acceptanceCriteria": [
+        "[AC-008] 两份行程在疏密或活动类型上可区分。"
+      ],
+      "technicalChecks": [
+        "两次咨询目的地与天数相同，仅人群与节奏不同；均成功写入不同 itinerary_id。",
+        "对照每天主要 attraction 数量或亲子适合说明：轻松明显更疏，或紧凑明显更密，或活动类型（亲子避坑 vs 情侣节奏）可观察不同。",
+        "不是同一 payload 只改 title/companion_type。",
+        "可与 T-011 并行，不改对方正在验收的主路径行程。"
+      ],
+      "externalServices": [
+        "DeepSeek",
+        "百炼千问",
+        "高德 Web 服务"
+      ],
+      "dependencies": [
+        "T-008",
+        "T-010"
+      ],
+      "priority": 3,
+      "context_files": [
+        {
+          "path": "docs/PRD.md",
+          "section": "REQ-004 人群与节奏约束规划结果"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "四、模型选型与提示词设计 > 行程设计（工具循环）"
+        },
+        {
+          "path": "docs/decisions.md",
+          "section": "D-006 节奏分档与行程详情按日滚动"
+        },
+        {
+          "path": "docs/ui-style.md",
+          "section": "UI-005 行程详情"
+        }
+      ],
+      "rules_files": [
+        "specification/default/frontend/acceptance.md",
+        "specification/default/backend/workflow.md"
+      ],
+      "write_scope": [],
+      "status": "passed",
+      "retry_count": 0,
+      "notes": "2026-09-13 Tester PASS AC-008。成都 3 日亲子轻松每天 2 点 vs 情侣紧凑每天 4 点，活动类型可区分。证据 .sdd/test-reports/test-T-012.md。研究 8 轮不交 JSON 未复现，不沉淀。"
+    },
+    {
+      "id": "T-013",
+      "title": "生成或刷新页面功能导航",
+      "type": "delivery",
+      "description": "按 /Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/harness-core/protocols/project-delivery.md 从当前源码梳理页面→功能→流程→接口→算法/工具，生成 docs/project-console.html（建议 docs/project-map.json），并在 README.md 提供入口与刷新方法。覆盖工作台 `/` 与行程详情 `/itineraries/:id`：问诊槽规则、三专员工具循环、SSE planning.log、修订与逐项改分开写。规划经理为固定 JSON 决策流水线，三专员工具循环按实际 Plugin 呈现，不把 Coco 标成可自由选工具的 Agent，不编造未实现工具。不输出旧六区看板，不改业务代码或原任务状态，不读取真实 .env 值。DEL 不计业务 AC。",
+      "source_feature": "F-DELIVERY",
+      "acceptanceCriteria": [
+        "[DEL-001] 页面按实际页面/入口组织，功能卡片能导航与展开，桌面和窄屏无遮挡/整页溢出，不再展示旧六区管理看板。",
+        "[DEL-002] 每项功能说明触发、输入输出与带分支的前后端流程；接口 method/URL、请求响应字段及类型与代码对应，共享接口引用可到达。",
+        "[DEL-003] 核对关键算法的步骤、条件、参数单位/默认值/位置/影响、结果选择及异常；工具/Agent仅按实际存在的调用与观察循环呈现，不编造能力。",
+        "[DEL-004] 功能、接口和算法有可定位的实现来源及核对状态；设计、源码默认值、运行验证边界清晰。实际浏览器导航、展开、来源查看和路径复制/失败手选可用，无业务或付费调用。",
+        "[DEL-005] README 的刷新方式有效；隔离样例中源变更/缺失/解析错误明确反映，过期算法不继续标已核对；仅写导航产物，不改业务代码或原任务状态。"
+      ],
+      "technicalChecks": [
+        "浏览器检查页面导航、功能展开、接口跳转与路径复制、窄屏布局。",
+        "按源码核对问诊 ready 规则、followup 2 轮、D-007 思考开关、高德六工具、walk_threshold_m=1200、planning_timeout_seconds=180，不编造出境必验或 PDF 导出。",
+        "隔离样例验证刷新、源码变更待复核、缺失和格式错误提示。",
+        "不展示密钥；配置只列字段名与源码默认值。"
+      ],
+      "externalServices": [],
+      "dependencies": [
+        "T-001",
+        "T-002",
+        "T-003",
+        "T-004",
+        "T-005",
+        "T-006",
+        "T-007",
+        "T-008",
+        "T-009",
+        "T-010",
+        "T-011",
+        "T-012"
+      ],
+      "priority": 4,
+      "context_files": [
+        {
+          "path": ".sdd/project.json",
+          "section": "id"
+        },
+        {
+          "path": ".sdd/tasks.json",
+          "section": "tasks"
+        },
+        {
+          "path": "frontend/src/router/index.tsx",
+          "section": "Routes"
+        },
+        {
+          "path": "frontend/src/pages/WorkbenchPage.tsx",
+          "section": "工作台页面"
+        },
+        {
+          "path": "frontend/src/pages/ItineraryDetailPage.tsx",
+          "section": "行程详情页面"
+        },
+        {
+          "path": "frontend/src/services/conversationService.ts",
+          "section": "会话请求封装"
+        },
+        {
+          "path": "frontend/src/services/itineraryService.ts",
+          "section": "行程请求封装"
+        },
+        {
+          "path": "backend/src/api/routes/conversations.py",
+          "section": "conversations 路由"
+        },
+        {
+          "path": "backend/src/api/routes/itineraries.py",
+          "section": "itineraries 路由"
+        },
+        {
+          "path": "backend/src/api/routes/events.py",
+          "section": "SSE events"
+        },
+        {
+          "path": "backend/src/services/manager.py",
+          "section": "问诊槽与就绪"
+        },
+        {
+          "path": "backend/src/services/planning.py",
+          "section": "三专员规划任务"
+        },
+        {
+          "path": "backend/src/services/revision.py",
+          "section": "行程修订"
+        },
+        {
+          "path": "backend/src/plugins/amap.py",
+          "section": "高德工具"
+        },
+        {
+          "path": "backend/src/config/settings.py",
+          "section": "配置字段默认值"
+        },
+        {
+          "path": "docs/tech-spec.md",
+          "section": "七、项目本地层级设计"
+        }
+      ],
+      "rules_files": [],
+      "write_scope": [
+        "docs/project-console.html",
+        "docs/project-map.json",
+        "README.md"
+      ],
+      "status": "passed",
+      "retry_count": 0,
+      "notes": "2026-09-13 Tester PASS DEL-001～005。docs/project-console.html。证据 .sdd/test-reports/test-T-013.md。原生文件对话框未验，不挡总结果。无新经验。"
+    }
+  ]
+}

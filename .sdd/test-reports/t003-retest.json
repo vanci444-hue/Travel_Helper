@@ -1,0 +1,519 @@
+{
+  "evidence": {
+    "browser": "Chrome/152.0.7977.84",
+    "createTarget": "Target.createTarget",
+    "notUsed": "/json/new",
+    "vite": "http://127.0.0.1:5511",
+    "cdp": "127.0.0.1:9566",
+    "userDataDir": "/tmp/xtrip-t003-retest-chrome",
+    "xtrip5199": "left running pid 65106",
+    "targetId": "2A22C07311E552CEF341ACA4FA8C81BA",
+    "sessionId": "FC7027BE0CB0F1F2109F3D2A047B532A"
+  },
+  "list": {
+    "url": "http://127.0.0.1:5511/trips",
+    "heading": "🧳 行程\n[Mock]",
+    "rows": [
+      {
+        "title": "🗺️杭州 5 日轻松游",
+        "meta": "📍 杭州 · 5 天 · 🍃 轻松 · 今天"
+      }
+    ],
+    "empty": "",
+    "bodyHasPlanning": false,
+    "mock": true
+  },
+  "initial": {
+    "selected": "第 1 天",
+    "scrollTop": 0,
+    "maxScroll": 1315,
+    "endSpace": 672,
+    "clientHeight": 672,
+    "chips": [
+      {
+        "text": "第 1 天",
+        "selected": true,
+        "aria": "true"
+      },
+      {
+        "text": "第 2 天",
+        "selected": false,
+        "aria": "false"
+      },
+      {
+        "text": "第 3 天",
+        "selected": false,
+        "aria": "false"
+      },
+      {
+        "text": "第 4 天",
+        "selected": false,
+        "aria": "false"
+      },
+      {
+        "text": "第 5 天",
+        "selected": false,
+        "aria": "false"
+      }
+    ],
+    "transits": [
+      "🚌公交约 25 分钟",
+      "🚶步行约 12 分钟（估算）",
+      "🚌公交约 40 分钟"
+    ],
+    "textHasPdf": false
+  },
+  "afterChip3": {
+    "selected": "第 3 天",
+    "scrollTop": 701.5,
+    "maxScroll": 1315,
+    "days": [
+      {
+        "day": "1",
+        "rel": -384.3203125,
+        "height": 220.8828125,
+        "visible": 0,
+        "inBand": false
+      },
+      {
+        "day": "2",
+        "rel": -139.4375,
+        "height": 220.8828125,
+        "visible": 81.4453125,
+        "inBand": true
+      },
+      {
+        "day": "3",
+        "rel": 105.4453125,
+        "height": 220.8828125,
+        "visible": 196.86679687500003,
+        "inBand": true
+      },
+      {
+        "day": "4",
+        "rel": 350.328125,
+        "height": 107.7421875,
+        "visible": 0,
+        "inBand": false
+      },
+      {
+        "day": "5",
+        "rel": 482.0703125,
+        "height": 107.7421875,
+        "visible": 0,
+        "inBand": false
+      }
+    ],
+    "endSpace": 672
+  },
+  "topAgain": {
+    "selected": "第 1 天",
+    "scrollTop": 317
+  },
+  "scrollPath": [
+    {
+      "step": 1,
+      "selected": "第 1 天",
+      "scrollTop": 597,
+      "maxScroll": 1315,
+      "days": [
+        {
+          "day": "1",
+          "rel": -279.8203125,
+          "height": 220.8828125,
+          "visible": 0,
+          "inBand": false
+        },
+        {
+          "day": "2",
+          "rel": -34.9375,
+          "height": 220.8828125,
+          "visible": 185.9453125,
+          "inBand": true
+        },
+        {
+          "day": "3",
+          "rel": 209.9453125,
+          "height": 220.8828125,
+          "visible": 92.36679687500003,
+          "inBand": true
+        },
+        {
+          "day": "4",
+          "rel": 454.828125,
+          "height": 107.7421875,
+          "visible": 0,
+          "inBand": false
+        },
+        {
+          "day": "5",
+          "rel": 586.5703125,
+          "height": 107.7421875,
+          "visible": 0,
+          "inBand": false
+        }
+      ],
+      "wheel": [
+        {
+          "before": 317,
+          "after": 597
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "selected": "第 1 天",
+      "scrollTop": 877,
+      "maxScroll": 1315,
+      "days": [
+        {
+          "day": "1",
+          "rel": -559.8203125,
+          "height": 220.8828125,
+          "visible": 0,
+          "inBand": false
+        },
+        {
+          "day": "2",
+          "rel": -314.9375,
+          "height": 220.8828125,
+          "visible": 0,
+          "inBand": false
+        },
+        {
+          "day": "3",
+          "rel": -70.0546875,
+          "height": 220.8828125,
+          "visible": 150.828125,
+          "inBand": true
+        },
+        {
+          "day": "4",
+          "rel": 174.828125,
+          "height": 107.7421875,
+          "visible": 107.7421875,
+          "inBand": true
+        },
+        {
+          "day": "5",
+          "rel": 306.5703125,
+          "height": 107.7421875,
+          "visible": 0,
+          "inBand": false
+        }
+      ],
+      "wheel": [
+        {
+          "before": 597,
+          "after": 877
+        }
+      ]
+    },
+    {
+      "step": 3,
+      "selected": "第 1 天",
+      "scrollTop": 1157,
+      "maxScroll": 1315,
+      "days": [
+        {
+          "day": "1",
+          "rel": -839.8203125,
+          "height": 220.8828125,
+          "visible": 0,
+          "inBand": false
+        },
+        {
+          "day": "2",
+          "rel": -594.9375,
+          "height": 220.8828125,
+          "visible": 0,
+          "inBand": false
+        },
+        {
+          "day": "3",
+          "rel": -350.0546875,
+          "height": 220.8828125,
+          "visible": 0,
+          "inBand": false
+        },
+        {
+          "day": "4",
+          "rel": -105.171875,
+          "height": 107.7421875,
+          "visible": 2.5703125,
+          "inBand": true
+        },
+        {
+          "day": "5",
+          "rel": 26.5703125,
+          "height": 107.7421875,
+          "visible": 107.7421875,
+          "inBand": true
+        }
+      ],
+      "wheel": [
+        {
+          "before": 877,
+          "after": 1157
+        }
+      ]
+    },
+    {
+      "step": 4,
+      "selected": "第 1 天",
+      "scrollTop": 1315.5,
+      "maxScroll": 1315,
+      "days": [
+        {
+          "day": "1",
+          "rel": -998.3203125,
+          "height": 220.8828125,
+          "visible": 0,
+          "inBand": false
+        },
+        {
+          "day": "2",
+          "rel": -753.4375,
+          "height": 220.8828125,
+          "visible": 0,
+          "inBand": false
+        },
+        {
+          "day": "3",
+          "rel": -508.5546875,
+          "height": 220.8828125,
+          "visible": 0,
+          "inBand": false
+        },
+        {
+          "day": "4",
+          "rel": -263.671875,
+          "height": 107.7421875,
+          "visible": 0,
+          "inBand": false
+        },
+        {
+          "day": "5",
+          "rel": -131.9296875,
+          "height": 107.7421875,
+          "visible": 0,
+          "inBand": false
+        }
+      ],
+      "wheel": [
+        {
+          "before": 1157,
+          "after": 1315.5
+        }
+      ]
+    }
+  ],
+  "day3ScrollHit": null,
+  "day5ScrollHit": null,
+  "atMax": {
+    "url": "http://127.0.0.1:5511/itineraries/itn_01",
+    "selected": "第 1 天",
+    "chips": [
+      {
+        "text": "第 1 天",
+        "selected": true,
+        "aria": "true"
+      },
+      {
+        "text": "第 2 天",
+        "selected": false,
+        "aria": "false"
+      },
+      {
+        "text": "第 3 天",
+        "selected": false,
+        "aria": "false"
+      },
+      {
+        "text": "第 4 天",
+        "selected": false,
+        "aria": "false"
+      },
+      {
+        "text": "第 5 天",
+        "selected": false,
+        "aria": "false"
+      }
+    ],
+    "scrollTop": 1315.5,
+    "clientHeight": 672,
+    "scrollHeight": 1987,
+    "maxScroll": 1315,
+    "endSpace": 672,
+    "cssEndSpace": "672px",
+    "days": [
+      {
+        "day": "1",
+        "rel": -998.3203125,
+        "height": 220.8828125,
+        "visible": 0,
+        "inBand": false
+      },
+      {
+        "day": "2",
+        "rel": -753.4375,
+        "height": 220.8828125,
+        "visible": 0,
+        "inBand": false
+      },
+      {
+        "day": "3",
+        "rel": -508.5546875,
+        "height": 220.8828125,
+        "visible": 0,
+        "inBand": false
+      },
+      {
+        "day": "4",
+        "rel": -263.671875,
+        "height": 107.7421875,
+        "visible": 0,
+        "inBand": false
+      },
+      {
+        "day": "5",
+        "rel": -131.9296875,
+        "height": 107.7421875,
+        "visible": 0,
+        "inBand": false
+      }
+    ],
+    "transits": [
+      "🚌公交约 25 分钟",
+      "🚶步行约 12 分钟（估算）",
+      "🚌公交约 40 分钟"
+    ],
+    "textHasPdf": false,
+    "pdfButtons": [],
+    "sideText": "C\nCoco\n👋 这份行程可以改某一张卡片，或直接跟我说。\n🍃第三天不要排那么满\n🚌白天少走路，多坐公交\n🏨换一家更安静的推荐住宿\n🗺️换个目的地，改去成都\n↑"
+  },
+  "checks": {
+    "TC-01a-list-ready": {
+      "result": "PASS",
+      "expected": "列表仅 ready，含杭州行程，无规划中",
+      "actual": {
+        "url": "http://127.0.0.1:5511/trips",
+        "heading": "🧳 行程\n[Mock]",
+        "rows": [
+          {
+            "title": "🗺️杭州 5 日轻松游",
+            "meta": "📍 杭州 · 5 天 · 🍃 轻松 · 今天"
+          }
+        ],
+        "empty": "",
+        "bodyHasPlanning": false,
+        "mock": true
+      },
+      "note": ""
+    },
+    "TC-02-no-pdf": {
+      "result": "PASS",
+      "expected": "报告无 PDF/导出",
+      "actual": {
+        "initialPdf": [],
+        "maxPdf": [],
+        "chips": 5
+      },
+      "note": ""
+    },
+    "TC-04-transit": {
+      "result": "PASS",
+      "expected": "卡间仍有交通条",
+      "actual": [
+        "🚌公交约 25 分钟",
+        "🚶步行约 12 分钟（估算）",
+        "🚌公交约 40 分钟"
+      ],
+      "note": ""
+    },
+    "TC-03": {
+      "result": "FAIL",
+      "expected": "点第3天高亮；从顶滚到第3天区域第3天高亮；滚到最大第5天高亮且不停第2天",
+      "actual": {
+        "afterChip3": "第 3 天",
+        "chip3ScrollTop": 701.5,
+        "scrollHitDay3": null,
+        "atMax": {
+          "selected": "第 1 天",
+          "scrollTop": 1315.5,
+          "maxScroll": 1315,
+          "endSpace": 672,
+          "clientHeight": 672,
+          "days": [
+            {
+              "day": "1",
+              "rel": -998.3203125,
+              "height": 220.8828125,
+              "visible": 0,
+              "inBand": false
+            },
+            {
+              "day": "2",
+              "rel": -753.4375,
+              "height": 220.8828125,
+              "visible": 0,
+              "inBand": false
+            },
+            {
+              "day": "3",
+              "rel": -508.5546875,
+              "height": 220.8828125,
+              "visible": 0,
+              "inBand": false
+            },
+            {
+              "day": "4",
+              "rel": -263.671875,
+              "height": 107.7421875,
+              "visible": 0,
+              "inBand": false
+            },
+            {
+              "day": "5",
+              "rel": -131.9296875,
+              "height": 107.7421875,
+              "visible": 0,
+              "inBand": false
+            }
+          ]
+        },
+        "bandDay3": {
+          "step": 2,
+          "selected": "第 1 天",
+          "scrollTop": 877
+        }
+      },
+      "note": ""
+    }
+  },
+  "experienceCandidate": {
+    "candidate": "短尾卡片 + 负 rootMargin 需要一屏底部空间，并按观察带可见面积选节",
+    "spacerApproxViewport": true,
+    "endSpace": 672,
+    "clientHeight": 672,
+    "cssEndSpace": "672px",
+    "maxSelected": "第 1 天",
+    "day3ViaVisibleArea": false,
+    "verified": false,
+    "note": "功能通过不自动等于全部根因；本轮量到一屏 end-space，且最大滚动选中最后一天。"
+  },
+  "shots": {
+    "list": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t003-retest-list.png",
+    "top": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t003-retest-detail-top.png",
+    "chip3": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t003-retest-chip3.png",
+    "max": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t003-retest-scroll-max.png"
+  },
+  "chip3Box": {
+    "x": 471.15234375,
+    "y": 90.86197916666667,
+    "w": 68.4609375,
+    "h": 32,
+    "top": 80.1953125,
+    "left": 436.921875
+  }
+}

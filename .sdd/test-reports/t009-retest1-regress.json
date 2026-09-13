@@ -1,0 +1,246 @@
+{
+  "round": "retest-1-regress",
+  "chrome": "Chrome/152.0.7977.84",
+  "acs": {
+    "AC-002": {
+      "result": "PASS",
+      "coco": "📝 好呀，先跟我对几个关键信息：你从哪个城市出发、打算去几天、和谁一起（几个人）、预算大概多少、想轻松点还是节奏紧凑些？",
+      "api": {
+        "http": 200,
+        "id": "conv_6707794094d26b94",
+        "ready": false,
+        "missing": [
+          "origin_city",
+          "region",
+          "duration_days",
+          "companion",
+          "budget",
+          "pace"
+        ],
+        "origin": null,
+        "dest": null,
+        "region": null,
+        "days": null,
+        "pace": null,
+        "companions": null,
+        "children": [],
+        "followups": 1,
+        "planning": "idle",
+        "itinerary_id": null,
+        "specs": [
+          {
+            "role": "destination_research",
+            "status": "not_started"
+          },
+          {
+            "role": "budget_expert",
+            "status": "not_started"
+          },
+          {
+            "role": "itinerary_design",
+            "status": "not_started"
+          }
+        ],
+        "coco": [
+          "📝 好呀，先跟我对几个关键信息：你从哪个城市出发、打算去几天、和谁一起（几个人）、预算大概多少、想轻松点还是节奏紧凑些？"
+        ],
+        "msg_count": 2
+      },
+      "sendError": "",
+      "hasMock": false
+    },
+    "AC-011": {
+      "result": "FAIL",
+      "rounds": [
+        "📝 好的，海边放松游安排上！还差三个信息我就能开工：你们从哪个城市出发？计划玩几天？",
+        "📝 收到，两个人国内海边，预算一万、轻松游～最后还差：从哪个城市出发？计划玩几天？",
+        "Coco 暂时没有回复，请再试一次"
+      ],
+      "last": "Coco 暂时没有回复，请再试一次",
+      "api": {
+        "http": 200,
+        "id": "conv_b97df6fc6714262b",
+        "ready": false,
+        "missing": [
+          "origin_city",
+          "duration_days"
+        ],
+        "origin": null,
+        "dest": "青岛",
+        "region": "domestic",
+        "days": null,
+        "pace": "relaxed",
+        "companions": "friends",
+        "children": [],
+        "followups": 2,
+        "planning": "idle",
+        "itinerary_id": null,
+        "specs": [
+          {
+            "role": "destination_research",
+            "status": "not_started"
+          },
+          {
+            "role": "budget_expert",
+            "status": "not_started"
+          },
+          {
+            "role": "itinerary_design",
+            "status": "not_started"
+          }
+        ],
+        "coco": [
+          "📝 好的，海边放松游安排上！还差三个信息我就能开工：你们从哪个城市出发？计划玩几天？",
+          "📝 收到，两个人国内海边，预算一万、轻松游～最后还差：从哪个城市出发？计划玩几天？"
+        ],
+        "msg_count": 5
+      },
+      "gapExplained": false,
+      "noPlan": true,
+      "sendError": ""
+    },
+    "AC-014": {
+      "result": "PASS",
+      "modalOpened": true,
+      "coco": "📝 好的，只剩出发城市了——你们从哪个城市出发？",
+      "askedPace": false,
+      "askedOrigin": true,
+      "api": {
+        "http": 200,
+        "id": "conv_037e9bf9d4e08862",
+        "ready": false,
+        "missing": [
+          "origin_city"
+        ],
+        "origin": null,
+        "dest": "杭州",
+        "region": "domestic",
+        "days": 5,
+        "pace": "relaxed",
+        "companions": null,
+        "children": [],
+        "followups": 1,
+        "planning": "idle",
+        "itinerary_id": null,
+        "specs": [
+          {
+            "role": "destination_research",
+            "status": "not_started"
+          },
+          {
+            "role": "budget_expert",
+            "status": "not_started"
+          },
+          {
+            "role": "itinerary_design",
+            "status": "not_started"
+          }
+        ],
+        "coco": [
+          "📝 好的，只剩出发城市了——你们从哪个城市出发？"
+        ],
+        "msg_count": 2
+      },
+      "sendError": ""
+    },
+    "AC-001": {
+      "result": "PASS",
+      "coco": "🧭 信息齐了：上海出发，和配偶去杭州 5 天，预算 2 万，节奏放轻松。我这就按这个来安排，先给你做一版不赶的杭州慢游计划。",
+      "api": {
+        "http": 200,
+        "id": "conv_96b97e167140072c",
+        "ready": true,
+        "missing": [],
+        "origin": "上海",
+        "dest": "杭州",
+        "region": "domestic",
+        "days": 5,
+        "pace": "relaxed",
+        "companions": "couple",
+        "children": [],
+        "followups": 0,
+        "planning": "running",
+        "itinerary_id": null,
+        "specs": [
+          {
+            "role": "destination_research",
+            "status": "running"
+          },
+          {
+            "role": "budget_expert",
+            "status": "not_started"
+          },
+          {
+            "role": "itinerary_design",
+            "status": "not_started"
+          }
+        ],
+        "coco": [
+          "🧭 信息齐了：上海出发，和配偶去杭州 5 天，预算 2 万，节奏放轻松。我这就按这个来安排，先给你做一版不赶的杭州慢游计划。"
+        ],
+        "msg_count": 2
+      },
+      "askedOutbound": false,
+      "uiSpecs": [
+        "📍 目的地研究 · 进行中 · 正在查杭州点位与天气",
+        "💰 预算专家 · 未执行",
+        "🗓️ 行程设计 · 未执行"
+      ],
+      "sendError": ""
+    }
+  },
+  "createProbe": {
+    "http": 201,
+    "id": "conv_f35e27e85762a78b",
+    "message": "ok"
+  },
+  "refresh": {
+    "result": "PASS",
+    "id": "conv_6707794094d26b94",
+    "users": [
+      "想出去玩"
+    ],
+    "api": {
+      "http": 200,
+      "id": "conv_6707794094d26b94",
+      "ready": false,
+      "missing": [
+        "origin_city",
+        "region",
+        "duration_days",
+        "companion",
+        "budget",
+        "pace"
+      ],
+      "origin": null,
+      "dest": null,
+      "region": null,
+      "days": null,
+      "pace": null,
+      "companions": null,
+      "children": [],
+      "followups": 1,
+      "planning": "idle",
+      "itinerary_id": null,
+      "specs": [
+        {
+          "role": "destination_research",
+          "status": "not_started"
+        },
+        {
+          "role": "budget_expert",
+          "status": "not_started"
+        },
+        {
+          "role": "itinerary_design",
+          "status": "not_started"
+        }
+      ],
+      "coco": [
+        "📝 好呀，先跟我对几个关键信息：你从哪个城市出发、打算去几天、和谁一起（几个人）、预算大概多少、想轻松点还是节奏紧凑些？"
+      ],
+      "msg_count": 2
+    }
+  },
+  "homeMock": false
+}

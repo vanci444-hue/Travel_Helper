@@ -1,0 +1,52 @@
+{
+  "result": "FAIL",
+  "homeMock": false,
+  "city": "青岛",
+  "coco": "📝 请问孩子大概几岁？另外这趟想看海是想去国内的海边（比如青岛、厦门、三亚），还是想出境去某个国家？",
+  "allCoco": [
+    "📝 请问孩子大概几岁？另外这趟想看海是想去国内的海边（比如青岛、厦门、三亚），还是想出境去某个国家？"
+  ],
+  "api": {
+    "http": 200,
+    "id": "conv_f36856387d07db67",
+    "ready": false,
+    "missing": [
+      "region",
+      "children_age_bands"
+    ],
+    "origin": "北京",
+    "dest": null,
+    "region": null,
+    "days": 4,
+    "pace": "relaxed",
+    "followups": 1,
+    "planning": "idle",
+    "itinerary_id": null,
+    "specs": [
+      {
+        "role": "destination_research",
+        "status": "not_started"
+      },
+      {
+        "role": "budget_expert",
+        "status": "not_started"
+      },
+      {
+        "role": "itinerary_design",
+        "status": "not_started"
+      }
+    ],
+    "coco": [
+      "📝 请问孩子大概几岁？另外这趟想看海是想去国内的海边（比如青岛、厦门、三亚），还是想出境去某个国家？"
+    ],
+    "msg_count": 2
+  },
+  "askedPickCity": false,
+  "uiSpecs": [
+    "📍 目的地研究 · 未执行",
+    "💰 预算专家 · 未执行",
+    "🗓️ 行程设计 · 未执行"
+  ],
+  "sendError": "",
+  "shot": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t009-shots/11-ac009-recheck.png"
+}

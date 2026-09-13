@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Xtrip</title>
+  <style>
+    :root {
+      --bg: #050508; --side: transparent; --main: transparent; --panel: transparent;
+      --elev: #14141c; --hover: rgba(255,255,255,.045); --sel: rgba(255,255,255,.08);
+      --t: #f4f4f7; --t2: #b8b8c2; --tm: #8a8a96;
+      --line: rgba(255,255,255,.055); --line2: rgba(255,255,255,.12);
+      --inv: #050508; --surface: #0c0c12;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; background: var(--bg); color: var(--t);
+      font: 16px/1.55 "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+    #app {
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(920px 640px at 10% 6%, rgba(232,196,110,.16), transparent 58%),
+        radial-gradient(720px 520px at 92% 12%, rgba(124,92,186,.09), transparent 54%),
+        linear-gradient(rgba(255,255,255,.028) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.028) 1px, transparent 1px);
+      background-size: auto, auto, 72px 72px, 72px 72px;
+    }
+    button, input, textarea, select { font: inherit; color: inherit; }
+    #app { display: flex; height: 100vh; overflow: hidden; }
+    .side { width: 260px; background: var(--side); border-right: 1px solid var(--line); display: flex; flex-direction: column; padding: 12px; flex-shrink: 0; }
+    .brand { display: flex; align-items: center; gap: 10px; font: 600 18px/1.2 Inter, system-ui, sans-serif; letter-spacing: .04em; padding: 12px 10px 20px; }
+    .brand img { width: 28px; height: 28px; border-radius: 8px; object-fit: cover; background: #0e0e0e; }
+    .nav { display: flex; flex-direction: column; gap: 4px; }
+    .nav button { text-align: left; background: transparent; border: 0; border-radius: 10px; height: 40px; padding: 0 12px; color: var(--t); cursor: pointer; }
+    .nav button:hover { background: var(--hover); }
+    .nav button.on { background: var(--sel); }
+    .side-foot { margin-top: auto; font-size: 13px; color: var(--tm); padding: 12px; }
+    .col { flex: 1; min-width: 0; display: flex; flex-direction: column; background: var(--main); position: relative; }
+    .right { width: 400px; background: var(--panel); border-left: 1px solid var(--line); display: flex; flex-direction: column; flex-shrink: 0; position: relative; }
+    .right-resizer { position: absolute; left: -3px; top: 0; bottom: 0; width: 6px; border: 0; padding: 0; background: transparent; cursor: col-resize; }
+    .right-resizer:hover { background: rgba(255,255,255,.14); }
+    .right h2 { font-size: 13px; font-weight: 500; color: var(--t2); margin: 0; padding: 16px 16px 8px; }
+    .insp { overflow: auto; padding: 12px 20px 28px; display: flex; flex-direction: column; gap: 20px; }
+    .insp article { flex-shrink: 0; cursor: default; background: var(--elev); border: 1px solid rgba(255,255,255,.15); border-radius: 14px; overflow: visible; position: relative; isolation: isolate; }
+    .ph { height: 140px; }
+    .ph.h { background: linear-gradient(135deg, #3a4654, #8aa0a8 40%, #c5b49a); }
+    .ph.c { background: linear-gradient(135deg, #2c3330, #6b8f71 45%, #e2c48a); }
+    .ph.d { background: linear-gradient(135deg, #3d4450, #7d8aa0 40%, #d9c4a8); }
+    .insp .cap { padding: 12px 14px 14px; }
+    .insp .city { margin: 0 0 4px; font-size: 13px; font-weight: 600; letter-spacing: .04em; }
+    .insp h3 { margin: 0 0 6px; font-size: 16px; font-weight: 600; }
+    .insp p { margin: 0; font-size: 13px; color: var(--t2); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .map { flex: 1; margin: 16px; border-radius: 14px; background:
+      linear-gradient(var(--line), var(--line)) center/1px 100% no-repeat,
+      linear-gradient(var(--line), var(--line)) center/100% 1px no-repeat,
+      #2a2a2a; position: relative; }
+    .map span { position: absolute; left: 50%; top: 46%; transform: translate(-50%,-50%); color: var(--tm); font-size: 13px; text-align: center; }
+    .pin { width: 10px; height: 10px; background: #fff; border-radius: 50%; position: absolute; left: 52%; top: 48%; }
+    .msgs { flex: 1; overflow: auto; padding: 24px 24px 12px; }
+    .inner { max-width: 760px; margin: 0 auto; }
+    .welcome { height: 100%; display: flex; align-items: center; justify-content: center; color: var(--t2); text-align: center; }
+    .welcome strong { display: block; color: var(--t); font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+    .row { margin: 0 0 20px; }
+    .row.user { display: flex; justify-content: flex-end; }
+    .bubble { background: var(--elev); border-radius: 18px; padding: 10px 14px; max-width: 72%; }
+    .coco .who { font-size: 13px; font-weight: 500; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+    .av { width: 22px; height: 22px; border-radius: 50%; background: var(--elev); display: grid; place-items: center; font-size: 11px; font-weight: 600; }
+    .fail { border-left: 2px solid #fff; padding-left: 12px; }
+    .specs { margin-top: 12px; font-size: 13px; color: var(--t2); display: flex; flex-direction: column; gap: 6px; }
+    .specs i { font-style: normal; color: var(--tm); }
+    .specs .run i { color: var(--t); }
+    .spin { display: inline-block; width: 10px; height: 10px; border: 1.5px solid var(--tm); border-top-color: #fff; border-radius: 50%; animation: sp 1s linear infinite; margin-right: 6px; }
+    @keyframes sp { to { transform: rotate(360deg); } }
+    .composer { padding: 16px 24px 28px; }
+    .box { max-width: 760px; margin: 0 auto; background: var(--elev); border: 1px solid rgba(255,255,255,.15); border-radius: 14px; display: flex; align-items: flex-end; padding: 8px 8px 8px 16px; position: relative; isolation: isolate; overflow: visible; }
+    textarea { flex: 1; background: transparent; border: 0; resize: none; min-height: 36px; max-height: 160px; outline: none; }
+    .send { width: 36px; height: 36px; border: 0; border-radius: 10px; background: #fff; color: var(--inv); cursor: pointer; font-weight: 600; }
+    .send:disabled { background: #5c5c5c; color: #c8c8c8; cursor: default; }
+    .ghost { background: transparent; border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; cursor: pointer; }
+    .cta { background: #fff; color: var(--inv); border: 0; border-radius: 10px; height: 40px; padding: 0 16px; font-weight: 600; cursor: pointer; }
+    .list { flex: 1; overflow: auto; padding: 24px; }
+    .trip { background: var(--elev); border: 1px solid var(--line); border-radius: 14px; padding: 16px; cursor: pointer; max-width: 760px; }
+    .trip:hover { background: var(--hover); }
+    .trip small { color: var(--t2); font-size: 13px; }
+    .detail { flex: 1; display: flex; min-width: 0; }
+    .report { flex: 1; min-width: 0; display: flex; flex-direction: column; overflow: hidden; }
+    .report-head { flex-shrink: 0; background: var(--main); padding: 20px 28px 16px; border-bottom: 1px solid var(--line); }
+    .report-body { flex: 1; min-height: 0; overflow: auto; padding: 20px 28px 48px; }
+    .chips { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0 0; }
+    .chip { background: var(--elev); border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; font-size: 13px; cursor: pointer; }
+    .chip.on { background: var(--sel); border-color: var(--line2); }
+    .card { background: var(--elev); border: 1px solid rgba(255,255,255,.15); border-radius: 14px; padding: 14px; margin: 8px 0; cursor: pointer; position: relative; isolation: isolate; overflow: visible; }
+    .glow-border, .glow-aura { position: absolute; pointer-events: none; border-radius: inherit; opacity: var(--glow-opacity, 0); transition: opacity .25s ease-out; }
+    .glow-border {
+      inset: 0;
+      background:
+        radial-gradient(at 80% 55%, #c084fc 0px, transparent 50%),
+        radial-gradient(at 69% 34%, #f472b6 0px, transparent 50%),
+        radial-gradient(at 8% 6%, #38bdf8 0px, transparent 50%);
+      -webkit-mask-image: conic-gradient(from var(--glow-angle, 45deg) at center, #000 25%, transparent 40%, transparent 60%, #000 75%);
+      mask-image: conic-gradient(from var(--glow-angle, 45deg) at center, #000 25%, transparent 40%, transparent 60%, #000 75%);
+      mix-blend-mode: soft-light;
+    }
+    .glow-aura {
+      inset: -20px;
+      box-shadow: 0 0 28px 4px hsl(40deg 80% 80% / 40%);
+      -webkit-mask-image: conic-gradient(from var(--glow-angle, 45deg) at center, #000 2.5%, transparent 12%, transparent 88%, #000 97.5%);
+      mask-image: conic-gradient(from var(--glow-angle, 45deg) at center, #000 2.5%, transparent 12%, transparent 88%, #000 97.5%);
+    }
+    .insp .ph { border-radius: 14px 14px 0 0; overflow: hidden; position: relative; z-index: 1; }
+    .insp .cap { position: relative; z-index: 1; }
+    .card > *:not(.glow-border):not(.glow-aura),
+    .box > *:not(.glow-border):not(.glow-aura) { position: relative; z-index: 1; }
+    @media (prefers-reduced-motion: reduce) {
+      .glow-border, .glow-aura { display: none; }
+    }
+    .leg { font-size: 13px; color: var(--t2); padding: 4px 8px 4px 16px; border-left: 1px solid var(--line2); margin: 0 12px; }
+    .sidechat { width: 360px; border-left: 1px solid var(--line); background: var(--panel); display: flex; flex-direction: column; }
+    .suggest { display: flex; flex-direction: column; align-items: stretch; gap: 8px; padding: 0 16px 8px; }
+    .suggest button { background: transparent; border: 1px solid var(--line); border-radius: 999px; color: var(--t2); font-size: 13px; padding: 8px 12px; cursor: pointer; width: 100%; text-align: left; white-space: normal; line-height: 1.4; }
+    .ov { position: fixed; inset: 0; background: rgba(0,0,0,.62); display: grid; place-items: center; z-index: 20; }
+    .modal { width: min(520px, 92vw); background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 24px; box-shadow: 0 16px 48px rgba(0,0,0,.45); }
+    .modal h2 { margin: 0 0 16px; font-size: 20px; }
+    label { display: block; font-size: 13px; color: var(--t2); margin: 12px 0 6px; }
+    .modal input, .modal textarea, .modal select { width: 100%; background: var(--elev); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; outline: none; }
+    .paces { display: flex; gap: 8px; }
+    .paces button { flex: 1; height: 36px; border-radius: 10px; border: 1px solid var(--line); background: var(--elev); cursor: pointer; }
+    .paces button.on { background: var(--sel); border-color: var(--line2); }
+    .actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 20px; }
+    .log { margin-top: 14px; font-size: 13px; color: var(--t2); }
+    .log-h { cursor: pointer; user-select: none; color: var(--t); font-weight: 500; }
+    .log-h .chev { display: inline-block; width: 10px; margin-right: 6px; color: var(--tm); }
+    .log.fold .log-b { display: none; }
+    .log-b { margin: 10px 0 0 16px; display: flex; flex-direction: column; gap: 7px; }
+    .log-b .step { background: none; border: 0; padding: 0; text-align: left; color: var(--t2); cursor: default; font: inherit; }
+    .log-b .step.click { cursor: pointer; }
+    .log-b .step.click:hover { color: var(--t); }
+    .pre { white-space: pre-wrap; color: var(--t2); font-size: 14px; line-height: 1.5; max-height: 50vh; overflow: auto; }
+    @media (max-width: 1100px) {
+      .right { position: absolute; right: 0; top: 0; bottom: 0; z-index: 5; }
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <aside class="side">
+      <div class="brand"><img src="./xtrip-logo.png" alt="" />Xtrip</div>
+      <nav class="nav">
+        <button id="nav-chat" class="on" type="button">对话</button>
+        <button id="nav-trips" type="button">行程</button>
+        <button id="nav-new" type="button">新建计划</button>
+      </nav>
+      <div class="side-foot">Demo · 无登录</div>
+    </aside>
+
+    <section class="col" id="view-chat">
+      <div class="msgs" id="p-chat">
+        <div class="welcome" id="p-home">
+          <div><strong>✈️ 和 Coco 规划一趟旅行</strong>🗺️ 想去哪，直接说。</div>
+        </div>
+        <div class="inner hide" id="thread"></div>
+      </div>
+      <div class="composer">
+        <div class="box">
+          <textarea id="input" rows="1" placeholder="从上海出发去杭州，轻松 5 天…"></textarea>
+          <button class="send" id="send" type="button" disabled>↑</button>
+        </div>
+      </div>
+    </section>
+
+    <aside class="right" id="right-insp">
+      <button type="button" class="right-resizer" aria-label="调整地图列宽度"></button>
+      <h2>灵感</h2>
+      <div class="insp">
+        <article><div class="ph h"></div><div class="cap"><p class="city">杭州</p><h3>西湖边慢慢走</h3><p>湖景、茶、短途高铁都合适，适合轻松几天。</p></div></article>
+        <article><div class="ph c"></div><div class="cap"><p class="city">成都</p><h3>熊猫与火锅</h3><p>节奏可以很慢，吃和逛都适合情侣或家庭。</p></div></article>
+        <article><div class="ph d"></div><div class="cap"><p class="city">大理</p><h3>风大，适合发呆</h3><p>洱海边发呆就够了，不要把行程排太满。</p></div></article>
+      </div>
+    </aside>
+    <aside class="right hide" id="right-map">
+      <button type="button" class="right-resizer" aria-label="调整地图列宽度"></button>
+      <h2>地图</h2>
+      <div class="map"><i class="pin"></i><span>杭州 · 演示点位<br />（原型无真实地图）</span></div>
+    </aside>
+
+    <section class="col hide" id="p-trips">
+      <div class="list">
+        <p id="trips-empty" class="welcome" style="height:auto;justify-content:flex-start;">还没有行程，先和 Coco 聊一趟。</p>
+        <article class="trip hide" id="trip-row">
+          <strong>杭州 5 天</strong><br /><small>轻松 · 情侣 · 今天</small>
+        </article>
+      </div>
+    </section>
+
+    <section class="detail hide" id="p-detail">
+      <div class="report">
+        <header class="report-head">
+          <h1 style="font-size:20px;font-weight:600;margin:0;">🗺️ 杭州 5 天</h1>
+          <p style="color:var(--t2);font-size:13px;margin:8px 0 0;">🍃 轻松 · 💰 预算上限 2 万 · 合计约 1.6 万</p>
+          <div class="chips" id="chips"></div>
+        </header>
+        <div class="report-body" id="report">
+          <section id="budget"><h2 style="font-size:16px;">💰 预算</h2><p style="color:var(--t2);font-size:13px;">交通、住宿、餐饮合计约 1.6 万，未超出上限。金额为估算，非实时库存价。</p></section>
+          <section><h2 style="font-size:16px;">🎒 行前清单</h2><p style="color:var(--t2);font-size:13px;">身份证 · 轻便外套 · 舒适步行鞋</p></section>
+          <div id="days"></div>
+        </div>
+      </div>
+      <aside class="sidechat">
+        <div class="msgs" id="side-thread"></div>
+        <div class="suggest">
+          <button type="button" data-sg="第三天不要排那么满">第三天少排一点</button>
+          <button type="button" data-sg="把住宿换到湖边">住宿换到湖边</button>
+        </div>
+        <div class="composer" style="padding:12px;">
+          <div class="box">
+            <textarea id="side-input" rows="1" placeholder="跟 Coco 说要改什么"></textarea>
+            <button class="send" id="side-send" type="button">↑</button>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </div>
+
+  <div class="ov hide" id="p-create">
+    <div class="modal">
+      <h2>新建计划</h2>
+      <label>去哪</label><input id="f-where" placeholder="例如杭州" />
+      <label>何时</label><input id="f-when" placeholder="例如 5 天" />
+      <label>和谁</label><input id="f-who" placeholder="例如 2 名成人" />
+      <label>预算</label><input id="f-budget" placeholder="例如 20000" />
+      <label>节奏</label>
+      <div class="paces" id="paces">
+        <button type="button" data-p="轻松" class="on">轻松</button>
+        <button type="button" data-p="适中">适中</button>
+        <button type="button" data-p="紧凑">紧凑</button>
+      </div>
+      <label>目前已知的计划</label><textarea id="f-note" rows="2" placeholder="可选"></textarea>
+      <div class="actions">
+        <button class="ghost" type="button" id="create-cancel">取消</button>
+        <button class="cta" type="button" id="create-go">开始聊</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="ov hide" id="modal-log">
+    <div class="modal">
+      <h2 id="log-title">步骤细节</h2>
+      <div class="pre" id="log-body"></div>
+      <div class="actions"><button class="cta" type="button" id="log-close">关闭</button></div>
+    </div>
+  </div>
+
+  <div class="ov hide" id="modal-card">
+    <div class="modal">
+      <h2 id="card-title">景点</h2>
+      <p id="card-body" style="color:var(--t2);font-size:14px;"></p>
+      <div class="actions"><button class="cta" type="button" id="card-close">关闭</button></div>
+    </div>
+  </div>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const state = {
+      view: "chat",
+      started: false,
+      planning: "idle",
+      tripReady: false,
+      pace: "轻松",
+      day3Light: false,
+    };
+    const DAYS = [
+      { id: 1, title: "第 1 天", cards: [
+        { name: "灵隐寺", intro: "香火与山林，适合慢慢走，不要排在午后最赶的一段。", addr: "杭州市西湖区" },
+        { name: "西湖", intro: "沿湖散步，轻松节奏每天大约 1–2 个主要点。", addr: "杭州市西湖区" },
+      ], leg: "公交约 25 分钟" },
+      { id: 2, title: "第 2 天", cards: [
+        { name: "龙井村", intro: "茶田与步行，情侣轻松行程。", addr: "杭州市西湖区" },
+        { name: "推荐住宿 · 湖边民宿", intro: "仅推荐，不代订、不展示支出。", addr: "南山路附近" },
+      ], leg: "步行约 12 分钟" },
+      { id: 3, title: "第 3 天", cards: [
+        { name: "西溪湿地", intro: "留白较多的一天。", addr: "杭州市西湖区" },
+        { name: "河坊街", intro: "晚上轻松走走。", addr: "杭州市上城区" },
+      ], leg: "公交约 40 分钟" },
+    ];
+
+    function show(el, on) { el.classList.toggle("hide", !on); }
+    function setNav() {
+      $("nav-chat").classList.toggle("on", state.view === "chat");
+      $("nav-trips").classList.toggle("on", state.view === "trips" || state.view === "detail");
+      show($("view-chat"), state.view === "chat");
+      show($("p-trips"), state.view === "trips");
+      show($("p-detail"), state.view === "detail");
+      const useRight = state.view === "chat";
+      show($("right-insp"), useRight && !state.started);
+      show($("right-map"), useRight && state.started);
+    }
+    function appendCoco(html, fail) {
+      show($("p-home"), false);
+      show($("thread"), true);
+      const d = document.createElement("div");
+      d.className = "row coco";
+      d.innerHTML = `<div class="who"><span class="av">C</span>Coco</div><div class="${fail ? "fail" : ""}">${html}</div>`;
+      $("thread").appendChild(d);
+      $("p-chat").scrollTop = $("p-chat").scrollHeight;
+    }
+    function appendUser(text) {
+      show($("p-home"), false);
+      show($("thread"), true);
+      const d = document.createElement("div");
+      d.className = "row user";
+      d.innerHTML = `<div class="bubble"></div>`;
+      d.querySelector(".bubble").textContent = text;
+      $("thread").appendChild(d);
+    }
+    const LOG_OK = [
+      { title: "查询杭州地理编码", detail: "目的地研究\n结果：杭州市已定位。不展示密钥或原始坐标串给调试用。" },
+      { title: "搜索景点 西湖", detail: "目的地研究\n找到：西湖、断桥、苏堤。适合情侣轻松节奏。" },
+      { title: "思考 4s", detail: "先确认湖边点位够不够排 5 天轻松行程，再决定要不要补龙井。" },
+      { title: "读取杭州天气", detail: "未来几天多云到晴，体感适宜步行。清单里提示轻便外套。" },
+      { title: "估算分类预算", detail: "预算专家\n交通、住宿、餐饮合计约 1.6 万，未超出 2 万上限。" },
+      { title: "查询公交 灵隐寺 → 西湖", detail: "行程设计\n公交约 25 分钟。此为摘要，不含完整路线折线。" },
+    ];
+    const LOG_FAIL = [
+      { title: "查询目的地", detail: "地理编码无结果。国内地图找不到该地名。" },
+      { title: "目的地研究未完成", detail: "没有可用景点信息，不能继续做预算和行程。" },
+    ];
+    function openLogDetail(title, body) {
+      $("log-title").textContent = title;
+      $("log-body").textContent = body;
+      show($("modal-log"), true);
+    }
+    function mountLog(host, items, summary, done) {
+      const wrap = document.createElement("div");
+      wrap.className = "log";
+      const head = document.createElement("div");
+      head.className = "log-h";
+      const chev = document.createElement("span");
+      chev.className = "chev";
+      chev.textContent = "▾";
+      const label = document.createElement("span");
+      label.textContent = summary;
+      head.append(chev, label);
+      head.onclick = () => wrap.classList.toggle("fold");
+      const body = document.createElement("div");
+      body.className = "log-b";
+      wrap.append(head, body);
+      host.appendChild(wrap);
+      items.forEach((item, i) => {
+        setTimeout(() => {
+          const row = document.createElement("button");
+          row.type = "button";
+          row.className = "step click";
+          row.textContent = item.title;
+          row.onclick = () => openLogDetail(item.title, item.detail);
+          body.appendChild(row);
+          $("p-chat").scrollTop = $("p-chat").scrollHeight;
+          if (done && i === items.length - 1) done(wrap, label);
+        }, 280 * (i + 1));
+      });
+      return wrap;
+    }
+    function goChat() { state.view = "chat"; setNav(); }
+    function startTalk() {
+      state.started = true;
+      setNav();
+    }
+    $("input").addEventListener("input", () => {
+      $("send").disabled = !$("input").value.trim();
+    });
+    $("send").addEventListener("click", () => send($("input")));
+    $("input").addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send($("input")); }
+    });
+    function send(box) {
+      const text = box.value.trim();
+      if (!text) return;
+      box.value = "";
+      $("send").disabled = true;
+      startTalk();
+      appendUser(text);
+      if (state.planning === "run") {
+        appendCoco("⏳ 专员还在做，完成后会放到行程里。");
+        return;
+      }
+      if (/阿巴|不存在|火星|乱码/.test(text)) {
+        appendCoco("🌫️ 这次没法帮你出方案。原因是：在国内地图里找不到这个目的地，没有可用的景点信息。你可以换一个国内城市，或者说得更具体一点再试。", true);
+        mountLog($("thread").lastElementChild, LOG_FAIL, "规划未完成 · 2 步", (wrap, label) => {
+          label.textContent = "规划未完成 · 2 步";
+        });
+        state.planning = "failed";
+        return;
+      }
+      const thin = text.length < 8 && !/杭州|成都|大理/.test(text);
+      if (thin && state.planning === "idle") {
+        appendCoco("📝 可以。还差几件事就能开工：你从哪座城市出发、玩几天、和谁、预算大概多少、节奏要轻松还是紧凑？专员还不会上场。");
+        return;
+      }
+      appendCoco("🧭 信息齐了：上海出发、杭州 5 天、情侣、2 万、轻松节奏。我这边让专员出一版，过程会写在下面的日志里。");
+      state.planning = "run";
+      mountLog($("thread").lastElementChild, LOG_OK, "规划中 · 已查地点与路线", (wrap, label) => {
+        label.textContent = "规划完成 · 6 步、3 名专员";
+        appendCoco('✨ 方案好了，按天行程在详情页，不贴在对话里。<p style="margin:12px 0 0;"><button class="cta" type="button" id="open-trip">👀 查看行程</button></p>');
+        $("open-trip").onclick = openDetail;
+        state.planning = "done";
+        state.tripReady = true;
+        $("trips-empty").classList.add("hide");
+        $("trip-row").classList.remove("hide");
+      });
+    }
+    function openDetail() {
+      state.view = "detail";
+      renderDays();
+      setNav();
+      $("side-thread").innerHTML = `<div class="row coco"><div class="who"><span class="av">C</span>Coco</div><div>这份杭州 5 天可以改某一张卡片，或直接跟我说。</div></div>`;
+    }
+    function renderDays() {
+      $("chips").innerHTML = "";
+      $("days").innerHTML = "";
+      [1,2,3,4,5].forEach((d) => {
+        const b = document.createElement("button");
+        b.className = "chip" + (d === 1 ? " on" : "");
+        b.textContent = "第 " + d + " 天";
+        b.onclick = () => {
+          document.querySelectorAll("#chips .chip").forEach((x) => x.classList.remove("on"));
+          b.classList.add("on");
+          const el = document.getElementById("day-" + d);
+          if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+        };
+        $("chips").appendChild(b);
+      });
+      DAYS.forEach((day) => {
+        const wrap = document.createElement("section");
+        wrap.id = "day-" + day.id;
+        let cards = day.cards;
+        if (day.id === 3 && state.day3Light) cards = [day.cards[0]];
+        wrap.innerHTML = `<h2 style="font-size:16px;margin:24px 0 8px;">${day.title}</h2>`;
+        cards.forEach((c, i) => {
+          const art = document.createElement("article");
+          art.className = "card";
+          art.innerHTML = `<strong>${c.name}</strong><div style="font-size:13px;color:var(--t2);margin-top:4px;">${c.addr}</div>`;
+          art.onclick = () => {
+            $("card-title").textContent = c.name;
+            $("card-body").textContent = c.intro + " " + c.addr;
+            show($("modal-card"), true);
+          };
+          wrap.appendChild(art);
+          if (i === 0 && cards.length > 1) {
+            const leg = document.createElement("div");
+            leg.className = "leg";
+            leg.textContent = day.leg;
+            wrap.appendChild(leg);
+          }
+        });
+        $("days").appendChild(wrap);
+      });
+      [4,5].forEach((d) => {
+        const wrap = document.createElement("section");
+        wrap.id = "day-" + d;
+        wrap.innerHTML = `<h2 style="font-size:16px;margin:24px 0 8px;">第 ${d} 天</h2><article class="card"><strong>自由活动 / 返程</strong><div style="font-size:13px;color:var(--t2);margin-top:4px;">轻松节奏，不排满。</div></article>`;
+        $("days").appendChild(wrap);
+      });
+      bindBorderGlow(document);
+    }
+    function bindBorderGlow(root) {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      root.querySelectorAll(".insp article, .card, .box").forEach((el) => {
+        if (el.dataset.glowBound) return;
+        el.dataset.glowBound = "1";
+        const border = document.createElement("span");
+        border.className = "glow-border";
+        const aura = document.createElement("span");
+        aura.className = "glow-aura";
+        el.prepend(aura);
+        el.prepend(border);
+        el.addEventListener("pointermove", (e) => {
+          if (el.dataset.glowSpin) return;
+          const r = el.getBoundingClientRect();
+          const x = e.clientX - r.left;
+          const y = e.clientY - r.top;
+          const cx = r.width / 2;
+          const cy = r.height / 2;
+          const dx = x - cx;
+          const dy = y - cy;
+          let deg = Math.atan2(dy, dx) * (180 / Math.PI) + 90;
+          if (deg < 0) deg += 360;
+          const kx = dx !== 0 ? cx / Math.abs(dx) : Infinity;
+          const ky = dy !== 0 ? cy / Math.abs(dy) : Infinity;
+          const prox = Math.min(Math.max(1 / Math.min(kx, ky), 0), 1);
+          el.style.setProperty("--glow-angle", deg.toFixed(2) + "deg");
+          el.style.setProperty("--glow-opacity", String(Math.max(0, (prox * 100 - 30) / 70)));
+        });
+        el.addEventListener("pointerleave", () => {
+          if (!el.dataset.glowSpin) el.style.setProperty("--glow-opacity", "0");
+        });
+        if (el.classList.contains("box")) {
+          let raf = 0;
+          let angle = 45;
+          let last = 0;
+          function tick(now) {
+            if (!last) last = now;
+            angle = (angle + ((now - last) / 1000) * 60) % 360;
+            last = now;
+            el.style.setProperty("--glow-angle", angle.toFixed(2) + "deg");
+            el.style.setProperty("--glow-opacity", "0.85");
+            raf = requestAnimationFrame(tick);
+          }
+          el.addEventListener("focusin", () => {
+            el.dataset.glowSpin = "1";
+            cancelAnimationFrame(raf);
+            last = 0;
+            raf = requestAnimationFrame(tick);
+          });
+          el.addEventListener("focusout", () => {
+            delete el.dataset.glowSpin;
+            cancelAnimationFrame(raf);
+            el.style.setProperty("--glow-opacity", "0");
+          });
+        }
+      });
+    }
+    $("report").addEventListener("scroll", () => {
+      const ids = [1,2,3,4,5].map((d) => $("day-" + d)).filter(Boolean);
+      let cur = 1;
+      ids.forEach((el) => {
+        if (el.getBoundingClientRect().top < 220) cur = Number(el.id.replace("day-", ""));
+      });
+      document.querySelectorAll("#chips .chip").forEach((x, i) => x.classList.toggle("on", i === cur - 1));
+    });
+    $("nav-chat").onclick = goChat;
+    $("nav-trips").onclick = () => { state.view = "trips"; setNav(); };
+    $("nav-new").onclick = () => show($("p-create"), true);
+    $("create-cancel").onclick = () => show($("p-create"), false);
+    $("p-create").addEventListener("click", (e) => { if (e.target === $("p-create")) show($("p-create"), false); });
+    $("paces").onclick = (e) => {
+      const b = e.target.closest("button");
+      if (!b) return;
+      state.pace = b.dataset.p;
+      [...$("paces").children].forEach((x) => x.classList.toggle("on", x === b));
+    };
+    $("create-go").onclick = () => {
+      show($("p-create"), false);
+      goChat();
+      startTalk();
+      const where = $("f-where").value.trim() || "杭州";
+      appendCoco(`📝 已记下：去${where}、${$("f-when").value.trim() || "5 天"}、${$("f-who").value.trim() || "2 名成人"}、预算 ${$("f-budget").value.trim() || "2 万"}、节奏${state.pace}。还差出发城市的话我只问这个，已填的节奏不会再问一遍。`);
+    };
+    $("trip-row").onclick = openDetail;
+    $("log-close").onclick = () => show($("modal-log"), false);
+    $("card-close").onclick = () => show($("modal-card"), false);
+    $("modal-log").addEventListener("click", (e) => { if (e.target === $("modal-log")) show($("modal-log"), false); });
+    $("modal-card").addEventListener("click", (e) => { if (e.target === $("modal-card")) show($("modal-card"), false); });
+    function hideSuggest() {
+      const box = document.querySelector(".suggest");
+      if (box) box.remove();
+    }
+    function appendSideUser(text) {
+      const d = document.createElement("div");
+      d.className = "row user";
+      d.innerHTML = `<div class="bubble">${text}</div>`;
+      $("side-thread").appendChild(d);
+    }
+    document.querySelectorAll("[data-sg]").forEach((b) => {
+      b.onclick = () => {
+        const text = b.getAttribute("data-sg") || b.textContent || "";
+        appendSideUser(text);
+        hideSuggest();
+        state.day3Light = true;
+        renderDays();
+        const d = document.createElement("div");
+        d.className = "row coco";
+        d.innerHTML = `<div class="who"><span class="av">C</span>Coco</div><div>第三天已放疏，只留西溪湿地。和逐项改的是同一份方案。</div>`;
+        $("side-thread").appendChild(d);
+      };
+    });
+    $("side-send").onclick = () => {
+      const t = $("side-input").value.trim();
+      if (!t) return;
+      $("side-input").value = "";
+      appendSideUser(t);
+      hideSuggest();
+      if (/第三天|少排|不要排那么满/.test(t)) {
+        state.day3Light = true;
+        renderDays();
+      }
+      const d = document.createElement("div");
+      d.className = "row coco";
+      d.innerHTML = `<div class="who"><span class="av">C</span>Coco</div><div>已按你的话改当前这份报告。</div>`;
+      $("side-thread").appendChild(d);
+    };
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") { show($("p-create"), false); show($("modal-card"), false); show($("modal-log"), false); }
+    });
+    document.querySelectorAll(".right-resizer").forEach((handle) => {
+      handle.addEventListener("pointerdown", (event) => {
+        if (event.button !== 0) return;
+        const col = handle.parentElement;
+        const startX = event.clientX;
+        const startW = col.getBoundingClientRect().width;
+        function move(ev) {
+          const next = Math.min(720, Math.max(280, Math.round(startW + (startX - ev.clientX))));
+          document.querySelectorAll(".right").forEach((node) => { node.style.width = next + "px"; });
+        }
+        function up() {
+          window.removeEventListener("pointermove", move);
+          window.removeEventListener("pointerup", up);
+        }
+        window.addEventListener("pointermove", move);
+        window.addEventListener("pointerup", up);
+      });
+    });
+    setNav();
+    bindBorderGlow(document);
+  </script>
+</body>
+</html>

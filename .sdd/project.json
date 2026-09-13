@@ -1,0 +1,11 @@
+{
+  "id": "Travel_Helper",
+  "name": "Xtrip",
+  "project_type": "web",
+  "source": "new",
+  "repo_url": "git@github.com:vanci444-hue/Travel_Helper.git",
+  "specification": "default",
+  "created_at": "2026-09-13 12:26:28",
+  "last_active": "2026-09-13 12:26:28",
+  "harness_version": "V7_2"
+}

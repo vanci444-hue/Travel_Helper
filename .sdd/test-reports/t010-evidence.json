@@ -1,0 +1,392 @@
+{
+  "chrome": "Chrome/152.0.7977.84",
+  "cdp": "Target.createTarget + attachToTarget flatten",
+  "frontend": "http://127.0.0.1:5199",
+  "backend": "http://127.0.0.1:8099",
+  "vite_use_mock": false,
+  "acs": {
+    "AC-003": {
+      "result": "FAIL",
+      "wait_seconds": 63.9,
+      "hasMock": false,
+      "specs": [
+        "📍 目的地研究 · 已完成 · 已收集3 处点位",
+        "💰 预算专家 · 已完成 · 合计约 6800，未超 20000",
+        "🗓️ 行程设计 · 已完成 · 杭州5天情侣轻松行程：每天只排1–2个主要点，西湖沿线慢逛、灵隐礼佛半日、西溪湿地半日、河坊街收尾。未指定交通偏好，按公交+步行假设排线（同一天相邻点优先步行，跨片区可乘公交）。所有点均已用路线工具核对，坐标齐全，不代订住宿、不含费用。"
+      ],
+      "logHead": "▾规划完成 · 已查 14 处地点、7 次路线",
+      "actionCount": 30,
+      "actions": [
+        "查询城市位置 杭州",
+        "读取天气 330100",
+        "搜索景点 西湖",
+        "查看地点详情 B023B13L9M",
+        "查看地点详情 B023B05MLT",
+        "查看地点详情 B023B01EE6",
+        "目的地研究已完成",
+        "思考一步",
+        "查看地点详情 B023B13L9M",
+        "查看地点详情 B023B05MLT",
+        "查看地点详情 B023B01EE6",
+        "搜索景点 灵隐寺"
+      ],
+      "tripLink": true,
+      "tripHref": "/itineraries/itn_c09c0397e10c7ea4",
+      "cocoLast": "✨ 去杭州的方案已经准备好了，可以去行程详情查看。对话里不贴按天安排。",
+      "dayCardsInBubble": true,
+      "api": {
+        "http": 200,
+        "planning": "succeeded",
+        "itinerary_id": "itn_c09c0397e10c7ea4",
+        "dest": "杭州",
+        "origin": "上海",
+        "days": 5,
+        "logCount": 30,
+        "specs": [
+          {
+            "role": "destination_research",
+            "status": "succeeded",
+            "summary": "已收集3 处点位"
+          },
+          {
+            "role": "budget_expert",
+            "status": "succeeded",
+            "summary": "合计约 6800，未超 20000"
+          },
+          {
+            "role": "itinerary_design",
+            "status": "succeeded",
+            "summary": "杭州5天情侣轻松行程：每天只排1–2个主要点，西湖沿线慢逛、灵隐礼佛半日、西溪湿地半日、河坊街收尾。未指定交通偏好，按公交+步行假设排线（同一天相邻点优先步行，"
+          }
+        ]
+      },
+      "sendError": ""
+    },
+    "AC-024": {
+      "result": "PASS",
+      "clicked": {
+        "ok": true,
+        "title": "🔧 查询城市位置 杭州"
+      },
+      "heading": "查询城市位置 杭州",
+      "body": "已定位，adcode=330100",
+      "bodyLen": 17,
+      "leaks": [],
+      "closed": true,
+      "stillConversation": true,
+      "pathAfter": "/",
+      "conversationIdSame": true
+    },
+    "AC-004": {
+      "result": "FAIL",
+      "wait_seconds": 180.7,
+      "cocoLast": "📝 收到，上海出发、两人同行、5 天、预算 2 万、节奏放松都记下了；不过「䶮䶮䶮阿巴市」我这边查不到对应地点，能确认下是国内哪个城市，还是国外的某个国家或区域吗？",
+      "error_message": "",
+      "reasonInCoco": false,
+      "errorAligned": false,
+      "itinerary_id": null,
+      "tripLink": false,
+      "failStripe": false,
+      "specs": [
+        {
+          "role": "destination_research",
+          "status": "not_started",
+          "summary": ""
+        },
+        {
+          "role": "budget_expert",
+          "status": "not_started",
+          "summary": ""
+        },
+        {
+          "role": "itinerary_design",
+          "status": "not_started",
+          "summary": ""
+        }
+      ],
+      "logCount": 0,
+      "failStep": {
+        "ok": false,
+        "title": ""
+      },
+      "modalHeading": "",
+      "modalBody": "",
+      "modalLeaks": [],
+      "http": 200,
+      "planning": "idle",
+      "sendError": ""
+    }
+  },
+  "tech": {
+    "eventsource_poll": {
+      "closed": {
+        "count": 0,
+        "closed": 0
+      },
+      "poll_hits_after_cut": 98,
+      "recent_gaps_s": [
+        0.75,
+        0.26,
+        1.02,
+        0.72,
+        0.03,
+        0.26,
+        0.25
+      ],
+      "reached_terminal": true
+    },
+    "no_src_curl": {
+      "src_module_hits": 84,
+      "checked": "DOM + /api only"
+    }
+  },
+  "home": {
+    "hasMock": false,
+    "composer": true,
+    "path": "/",
+    "welcome": false
+  },
+  "network_api": [
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    },
+    {
+      "url": "/api/conversations/conv_e38a31e319c1c1d4",
+      "status": 200
+    }
+  ],
+  "hasMockAny": false
+}

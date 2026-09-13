@@ -1,0 +1,193 @@
+{
+  "browser": "Chrome/152.0.7977.84",
+  "vite": "http://127.0.0.1:5604",
+  "checks": {
+    "ids": {
+      "mock01": "/itineraries/itn_mock_01",
+      "alias": "/itineraries/itn_01",
+      "fromList": "/itineraries/itn_mock_01",
+      "detailTitle": ""
+    },
+    "viewTripHref": "/itineraries/itn_mock_01",
+    "successChat": {
+      "url": "http://127.0.0.1:5604/",
+      "path": "/",
+      "vw": 1440,
+      "nav": [
+        {
+          "text": "对话",
+          "selected": true
+        },
+        {
+          "text": "行程",
+          "selected": false
+        },
+        {
+          "text": "新建计划",
+          "selected": false
+        }
+      ],
+      "selected": [
+        "对话"
+      ],
+      "sidebar": {
+        "w": 260,
+        "h": 900,
+        "top": 0,
+        "display": "block",
+        "inView": true
+      },
+      "right": {
+        "w": 400,
+        "h": 900,
+        "top": 0,
+        "display": "flex",
+        "inView": true
+      },
+      "rightToggle": {
+        "w": 0,
+        "h": 0,
+        "top": 0,
+        "display": "none",
+        "inView": false
+      },
+      "rightToggleText": "地图",
+      "sidebarToggle": {
+        "w": 0,
+        "h": 0,
+        "top": 0,
+        "display": "none",
+        "inView": false
+      },
+      "composer": {
+        "w": 780,
+        "h": 86,
+        "top": 814,
+        "display": "block",
+        "inView": true
+      },
+      "overlay": false,
+      "dialogTitle": "",
+      "rightHead": "🗺️ 地图",
+      "viewHref": "/itineraries/itn_mock_01",
+      "tripCount": 0,
+      "welcome": "",
+      "coco": [
+        "🧭 信息齐了：上海出发、杭州 5 天、情侣、2 万、轻松节奏。我这边让专员出一版，你可以在过程里看到进度。",
+        "✨ 方案好了，按天行程在详情页，不贴在对话里。"
+      ],
+      "mockCount": 3,
+      "hasLogin": true,
+      "forbiddenHit": [],
+      "cta": [
+        {
+          "text": "👀 查看行程",
+          "bg": "rgb(255, 255, 255)",
+          "color": "rgb(14, 14, 14)"
+        },
+        {
+          "text": "↑",
+          "bg": "rgb(92, 92, 92)",
+          "color": "rgb(200, 200, 200)"
+        }
+      ]
+    },
+    "narrow1099": {
+      "beforeToggle": "灵感",
+      "beforeRightDisplay": "none",
+      "inspOpenHead": "✨ 灵感",
+      "inspOpenInView": true,
+      "afterSendToggle": "地图",
+      "mapOpenHead": "🗺️ 地图",
+      "mapOpenInView": true,
+      "composer": {
+        "w": 839,
+        "h": 86,
+        "top": 714,
+        "display": "block",
+        "inView": true
+      }
+    },
+    "narrow768": {
+      "homeSidebar": {
+        "w": 0,
+        "h": 0,
+        "top": 0,
+        "display": "none",
+        "inView": false
+      },
+      "homeToggle": {
+        "w": 32,
+        "h": 32,
+        "top": 12,
+        "display": "flex",
+        "inView": true
+      },
+      "homeComposer": {
+        "w": 767,
+        "h": 86,
+        "top": 714,
+        "display": "block",
+        "inView": true
+      },
+      "drawerAfter": {
+        "w": 260,
+        "h": 800,
+        "top": 0,
+        "display": "block",
+        "inView": true
+      },
+      "detailPath": "/itineraries/itn_mock_01",
+      "createOpen": true,
+      "createTitle": "✈️ 新建计划",
+      "createPath": "/",
+      "createComposer": {
+        "w": 767,
+        "h": 86,
+        "top": 714,
+        "display": "block",
+        "inView": true
+      }
+    },
+    "style": {
+      "cta": [
+        {
+          "text": "↑",
+          "bg": "rgb(92, 92, 92)",
+          "color": "rgb(200, 200, 200)"
+        }
+      ],
+      "hasLogin": true,
+      "forbiddenHit": [],
+      "mockCount": 3,
+      "nav": [
+        {
+          "text": "对话",
+          "selected": true
+        },
+        {
+          "text": "行程",
+          "selected": false
+        },
+        {
+          "text": "新建计划",
+          "selected": false
+        }
+      ],
+      "sidebarW": 260,
+      "rightW": 400
+    }
+  },
+  "shots": {
+    "23-success-href.png": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t004-shots/23-success-href.png",
+    "14b-1099-insp.png": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t004-shots/14b-1099-insp.png",
+    "15b-1099-insp-open.png": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t004-shots/15b-1099-insp-open.png",
+    "16-1099-map-toggle.png": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t004-shots/16-1099-map-toggle.png",
+    "17-1099-map-open.png": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t004-shots/17-1099-map-open.png",
+    "18-767-home.png": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t004-shots/18-767-home.png",
+    "19-767-drawer.png": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t004-shots/19-767-drawer.png",
+    "20-767-detail.png": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t004-shots/20-767-detail.png",
+    "21-767-newplan.png": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t004-shots/21-767-newplan.png",
+    "22-style-1440.png": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t004-shots/22-style-1440.png"
+  }
+}

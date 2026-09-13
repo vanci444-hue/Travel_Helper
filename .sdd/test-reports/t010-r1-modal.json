@@ -1,0 +1,41 @@
+{
+  "ok": true,
+  "box": {
+    "ok": true,
+    "text": "👤 这一步没有完成",
+    "clickable": true,
+    "disabled": false,
+    "x": 656,
+    "y": 758.66796875,
+    "top": 747.5703125,
+    "bottom": 769.765625
+  },
+  "heading": "这一步没有完成",
+  "body": "目的地城市“䶮䶮䶮阿巴市”不存在于中国行政区划及主流旅游数据库，疑似输入错误或虚构地名，无法匹配交通、住宿、门票等基础价格数据，预算估算不可行",
+  "bodyLen": 71,
+  "leaks": [],
+  "closed": true,
+  "after": {
+    "path": "/",
+    "id": "conv_5903a8247d5a2da1",
+    "modal": false,
+    "composer": true
+  },
+  "api": {
+    "http": 200,
+    "planning": "failed",
+    "dest": "䶮䶮䶮阿巴市",
+    "error_message": "目的地城市“䶮䶮䶮阿巴市”不存在于中国行政区划及主流旅游数据库，疑似输入错误或虚构地名，无法匹配交通、住宿、门票等基础价格数据，预算估算不可行",
+    "itinerary_id": null,
+    "failLogs": [
+      {
+        "id": "log_2754ae95f85ca103",
+        "title": "这一步没有完成",
+        "clickable": true,
+        "heading": "这一步没有完成",
+        "body": "目的地城市“䶮䶮䶮阿巴市”不存在于中国行政区划及主流旅游数据库，疑似输入错误或虚构地名，无法匹配交通、住宿、门票等基础价格数据，预算估算不可行"
+      }
+    ]
+  },
+  "shot": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t010-r1-shots/07-fail-modal.png"
+}

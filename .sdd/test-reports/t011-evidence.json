@@ -1,0 +1,509 @@
+{
+  "chrome": "Chrome/152.0.7977.84",
+  "cdp": "Target.createTarget + attachToTarget flatten",
+  "frontend": "http://127.0.0.1:5199",
+  "backend": "http://127.0.0.1:8099",
+  "vite_use_mock": false,
+  "reused_services": {
+    "backend_8099": true,
+    "frontend_5199": true,
+    "started_by_tester": false
+  },
+  "acs": {
+    "AC-015": {
+      "result": "PASS",
+      "list_id": "itn_a79bf0c8d6c0ec62",
+      "chat_id": "itn_a79bf0c8d6c0ec62",
+      "view_href": "/itineraries/itn_a79bf0c8d6c0ec62",
+      "clicked_view": true,
+      "after_reload": "/itineraries/itn_a79bf0c8d6c0ec62",
+      "hasMock": false
+    },
+    "AC-016": {
+      "result": "PASS",
+      "chips": [
+        "第 1 天",
+        "第 2 天",
+        "第 3 天",
+        "第 4 天",
+        "第 5 天"
+      ],
+      "d1_cards": 2,
+      "d5_cards": 1,
+      "d1_titles": [
+        "📍杭州西湖风景名胜区-湖",
+        "📍杭州西湖风景名胜区-断"
+      ],
+      "d5_titles": [
+        "📍灵隐寺"
+      ]
+    },
+    "AC-022": {
+      "result": "PASS",
+      "ui_legs": [
+        "🚶步行约 15 分钟",
+        "🚶步行约 13 分钟",
+        "🚌公交约 39 分钟"
+      ],
+      "api_legs": [
+        {
+          "mode": "walking",
+          "source": "amap",
+          "hasApprox": true,
+          "duration_min": 15,
+          "distance_m": 1127,
+          "summary": "步行约 15 分钟"
+        },
+        {
+          "mode": "walking",
+          "source": "amap",
+          "hasApprox": true,
+          "duration_min": 13,
+          "distance_m": 974,
+          "summary": "步行约 13 分钟"
+        },
+        {
+          "mode": "transit",
+          "source": "amap",
+          "hasApprox": true,
+          "duration_min": 39,
+          "distance_m": 6536,
+          "summary": "公交约 39 分钟"
+        }
+      ],
+      "estimate_with_approx": [],
+      "note": "展示行程腿均为 amap；文案含方式+约时间"
+    },
+    "AC-023": {
+      "result": "PASS",
+      "opened": true,
+      "title": "📍杭州西湖风景名胜区-湖滨公园",
+      "body_len": 71,
+      "no_pay": true,
+      "closed": true
+    },
+    "AC-021": {
+      "result": "FAIL",
+      "after_scroll": "第 4 天",
+      "after_chip": "第 1 天",
+      "scrollTop": 839,
+      "after_chip_scrollTop": 321
+    },
+    "AC-005": {
+      "result": "PASS",
+      "budget": true,
+      "checklist": true,
+      "days": 5,
+      "mapClicked": true,
+      "mapLabel": "当天行程地图",
+      "mapUnconfigured": false,
+      "mapFailed": false,
+      "mapCanvas": true,
+      "canvases": [
+        {
+          "w": 764,
+          "h": 360
+        }
+      ],
+      "mapChips": [
+        "📍 杭州西湖风景名胜区-",
+        "📍 杭州西湖风景名胜区-"
+      ],
+      "day1Cards": [
+        "📍杭州西湖风景名胜区-湖",
+        "📍杭州西湖风景名胜区-断"
+      ],
+      "amap_network_n": 21,
+      "noPdf": true,
+      "noPassport": true,
+      "noMock": true
+    },
+    "AC-007": {
+      "result": "PASS",
+      "ui_over": true,
+      "api": {
+        "cap": 800,
+        "total": 1280,
+        "over": true
+      },
+      "path": "/itineraries/itn_8d75be294e483e2a"
+    },
+    "AC-006": {
+      "result": "FAIL",
+      "deleted": {
+        "ok": false,
+        "reason": "no-delete"
+      },
+      "before_n": 2,
+      "after_n": 2,
+      "planning": {
+        "http": 200,
+        "id": "conv_73b028b0acfb325a",
+        "planning": "succeeded",
+        "itinerary_id": "itn_e6e7ea18e5abc6c2",
+        "specs": [
+          {
+            "role": "destination_research",
+            "status": "succeeded"
+          },
+          {
+            "role": "budget_expert",
+            "status": "succeeded"
+          },
+          {
+            "role": "itinerary_design",
+            "status": "succeeded"
+          }
+        ],
+        "running": false,
+        "allSucceeded": true
+      },
+      "before_planning": "succeeded"
+    },
+    "AC-017": {
+      "result": "FAIL",
+      "after_titles": [
+        "杭州西湖风景名胜区",
+        "雷峰塔景区"
+      ],
+      "mapChips": [
+        "📍 杭州西湖风景名胜区",
+        "📍 雷峰塔景区"
+      ],
+      "map_has_deleted": true
+    },
+    "AC-018": {
+      "result": "PASS",
+      "wait_seconds": 2.0,
+      "before_d3": 2,
+      "after_d3": 1,
+      "before_titles": [
+        "杭州西湖风景名胜区-苏堤",
+        "杭州西湖风景名胜区-曲院"
+      ],
+      "after_titles": [
+        "杭州西湖风景名胜区-苏堤"
+      ],
+      "same_id": true,
+      "planning": {
+        "http": 200,
+        "id": "conv_4ead9056389b1de7",
+        "planning": "succeeded",
+        "itinerary_id": "itn_a79bf0c8d6c0ec62",
+        "specs": [
+          {
+            "role": "destination_research",
+            "status": "succeeded"
+          },
+          {
+            "role": "budget_expert",
+            "status": "succeeded"
+          },
+          {
+            "role": "itinerary_design",
+            "status": "succeeded"
+          }
+        ],
+        "running": false,
+        "allSucceeded": true
+      },
+      "user_has_text": true,
+      "suggest_gone": true
+    },
+    "AC-019": {
+      "result": "FAIL",
+      "clicked": true,
+      "wait_seconds": 180.1,
+      "user_has_text": true,
+      "chips_gone": true,
+      "same_id": true,
+      "updated_changed": false,
+      "before_days": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          5,
+          1
+        ]
+      ],
+      "after_days": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          5,
+          1
+        ]
+      ],
+      "planning": {
+        "http": 200,
+        "id": "conv_a66b5537023f598c",
+        "planning": "succeeded",
+        "itinerary_id": "itn_541d4713e1061407",
+        "specs": [
+          {
+            "role": "destination_research",
+            "status": "succeeded"
+          },
+          {
+            "role": "budget_expert",
+            "status": "succeeded"
+          },
+          {
+            "role": "itinerary_design",
+            "status": "succeeded"
+          }
+        ],
+        "running": false,
+        "allSucceeded": true
+      }
+    }
+  },
+  "tech": {
+    "list_entry": {
+      "listHasMock": false,
+      "tripRows": 7,
+      "clicked": true,
+      "path": "/itineraries/itn_a79bf0c8d6c0ec62",
+      "id": "itn_a79bf0c8d6c0ec62"
+    },
+    "no_pdf_no_passport": {
+      "ui_pdf": false,
+      "ui_passport": false,
+      "api_passport": false
+    },
+    "delete_no_rerun": {
+      "planning": "succeeded",
+      "running": false,
+      "specs": [
+        {
+          "role": "destination_research",
+          "status": "succeeded"
+        },
+        {
+          "role": "budget_expert",
+          "status": "succeeded"
+        },
+        {
+          "role": "itinerary_design",
+          "status": "succeeded"
+        }
+      ],
+      "same_id": true
+    },
+    "same_itinerary_id": {
+      "list": "itn_a79bf0c8d6c0ec62",
+      "chat": "itn_a79bf0c8d6c0ec62",
+      "display": "itn_a79bf0c8d6c0ec62",
+      "planning": "itn_a79bf0c8d6c0ec62",
+      "refresh": "/itineraries/itn_a79bf0c8d6c0ec62"
+    },
+    "src_hits": 136,
+    "api_sample": [
+      {
+        "url": "http://127.0.0.1:5199/api/inspirations",
+        "status": 200,
+        "type": "XHR"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/inspirations",
+        "status": 200,
+        "type": "XHR"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/itineraries",
+        "status": 200,
+        "type": "XHR"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/itineraries",
+        "status": 200,
+        "type": "XHR"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/itineraries",
+        "status": 200,
+        "type": "Fetch"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/itineraries/itn_a79bf0c8d6c0ec62",
+        "status": 200,
+        "type": "XHR"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/itineraries/itn_a79bf0c8d6c0ec62",
+        "status": 200,
+        "type": "XHR"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/conversations/conv_4ead9056389b1de7",
+        "status": 200,
+        "type": "XHR"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/conversations/conv_4ead9056389b1de7",
+        "status": 200,
+        "type": "XHR"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/inspirations",
+        "status": 200,
+        "type": "XHR"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/inspirations",
+        "status": 200,
+        "type": "XHR"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/conversations/conv_4ead9056389b1de7",
+        "status": 200,
+        "type": "XHR"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/conversations/conv_4ead9056389b1de7",
+        "status": 200,
+        "type": "XHR"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/itineraries/itn_a79bf0c8d6c0ec62",
+        "status": 200,
+        "type": "XHR"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/itineraries/itn_a79bf0c8d6c0ec62",
+        "status": 200,
+        "type": "XHR"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/conversations/conv_4ead9056389b1de7",
+        "status": 200,
+        "type": "XHR"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/conversations/conv_4ead9056389b1de7",
+        "status": 200,
+        "type": "XHR"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/inspirations",
+        "status": 200,
+        "type": "XHR"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/inspirations",
+        "status": 200,
+        "type": "XHR"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/itineraries/itn_a79bf0c8d6c0ec62",
+        "status": 200,
+        "type": "XHR"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/itineraries/itn_a79bf0c8d6c0ec62",
+        "status": 200,
+        "type": "XHR"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/conversations/conv_4ead9056389b1de7",
+        "status": 200,
+        "type": "XHR"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/conversations/conv_4ead9056389b1de7",
+        "status": 200,
+        "type": "XHR"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/itineraries/itn_a79bf0c8d6c0ec62",
+        "status": 200,
+        "type": "Fetch"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/conversations/conv_4ead9056389b1de7",
+        "status": 200,
+        "type": "Fetch"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/itineraries",
+        "status": 200,
+        "type": "XHR"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/itineraries",
+        "status": 200,
+        "type": "XHR"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/itineraries",
+        "status": 200,
+        "type": "Fetch"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/itineraries/itn_8d75be294e483e2a",
+        "status": 200,
+        "type": "XHR"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/itineraries/itn_8d75be294e483e2a",
+        "status": 200,
+        "type": "XHR"
+      }
+    ]
+  },
+  "experience": {
+    "no_curl_src": {
+      "src_hits": 136,
+      "ok": false
+    },
+    "budget_not_recomputed_from_days": {
+      "overcap_total": 1280,
+      "overcap_cap": 800,
+      "over": true,
+      "note": "偏低预算页合计与上限来自预算字段，未按天数常数重算抹掉 over_cap"
+    },
+    "scroll_band": {
+      "after_scroll_chip": "第 4 天",
+      "after_chip": "第 1 天"
+    },
+    "revise_same_conversation": {
+      "ac018_id": "itn_a79bf0c8d6c0ec62",
+      "ac018_conv_planning_id": "itn_a79bf0c8d6c0ec62",
+      "ac019_id": "itn_541d4713e1061407",
+      "ac019_conv_planning_id": "itn_541d4713e1061407"
+    }
+  },
+  "home": {
+    "hasMock": false,
+    "path": "/",
+    "composer": false
+  }
+}

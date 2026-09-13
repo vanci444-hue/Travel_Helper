@@ -1,0 +1,313 @@
+{
+  "env": {
+    "vite": "http://127.0.0.1:5499",
+    "chrome": "Chrome/152.0.7977.84",
+    "cdp": "Target.createTarget + attachToTarget flatten",
+    "mock": true,
+    "isolatedFrom5199": true
+  },
+  "checks": [
+    {
+      "id": "TC-01a",
+      "status": "FAIL",
+      "expected": "列表字段齐全；规划中项不出现",
+      "actual": {
+        "href": "http://127.0.0.1:5499/trips",
+        "mock": true,
+        "heading": "🧳 行程",
+        "rows": [],
+        "hasPlanning": false
+      },
+      "evidence": {
+        "shot": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t003-02-trips.png"
+      }
+    },
+    {
+      "id": "TC-01b",
+      "status": "PASS",
+      "expected": "空态含「还没有行程，先和 Coco 聊一趟」",
+      "actual": {
+        "href": "http://127.0.0.1:5499/trips?empty=1",
+        "empty": "✈️ 还没有行程，先和 Coco 聊一趟。",
+        "rows": 0
+      },
+      "evidence": {
+        "shot": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t003-03-empty.png"
+      }
+    },
+    {
+      "id": "TC-02",
+      "status": "PASS",
+      "expected": "网页报告 5 天杭州 + 预算 + 地图入口 + 清单；无 PDF；对话无整份粘贴",
+      "actual": {
+        "href": "http://127.0.0.1:5499/itineraries/itn_01",
+        "title": "杭州 5 日轻松游",
+        "sub": "🍃 轻松 · 📍 杭州 5 天",
+        "mock": "[Mock]",
+        "chips": [
+          {
+            "text": "第 1 天",
+            "selected": true
+          },
+          {
+            "text": "第 2 天",
+            "selected": false
+          },
+          {
+            "text": "第 3 天",
+            "selected": false
+          },
+          {
+            "text": "第 4 天",
+            "selected": false
+          },
+          {
+            "text": "第 5 天",
+            "selected": false
+          }
+        ],
+        "days": [
+          {
+            "day": "1",
+            "label": "📅第 1 天",
+            "cards": [
+              "📍灵隐寺",
+              "📍西湖"
+            ]
+          },
+          {
+            "day": "2",
+            "label": "📅第 2 天",
+            "cards": [
+              "📍龙井村",
+              "🏨推荐住宿 · 湖边民宿"
+            ]
+          },
+          {
+            "day": "3",
+            "label": "📅第 3 天",
+            "cards": [
+              "📍西溪湿地",
+              "📍河坊街"
+            ]
+          },
+          {
+            "day": "4",
+            "label": "📅第 4 天",
+            "cards": [
+              "📍九溪十八涧"
+            ]
+          },
+          {
+            "day": "5",
+            "label": "📅第 5 天",
+            "cards": [
+              "📌湖滨漫步 / 返程"
+            ]
+          }
+        ],
+        "transits": [
+          "🚌公交约 25 分钟",
+          "🚶步行约 12 分钟（估算）",
+          "🚌公交约 40 分钟"
+        ],
+        "budget": "💰 预算\n\n交通、住宿、餐饮、门票活动、其他合计约 1.6 万，上限 2 万。未超出上限。\n\n含上海—杭州往返与当地食住行门票的估算，非实时报价",
+        "checklist": "🎒 行前清单\n携带身份证\n查看是否需要提前预约西湖周边热门园\n带一件轻便外套\n准备舒适步行鞋",
+        "mapBtn": true,
+        "pdf": false,
+        "passport": false,
+        "side": [
+          "C\nCoco\n👋 这份行程可以改某一张卡片，或直接跟我说。"
+        ],
+        "hasFullPaste": false,
+        "bodyScroll": {
+          "overflowY": "auto",
+          "clientH": 767,
+          "scrollH": 1315
+        }
+      },
+      "evidence": {
+        "shot": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t003-04-detail.png"
+      }
+    },
+    {
+      "id": "TC-04",
+      "status": "PASS",
+      "expected": "卡间交通文案如「公交约 25 分钟」",
+      "actual": {
+        "transits": [
+          "🚌公交约 25 分钟",
+          "🚶步行约 12 分钟（估算）",
+          "🚌公交约 40 分钟"
+        ]
+      },
+      "evidence": {
+        "shot": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t003-04-detail.png"
+      }
+    },
+    {
+      "id": "TC-03",
+      "status": "FAIL",
+      "expected": "chip 可点滚动；滚到第 3 天 chip 高亮",
+      "actual": {
+        "chip5": {
+          "error": "waitFor timeout: {\"selected\":\"第 3 天\",\"rel\":635.0703125,\"scrollTop\":548.5}"
+        },
+        "chip3": {
+          "error": "waitFor timeout: {\"selected\":\"第 3 天\",\"rel\":258.4453125}"
+        },
+        "scrolled": {
+          "error": "waitFor timeout: {\"selected\":\"第 1 天\",\"scrollTop\":548.5}"
+        },
+        "scrollMeta": {
+          "top": 806.9453125,
+          "clientH": 767,
+          "scrollH": 1315
+        }
+      },
+      "evidence": {
+        "chipShot": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t003-05-chip-day3.png",
+        "scrollShot": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t003-06-scroll-day3.png"
+      }
+    },
+    {
+      "id": "TC-05",
+      "status": "PASS",
+      "expected": "微详情名称+介绍或地址，无支付；关闭回列表",
+      "actual": {
+        "micro": {
+          "title": "📍灵隐寺",
+          "body": "香火与山林，适合慢慢走，不要排在午后最赶的一段。 杭州市西湖区法云弄1号",
+          "text": "📍灵隐寺\n\n香火与山林，适合慢慢走，不要排在午后最赶的一段。 杭州市西湖区法云弄1号\n\n关闭"
+        },
+        "payWords": false,
+        "afterClose": {
+          "dialog": false,
+          "cards": [
+            "📍灵隐寺",
+            "📍西湖"
+          ]
+        }
+      },
+      "evidence": {
+        "shot": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t003-07-micro.png"
+      }
+    },
+    {
+      "id": "TC-06",
+      "status": "PASS",
+      "expected": "删第 2 天一张卡后列表与当天地图点消失；地图未配置",
+      "actual": {
+        "beforeDelete": {
+          "cards": [
+            "📍龙井村",
+            "🏨推荐住宿 · 湖边民宿"
+          ]
+        },
+        "afterDelete": {
+          "cards": [
+            "🏨推荐住宿 · 湖边民宿"
+          ]
+        },
+        "mapSnap": {
+          "unconfigured": "🗺️ 地图未配置",
+          "points": [
+            "📍 灵隐寺 · 杭州市西湖区法云弄1号",
+            "📍 西湖 · 杭州市西湖区"
+          ],
+          "selected": "第 1 天"
+        }
+      },
+      "evidence": {
+        "shot": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t003-08-delete-map.png"
+      }
+    },
+    {
+      "id": "TC-07",
+      "status": "PASS",
+      "expected": "快捷建议最多 4 条；点选出现对等用户消息；换目的地提示新建计划",
+      "actual": {
+        "suggestSnap": {
+          "suggestions": [
+            "🍃第三天不要排那么满",
+            "🚌白天少走路，多坐公交",
+            "🏨换一家更安静的推荐住宿",
+            "🗺️换个目的地，改去成都"
+          ]
+        },
+        "destChip": "🗺️换个目的地，改去成都",
+        "afterDest": {
+          "users": [
+            "换个目的地，改去成都"
+          ],
+          "coco": [
+            "C\nCoco\n👋 这份行程可以改某一张卡片，或直接跟我说。",
+            "C\nCoco\n🗺️ 换目的地这类大改，请去新建计划。当前这份卡片先不动。"
+          ],
+          "remaining": []
+        }
+      },
+      "evidence": {
+        "shot": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t003-09-suggest.png"
+      }
+    },
+    {
+      "id": "TC-08",
+      "status": "PASS",
+      "expected": "对照 UI-004/005；侧栏 composer 不被中栏滚动挤掉",
+      "actual": {
+        "layoutBefore": {
+          "body": {
+            "top": 133.1953125,
+            "left": 260,
+            "bottom": 900,
+            "width": 820,
+            "height": 766.8046875,
+            "overflowY": "auto",
+            "scrollH": 1202,
+            "clientH": 767
+          },
+          "side": {
+            "top": 0,
+            "left": 1080,
+            "bottom": 900,
+            "width": 360,
+            "height": 900
+          },
+          "composer": {
+            "top": 822,
+            "left": 1081,
+            "bottom": 900,
+            "width": 359,
+            "height": 78
+          }
+        },
+        "layoutAfter": {
+          "scrollTop": 435,
+          "composer": {
+            "top": 822,
+            "bottom": 900
+          },
+          "visible": true
+        }
+      },
+      "evidence": {
+        "shot": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t003-10-composer.png"
+      }
+    },
+    {
+      "id": "TC-09",
+      "status": "PASS",
+      "expected": "后续 AC 不在本任务判过",
+      "actual": "T-011 持有 AC-005/006/007/015～019/021～023；T-012 持有 AC-008。本轮不判这些 AC 通过。",
+      "evidence": {
+        "assignment": "T-011 / T-012"
+      }
+    }
+  ],
+  "failed": [
+    "TC-01a",
+    "TC-03"
+  ],
+  "blocked": []
+}

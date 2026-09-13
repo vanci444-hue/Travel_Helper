@@ -1,0 +1,277 @@
+{
+  "chrome": "Chrome/152.0.7977.84",
+  "cdp": "Target.createTarget + attachToTarget flatten",
+  "frontend": "http://127.0.0.1:5199/",
+  "backend": "http://127.0.0.1:8099",
+  "vite_use_mock": false,
+  "acs": {
+    "AC-004": {
+      "result": "FAIL",
+      "wait_seconds": 69.7,
+      "running_at": 1.5,
+      "from_running": 68.1,
+      "why": null,
+      "hasMock": false,
+      "cocoLast": "🌫️ 这次没法帮你出方案。原因是：目的地城市“䶮䶮䶮阿巴市”不存在于中国行政区划及主流旅游数据库，疑似输入错误或虚构地名，无法匹配交通、住宿、门票等基础价格数据，预算估算不可行。你可以换一个目的地，或者说得更具体一点再试。",
+      "error_message": "目的地城市“䶮䶮䶮阿巴市”不存在于中国行政区划及主流旅游数据库，疑似输入错误或虚构地名，无法匹配交通、住宿、门票等基础价格数据，预算估算不可行",
+      "reasonInCoco": true,
+      "errorAligned": true,
+      "itinerary_id": null,
+      "tripLink": false,
+      "failStripe": true,
+      "dest": "䶮䶮䶮阿巴市",
+      "rewrittenToHangzhou": false,
+      "specs": [
+        {
+          "role": "destination_research",
+          "status": "succeeded",
+          "summary": "已收集3 处点位"
+        },
+        {
+          "role": "budget_expert",
+          "status": "failed",
+          "summary": "目的地城市“䶮䶮䶮阿巴市”不存在于中国行政区划及主流旅游数据库，疑似输入错误或虚构地名，无法匹配交通、住宿、门票等基础价格数据，预算估算不可行"
+        },
+        {
+          "role": "itinerary_design",
+          "status": "succeeded",
+          "summary": "5 天情侣轻松节奏行程。说明：下单目的地名「䶮䶮䶮阿巴市」未能识别，按提供的 POI 坐标与地址归位到西藏昌都市贡觉县莫洛镇一带，全部点位均取该片区真实 POI"
+        }
+      ],
+      "logCount": 38,
+      "logTitles": [
+        "查询城市位置 䶮䶮䶮阿巴市",
+        "搜索景点 景点",
+        "查看地点详情 B0J3ZCZ0SG",
+        "查看地点详情 B0KGF5ZB26",
+        "查看地点详情 B0LRYKUIA3",
+        "读取天气 540322",
+        "目的地研究已完成",
+        "思考一步",
+        "查看地点详情 B0J3ZCZ0SG",
+        "查看地点详情 B0KGF5ZB26",
+        "查看地点详情 B0LRYKUIA3",
+        "搜索景点 景点",
+        "思考一步",
+        "查询步行路线",
+        "查询步行路线",
+        "查询步行路线"
+      ],
+      "failStep": {
+        "ok": false,
+        "pick": {
+          "ok": true,
+          "title": "👤 这一步没有完成",
+          "count": 38,
+          "preferFail": false
+        },
+        "clicked": {
+          "ok": true,
+          "text": "🔧 查询城市位置 䶮䶮䶮阿巴市",
+          "x": 656,
+          "y": -443.94921875
+        },
+        "heading": "",
+        "body": "",
+        "bodyLen": 0,
+        "leaks": [],
+        "closed": false,
+        "modalGone": true,
+        "stillConversation": true,
+        "conversationIdSame": true,
+        "shot": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t010-r1-shots/04-fail-modal.png",
+        "afterPath": "/"
+      },
+      "http": 200,
+      "planning": "failed",
+      "timeline": [
+        {
+          "t": 0.0,
+          "planning": "idle",
+          "dest": null,
+          "logCount": 0,
+          "id": "conv_5903a8247d5a2da1"
+        },
+        {
+          "t": 1.5,
+          "planning": "running",
+          "dest": "䶮䶮䶮阿巴市",
+          "logCount": 0,
+          "id": "conv_5903a8247d5a2da1"
+        },
+        {
+          "t": 69.7,
+          "planning": "failed",
+          "dest": "䶮䶮䶮阿巴市",
+          "logCount": 38,
+          "id": "conv_5903a8247d5a2da1"
+        }
+      ],
+      "conversation_id": "conv_5903a8247d5a2da1"
+    },
+    "AC-003": {
+      "result": "PASS",
+      "scope": "regression: wait running|succeeded, dest=杭州; not full 60s scheme",
+      "wait_seconds": 1.5,
+      "why": null,
+      "hasMock": false,
+      "planning": "running",
+      "dest": "杭州",
+      "origin": "上海",
+      "itinerary_id": null,
+      "specs": [
+        {
+          "role": "destination_research",
+          "status": "running",
+          "summary": "正在查杭州点位与天气"
+        },
+        {
+          "role": "budget_expert",
+          "status": "not_started",
+          "summary": ""
+        },
+        {
+          "role": "itinerary_design",
+          "status": "not_started",
+          "summary": ""
+        }
+      ],
+      "logCount": 0,
+      "conversation_id": "conv_4ead9056389b1de7",
+      "timeline": [
+        {
+          "t": 0.0,
+          "planning": null,
+          "dest": null,
+          "logCount": null,
+          "id": null
+        },
+        {
+          "t": 1.5,
+          "planning": "running",
+          "dest": "杭州",
+          "logCount": 0,
+          "id": "conv_4ead9056389b1de7"
+        }
+      ]
+    },
+    "AC-024": {
+      "result": "FAIL",
+      "scope": "this-round fail-step modal only; success-path click reused prior PASS + frontend unchanged",
+      "clicked": {
+        "ok": true,
+        "text": "🔧 查询城市位置 䶮䶮䶮阿巴市",
+        "x": 656,
+        "y": -443.94921875
+      },
+      "heading": "",
+      "body": "",
+      "bodyLen": 0,
+      "leaks": [],
+      "closed": false,
+      "stillConversation": true
+    }
+  },
+  "tech": {
+    "page_api_hits": [
+      {
+        "url": "http://127.0.0.1:5199/api/conversations/conv_5903a8247d5a2da1",
+        "phase": "sent"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/conversations/conv_5903a8247d5a2da1",
+        "status": 200,
+        "phase": "resp"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/conversations/conv_5903a8247d5a2da1",
+        "phase": "sent"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/conversations/conv_5903a8247d5a2da1",
+        "status": 200,
+        "phase": "resp"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/conversations/conv_5903a8247d5a2da1",
+        "phase": "sent"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/conversations/conv_5903a8247d5a2da1",
+        "status": 200,
+        "phase": "resp"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/inspirations",
+        "phase": "sent"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/inspirations",
+        "phase": "sent"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/inspirations",
+        "status": 200,
+        "phase": "resp"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/inspirations",
+        "status": 200,
+        "phase": "resp"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/conversations",
+        "phase": "sent"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/conversations",
+        "status": 201,
+        "phase": "resp"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/conversations/conv_4ead9056389b1de7/messages",
+        "phase": "sent"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/conversations/conv_4ead9056389b1de7/messages",
+        "status": 200,
+        "phase": "resp"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/conversations/conv_4ead9056389b1de7",
+        "phase": "sent"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/conversations/conv_4ead9056389b1de7/events",
+        "phase": "sent"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/conversations/conv_4ead9056389b1de7",
+        "status": 200,
+        "phase": "resp"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/conversations/conv_4ead9056389b1de7/events",
+        "status": 200,
+        "phase": "resp"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/conversations/conv_4ead9056389b1de7",
+        "phase": "sent"
+      },
+      {
+        "url": "http://127.0.0.1:5199/api/conversations/conv_4ead9056389b1de7",
+        "status": 200,
+        "phase": "resp"
+      }
+    ],
+    "src_module_hits_seen_by_cdp_not_curl": 0,
+    "checked": "DOM + page fetch /api only; no Tester curl of Vite /src"
+  },
+  "home": {
+    "hasMock": false,
+    "composer": true,
+    "path": "/",
+    "welcome": true
+  }
+}

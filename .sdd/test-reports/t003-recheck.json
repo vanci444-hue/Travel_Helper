@@ -1,0 +1,190 @@
+{
+  "list": {
+    "rows": [
+      {
+        "title": "🗺️杭州 5 日轻松游",
+        "meta": "📍 杭州 · 5 天 · 🍃 轻松 · 今天"
+      }
+    ],
+    "heading": "🧳 行程",
+    "mock": true
+  },
+  "afterChip3": {
+    "chips": [
+      {
+        "text": "第 1 天",
+        "selected": false
+      },
+      {
+        "text": "第 2 天",
+        "selected": false
+      },
+      {
+        "text": "第 3 天",
+        "selected": true
+      },
+      {
+        "text": "第 4 天",
+        "selected": false
+      },
+      {
+        "text": "第 5 天",
+        "selected": false
+      }
+    ],
+    "selected": "第 3 天",
+    "scrollTop": 548.5,
+    "days": [
+      {
+        "day": "1",
+        "rel": -231.3203125,
+        "height": 220.8828125
+      },
+      {
+        "day": "2",
+        "rel": 13.5625,
+        "height": 220.8828125
+      },
+      {
+        "day": "3",
+        "rel": 258.4453125,
+        "height": 220.8828125
+      },
+      {
+        "day": "4",
+        "rel": 503.328125,
+        "height": 107.7421875
+      },
+      {
+        "day": "5",
+        "rel": 635.0703125,
+        "height": 107.7421875
+      }
+    ]
+  },
+  "beforeScroll": {
+    "chips": [
+      {
+        "text": "第 1 天",
+        "selected": false
+      },
+      {
+        "text": "第 2 天",
+        "selected": true
+      },
+      {
+        "text": "第 3 天",
+        "selected": false
+      },
+      {
+        "text": "第 4 天",
+        "selected": false
+      },
+      {
+        "text": "第 5 天",
+        "selected": false
+      }
+    ],
+    "selected": "第 2 天",
+    "scrollTop": 340,
+    "days": [
+      {
+        "day": "1",
+        "rel": -22.8203125,
+        "height": 220.8828125
+      },
+      {
+        "day": "2",
+        "rel": 222.0625,
+        "height": 220.8828125
+      },
+      {
+        "day": "3",
+        "rel": 466.9453125,
+        "height": 220.8828125
+      },
+      {
+        "day": "4",
+        "rel": 711.828125,
+        "height": 107.7421875
+      },
+      {
+        "day": "5",
+        "rel": 843.5703125,
+        "height": 107.7421875
+      }
+    ]
+  },
+  "afterScroll": {
+    "chips": [
+      {
+        "text": "第 1 天",
+        "selected": false
+      },
+      {
+        "text": "第 2 天",
+        "selected": true
+      },
+      {
+        "text": "第 3 天",
+        "selected": false
+      },
+      {
+        "text": "第 4 天",
+        "selected": false
+      },
+      {
+        "text": "第 5 天",
+        "selected": false
+      }
+    ],
+    "selected": "第 2 天",
+    "scrollTop": 548.5,
+    "days": [
+      {
+        "day": "1",
+        "rel": -231.3203125,
+        "height": 220.8828125
+      },
+      {
+        "day": "2",
+        "rel": 13.5625,
+        "height": 220.8828125
+      },
+      {
+        "day": "3",
+        "rel": 258.4453125,
+        "height": 220.8828125
+      },
+      {
+        "day": "4",
+        "rel": 503.328125,
+        "height": 107.7421875
+      },
+      {
+        "day": "5",
+        "rel": 635.0703125,
+        "height": 107.7421875
+      }
+    ]
+  },
+  "day2Before": {
+    "selected": "第 2 天",
+    "cards": [
+      "📍龙井村",
+      "🏨推荐住宿 · 湖边民宿"
+    ]
+  },
+  "mapDay2": {
+    "selected": "第 2 天",
+    "unconfigured": "🗺️ 地图未配置",
+    "points": [
+      "🏨 推荐住宿 · 湖边民宿 · 南山路附近"
+    ],
+    "cards": []
+  },
+  "listShot": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t003-recheck-list.png",
+  "chip3Shot": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t003-recheck-chip3.png",
+  "scrollShot": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t003-recheck-scroll3.png",
+  "mapShot": "/Users/zhaojiaqi/Documents/VibeCoding/Cursor/客服/Develop_Helper/Projects_Repo/Travel_Helper/.sdd/test-reports/t003-recheck-map-day2.png"
+}
